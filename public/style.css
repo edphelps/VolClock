@@ -1,8 +1,101 @@
+/* *****************************************
+*  GENERAL
+******************************************** */
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* to keep page form exceeding width of the banner */
+  max-width: 940px;
 }
 
-a {
-  color: #00B7FF;
+/* background banner at top of page */
+#banner {
+  background: url("./images/banner.png") no-repeat center;
+}
+
+#logo {
+  width: 100px;
+}
+
+/* spinner shown while waiting for ajax calls */
+.spinner {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+}
+
+/* "Thrift Store" title in banner */
+#app-title {
+  color: black;
+
+  text-shadow:
+  0 0 10px #fff,
+  0 0 20px #fff,
+  0 0 30px #fff,
+  0 0 40px #fff,
+  0 0 70px #fff,
+  0 0 80px #fff,
+  0 0 100px #fff,
+  0 0 150px #fff;
+
+  /* text-shadow: 0 0 10px #fff,
+  0 0 20px #fff,
+  0 0 30px #fff,
+  0 0 40px #ff00de,
+  0 0 70px #ff00de,
+  0 0 80px #ff00de,
+  0 0 100px #ff00de,
+  0 0 150px #ff00de; */
+
+  /* text-shadow:
+    -1px -1px 0 white,
+    1px -1px 0 white,
+    -1px 1px 0 white,
+    1px 1px 0 white; */
+}
+
+/* *****************************************
+*  User name on left side of banner
+******************************************** */
+
+ #login-fieldset input {
+  border-radius: 5px;
+  width: 180px;
+  margin-left: 2px;
+}
+ #login-fieldset ::placeholder {
+    color: grey;
+    opacity: 0.5;
+}
+fieldset {
+  padding: 10px 15px 7px 10px;
+  margin-bottom: 3px;
+  width: 290px;
+
+  border: solid 2px black;
+  border-radius: 10px;
+
+  color: white;
+  font-weight: lighter;
+
+  background: rgb(81, 142, 48);
+}
+
+
+/* *****************************************
+*  PAGE CONTENT AREA
+******************************************** */
+
+/* content area below the menu bar */
+.content {
+  background-color: lavender;
+  padding: 15px;
+}
+
+/* Marker for divs that are filled in by ajax.
+   When changing to another menu all divs with this class are set to "".
+   This prevents the problem of the card accordians shadowing each other's
+   ID names sine the all use "accordion" and set the assignment id's with
+   the same naming covnetion. */
+.auto-clear {
+   /* intentionally blank */
 }
