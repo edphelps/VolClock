@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('roles', function(table) {
-    table.increments().primary()
+    table.increments('id').primary()
     table.varchar('role', 255).notNullable()
     table.timestamps(true, true)
   })
