@@ -11,5 +11,9 @@ exports.seed = function(knex, Promise) {
         {id: 4, start: new Date(), end: new Date(), comment: "Square dance convention for three days."},
         {id: 5, start: new Date(), end: new Date(), comment: "BURNING MAN."}
       ]);
+      .then(() => {
+                 // Moves id column (PK) auto-incremented to correct value after inserts
+                return knex.raw(`SELECT setval('notifications_id_seq', (SELECT MAX(id) FROM notifications))`)
+            })
     });
 };

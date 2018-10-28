@@ -20,5 +20,9 @@ exports.seed = function(knex, Promise) {
         {id: 13, role: 'Toys'},
         {id: 14, role: 'Other'}
       ]);
+      .then(() => {
+                 // Moves id column (PK) auto-incremented to correct value after inserts
+                return knex.raw(`SELECT setval('roles_id_seq', (SELECT MAX(id) FROM roles))`)
+            })
     });
 };
