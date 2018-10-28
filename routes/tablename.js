@@ -1,3 +1,7 @@
+
+// Template file to grab typical knex commands from
+
+
 const express = require(`express`)
 const router = express.Router()
 const knex = require(`../knex`)
