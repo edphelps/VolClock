@@ -8,7 +8,8 @@ exports.up = function(knex, Promise) {
 		table.foreign('role_id').references('roles.id')
     table.datetime('start').notNullable()
     table.datetime('end').notNullable()
-    table.integer('miles').references('miles_default')inTable('users')
+		table.integer('miles').notNullable()
+    table.foreign('miles').references('users.miles_default')
 		table.timestamps(true, true)
 	})
 }
