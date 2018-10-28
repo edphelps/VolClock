@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+// Should be able to delete this, index.html comes from /public
 
-module.exports = router;
+// const express = require('express');
+// var router = express.Router();
+//
+// /* GET home page. */
+// router.get('/', function(req, res, next) {
+//   res.render('index', { title: 'Express' });
+// });
+//
+// module.exports = router;
