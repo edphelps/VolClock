@@ -127,15 +127,40 @@
     <!-- CONTENT - Notify -->
     <!-- ============================================= -->
 
-    <div id="content--notify" class="content" hidden>
+    <div id="content--notify" class="content justify-content-center">
 
-      <H4 class="text-center mt-3 mb-4">Notify</H4>
-
-      <!-- ajax data loads here -->
-      <div id="list-open-assignments" class="auto-clear">
-        onMenuNotify() loads this section via ajax...
+    <div class="row">
+    <div class="col-6">
+    <h3 class="mt-3 mb-4 ml-4">Notify Supervisor</h3>
+    <button type="button" class=" ml-4 btn btn-primary btn-lg">Large button</button>
+  </div>
+  <div class="col-6">
+    <h3 class="mt-3 mb-4 ml-4">Input Time Off</h3>
+    <button type="button" class=" ml-4 btn btn-primary btn-lg">Large button</button>
+  </div>
+</div>
+    <!-- Message to Supervisor Form -->
+    <!-- need to add class="auto-clear" to div when form is done -->
+    <hr></hr>
+      <div id="requestTimeOffForm" hidden>
+        <form>
+          <div class="form-row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="First name">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Last name">
+            </div>
+          </div>
+          <div class="form-group">
+              <label for="timeOff">Message for Supervisor</label>
+              <textarea class="form-control" id="timeOffTextArea" rows="5"></textarea>
+            </div>
+            <div class="form-row">
+                <button type="button" class="btn btn-primary btn-lg">SUBMIT</button>
+            </div>
+        </form>
       </div>
-
     </div> <!-- content--notify -->
 
 
@@ -145,7 +170,7 @@
 
     <div id="content--history" class="content" hidden>
 
-      <H4 class="text-center mt-3 mb-4">History</H4>
+      <h3 class="text-center mt-3 mb-4">History</h3>
 
       <!-- Spinner's hidden flag controlled by js -->
       <!-- A bit of a kludge, the div around the spinner doesn't hide and adds space below menu -->
