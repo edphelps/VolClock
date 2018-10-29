@@ -7,4 +7,5 @@
 * =================================================== */
 function onMenuHistory() {
   changeMenuAndContentArea("nav--history", gelemContentHistory);
+  
 }

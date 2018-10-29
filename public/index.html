@@ -129,19 +129,19 @@
 
     <div id="content--notify" class="content justify-content-center">
 
-    <div id="contactButtons" class="row" hidden>
+    <div id="contactButtons" class="row">
     <div class="col-6">
-    <h3 class="mt-3 mb-4 ml-4">Notify Supervisor</h3>
-    <button type="button" class=" ml-4 btn btn-primary btn-lg">Large button</button>
+    <!-- <h3 class="mt-3 mb-4 ml-4">Notify Supervisor</h3> -->
+    <button id="notify-button" type="button" class=" ml-4 btn btn-primary btn-lg">Notify Supervisor</button>
   </div>
   <div class="col-6">
-    <h3 class="mt-3 mb-4 ml-4">Input Time Off</h3>
-    <button type="button" class=" ml-4 btn btn-primary btn-lg">Large button</button>
+    <!-- <h3 class="mt-3 mb-4 ml-4">Input Time Off</h3> -->
+    <button id="time-off-button" type="button" class=" ml-4 btn btn-primary btn-lg">Input Time Off</button>
   </div>
 </div>
     <!-- Message to Supervisor Form -->
     <!-- need to add class="auto-clear" to div when form is done -->
-      <div id="contactSupervisorForm" hidden>
+      <div id="contactSupervisorForm" style="display:none">
         <form>
           <h2 class="text-center">Message for Supervisor:</h2>
           <h3 class="text-center">From Jane Doe</h3>
@@ -149,13 +149,13 @@
               <textarea class="form-control" id="contactSupervisorTextArea" rows="5"></textarea>
             </div>
             <div class="form-row">
-                <button type="button" class="btn btn-primary btn-lg">SUBMIT</button>
+                <button type="submit" class="btn btn-primary btn-lg">SUBMIT</button>
             </div>
         </form>
       </div>
 
       <!-- Input Time Off Form -->
-      <div id="inputTimeOffForm">
+      <div id="inputTimeOffForm" style="display:none">
         <div class="row">
           <div class="col-6">
         <form>
@@ -185,6 +185,17 @@
       <div id="upcoming-time-off">
         <div class="col">
         <h4>Upcoming Time Off:</h4>
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Start</th>
+      <th scope="col">End</th>
+      <th scope="col">Message</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
       </div>
       </div>
     </div>

@@ -16,4 +16,25 @@ router.get('/login/:login_code', (req, res, next) => {
    })
 })
 
+router.get('/:user_id', (req, res, next) => {
+  let userRoles = {
+    user: {},
+    roles: [],
+  }
+  knex('users')
+    .where('users.id', req.params.user_id)
+    .returning('*')
+    .then((user) => {
+      knex('users_roles')
+        .join('roles', 'roles.id', 'users_roles.role_id')
+        .where('user_id', req.params.user_id)
+        .returning(['roles.id', 'roles.role'])
+        .then((result) => {
+              res.status(200).send({ user: user[0], roles: result })
+        })
+    })
+})
+
+
+
 module.exports = router;
