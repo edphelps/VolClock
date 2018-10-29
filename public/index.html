@@ -14,9 +14,31 @@
 </head>
 
 <body>
-  <div class="container">
+  <!--============================================== -->
+  <!-- LOGIN PAGE -->
+  <!--============================================== -->
+  <div class="container justify-content-center">
+    <h1 class="text-center">TRU VOLUNTEER CLOCK-IN</h1>
+    <form id="loginForm">
+      <div class="form-row d-flex justify-content-center">
+        <label for="loginCode" class="col-form-label">Enter your 4 digit code</label>
+      </div>
+      <div class="form-row d-flex justify-content-center">
+        <div class="col-s6">
+        <input maxlength="4" size="4" type="text" class="form-control" id="loginCode" placeholder="####">
+        </div>
+      </div>
+      <div class="form-row d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary btn-lg">LOGIN</button>
+      </div>
+    </form>
+  </div>
+  <!--============================================== -->
+  <!-- END LOGIN PAGE HTML -->
+  <!--============================================== -->
 
 
+  <div id="mainContainer" class="container" style="display:none">
     <!-- ============================================= -->
     <!-- BANNER -->
     <!-- ============================================= -->
@@ -78,9 +100,9 @@
 
       <!--Buttons for usual shifts -->
   <h3 class="text-center pb-3 mt-3 mb-4">Clock in</h3>
-  <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
-  <button type="button" class="btn btn-secondary btn-lg btn-block">Block level button</button>
-  <button type="button" class="mb-2 btn btn-secondary btn-lg btn-block">Block level button</button>
+  <button id="shift1" type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+  <button id="shift2" type="button" class="btn btn-secondary btn-lg btn-block">Block level button</button>
+  <button id="shift3" type="button" class="mb-2 btn btn-secondary btn-lg btn-block">Block level button</button>
 
   <!-- Miles Driven Form -->
   <form id="milesForm">
@@ -218,7 +240,7 @@
 
       <!-- ajax data loads here -->
       <div id="list-history" class="auto-clear">
-        onMenuHistory() loads this section via ajax...
+        <!-- onMenuHistory() loads this section via ajax... -->
       </div>
 
       <!-- Displayed if there are no assignments for the volunteer -->
@@ -239,6 +261,7 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <!-- My scripts -->
   <script src="./js/globals.js" charset="utf-8"></script>
+  <script src="./js/login.js" charset="utf-8"></script>
   <script src="./js/utils.js" charset="utf-8"></script>
   <script src="./js/menu-clock-in.js" charset="utf-8"></script>
   <script src="./js/menu-notify.js" charset="utf-8"></script>
