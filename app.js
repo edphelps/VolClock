@@ -17,7 +17,9 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -33,11 +35,11 @@ app.use(function(req, res, next) {
 
 
 /* **************************************************
-*  restructureError()
-*  If not restructured information is lost when passed back to AJAX caller
-*  @param Error -- actual Error object with optional 'status'
-*  Returns object { message: 'xxxx', status: 123, name: 'xxx', stack: 'xxx' }
-***************************************************** */
+ *  restructureError()
+ *  If not restructured information is lost when passed back to AJAX caller
+ *  @param Error -- actual Error object with optional 'status'
+ *  Returns object { message: 'xxxx', status: 123, name: 'xxx', stack: 'xxx' }
+ ***************************************************** */
 function restructureError(error) {
   // return if error not in the expected form
   if (!error.stack)
@@ -64,7 +66,7 @@ function restructureError(error) {
 app.use((err, req, res, next) => {
   const status = err.status || 500;
   console.log("======================= APP ERROR IN CONTROLLER =======================");
-  console.log('status: ',status);
+  console.log('status: ', status);
   console.log(err);
   console.log('-------');
   console.log(restructureError(err));
