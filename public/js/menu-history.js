@@ -8,7 +8,7 @@
 function onMenuHistory() {
   // changeMenuAndContentArea("nav--history", gelemContentHistory);
   console.log('hello')
-  axios.get(`/user/${gactiveUserId}`)
+  axios.get(`/users/${gactiveUserId}`)
     .then((response) => {
       console.log('response>>>', response)
     })
