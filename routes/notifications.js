@@ -10,8 +10,8 @@ router.post('/', (req, res, next) => {
   knex('notifications')
       .insert({
         'user_id': req.body.user_id,
-        'start': req.body.start,
-        'end': req.body.end,
+        'start_time': req.body.start_time,
+        'end_time': req.body.end_time,
         'comment': req.body.comment
       })
       .returning(['user_id', 'start', 'end', 'comment'])
