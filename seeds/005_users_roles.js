@@ -9,6 +9,8 @@ exports.seed = function(knex, Promise) {
         {id: 2, user_id: 2, role_id: 6},
         {id: 3, user_id: 3, role_id: 7},
         {id: 4, user_id: 2, role_id: 13},
+        {id: 5, user_id: 2, role_id: 4},
+        {id: 6, user_id: 2, role_id: 10},
       ])
       .then(() => {
 				 // Moves id column (PK) auto-incremented to correct value after inserts

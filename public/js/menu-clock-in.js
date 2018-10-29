@@ -18,8 +18,9 @@ const shift3 = document.getElementById('shift3')
 
 
 
-
-// axios.get('/shifts')
-// .then((data) => {
-//   console.log(data)
-// })
+function getShifts() {
+  axios.get('/shifts')
+  .then((data) => {
+    console.log(data)
+  })
+}
