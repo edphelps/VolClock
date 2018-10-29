@@ -12,7 +12,7 @@ let buttonOptions = null;
 * =================================================== */
 
 function onMenuNotify() {
-  changeMenuAndContentArea("nav--notify", gelemContentNotify);
+  changeMenuAndContentArea("nav--notify", gelemContentNotify);  
 }
 
 
