@@ -18,11 +18,8 @@ router.get('/login/:login_code', (req, res, next) => {
   knex('users')
     .where('login_code', req.params.login_code)
     .then((result) => {
-      if (!result.length) {
-        res.status(200).json({ user: "null" });
-        return;
-      }
-      res.json({ user: result[0] });
+      if (!result.length) { res.status(200).json({ user: null })}
+      res.json({ user: result[0] })
     })
     .catch((error) => {
       next(routeCatch(`--- GET /login/${req.params.user_id} route`, error));

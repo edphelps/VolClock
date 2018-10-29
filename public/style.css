@@ -84,7 +84,10 @@ h1.text-center {
 .btn-lg {
   margin-top: 10px;
 }
-
+h4.text-center.text-danger {
+  font-size: 15px;
+  font-style: italic;
+}
 
 /* *****************************************
 *  PAGE CONTENT AREA

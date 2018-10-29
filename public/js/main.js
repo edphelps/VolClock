@@ -16,6 +16,5 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById("nav--notify").onclick = onMenuNotify;
   document.getElementById("nav--history").onclick = onMenuHistory;
 
-  // start with the home menu choice
-  // onMenuClockIn();
+
 });
