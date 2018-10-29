@@ -2,13 +2,8 @@ const express = require('express');
 const router = express.Router();
 const knex = require('../knex')
 
-/* GET . */
+/* GET users listing. */
 router.get('/', (req, res, next) => {
-<<<<<<< HEAD
-  res.send('Roles responds with a resource');
-});
-
-=======
   knex('roles')
     .then((results) => {
       res.json({ roles: results })
@@ -18,5 +13,4 @@ router.get('/', (req, res, next) => {
     throw new Error(error.message); // send to caller's .catch()
     })
 })
->>>>>>> TA
 module.exports = router;
