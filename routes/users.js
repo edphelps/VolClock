@@ -17,23 +17,22 @@ router.get('/login/:login_code', (req, res, next) => {
 })
 
 router.get('/:user_id', (req, res, next) => {
+  let userRoles = {
+    user: {},
+    roles: [],
+  }
   knex('users')
-    .where('id', req.params.user_id)
+    .where('users.id', req.params.user_id)
     .returning('*')
     .then((user) => {
-      return knex('users_roles')
-      let userId = user.id
+      knex('users_roles')
         .join('roles', 'roles.id', 'users_roles.role_id')
-        .where('users_roles.user_id', userId)
-        .then((roles) => {
-          user.roles = roles
-          return user
+        .where('user_id', req.params.user_id)
+        .returning(['roles.id', 'roles.role'])
+        .then((result) => {
+              res.status(200).send({ user: user[0], roles: result })
         })
-      // console.log('req.params>>>', req.params)
-      // console.log('user>>>', user)
-      res.send({ user: user[0] })
     })
-
 })
 
 
