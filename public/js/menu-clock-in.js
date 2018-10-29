@@ -18,11 +18,8 @@ const shift3 = document.getElementById('shift3')
 
 
 
-function getShifts() {
-axios.get('/user/:user_id/current')
-.then((data) => {
- console.log(data)
-})
-}
 
-getShifts()
+// axios.get('/shifts')
+// .then((data) => {
+//   console.log(data)
+// })
