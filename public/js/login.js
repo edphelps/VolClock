@@ -42,6 +42,7 @@ const loginContainer = document.getElementById('loginContainer')
         //set name for time off
         let nameTimeOff = document.getElementById('nameTimeOff')
         nameTimeOff.innerText = `For ${firstName} ${lastName}`
+        getRoles()
       }
     })
     .catch((error) => {
