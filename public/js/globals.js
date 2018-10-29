@@ -6,6 +6,7 @@
 let gelemContentClockIn = null;
 let gelemContentNotify = null;
 let gelemContentHistory = null;
+let gactiveUserId = 2;
 
 
 // object used to cancel current AJAX data loads requests if another is made.
