@@ -33,7 +33,7 @@ select id, user_id, role_id, start_time, end_time from shifts
 http GET localhost:3000/shifts/user/2/current
 ***************************************************** */
 router.get('/user/:user_id/current', (req, res, next) => {
-  console.log("-- GET route shifts/user/:id/current: ", req.params.id);
+  console.log("-- GET route shifts/user/:user_id/current: ", req.params.user_id);
 
   // check if user is currently clocked into a shift
   knex('shifts')
@@ -68,7 +68,7 @@ router.get('/user/:user_id/current', (req, res, next) => {
         });
     })
     .catch((error) => {
-      console.log("%%% knex:r/user/:user_id/current :", error);
+      console.log("%%% GET route /user/:user_id/current :", error);
       throw new Error(error.message); // set Error object to call stack rather than knex internals
     });
 });
@@ -107,7 +107,7 @@ router.get('/user/:user_id', (req, res, next) => {
       return;
     })
     .catch((error) => {
-      console.log("%%% knex:shifts/user/:id :", error);
+      console.log("%%% GET route shifts/user/:id :", error);
       throw new Error(error.message); // set Error object to call stack rather than knex internals
     });
 });
@@ -118,7 +118,8 @@ router.get('/user/:user_id', (req, res, next) => {
 *  @body user_id
 *  @body role_id
 *  @body miles
-*  return
+*  Return
+*    200 { shift: { id, start_time, ... } }
 http POST localhost:3000/shifts user_id=4 role_id=3 miles=99
 ***************************************************** */
 router.post('', (req, res, next) => {
@@ -166,7 +167,56 @@ router.post('', (req, res, next) => {
     })
     .catch((error) => {
       error.status = error.status || 500;
-      console.log("--- route shifts/user/:id, error: ", error);
+      console.log("--- POST route shifts/user/:id, error: ", error);
+      next(error);
+    });
+
+});
+
+/* **************************************************
+*  PATCH /
+*  Clock-out, add the end_time to an existing shift record
+*  return
+*    200 { message: "success" }
+http PATCH localhost:3000/shifts/5
+***************************************************** */
+router.patch('/:id', (req, res, next) => {
+  console.log("-- PATCH route shifts/:id: ", req.params.id);
+
+  // check that shift exists and hasn't been clocked out already
+  knex('shifts')
+    .where('id', req.params.id)
+    .then((aRecs) => {
+      if (!aRecs.length) {
+        console.log("-- error, can't find shift");
+        const error = new Error(`unable to clock-out, record not found for id: req.params.id`);
+        error.status = 401;
+        throw error; // send to .catch() below.
+                     // MUST throw to prevent following .then()'s from executing
+      }
+      if (aRecs[0].end_time) {
+        console.log("-- error, shift already clocked out");
+        const error = new Error(`unable to clock-out, shfit already clocked out for id: req.params.id`);
+        error.status = 401;
+        throw error; // send to .catch() below.
+                     // MUST throw to prevent following .then()'s from executing
+      }
+    })
+    // clock-out
+    .then(() => {
+      knex('shifts')
+        .update({ end_time: new Date() })
+        .where('id', req.params.id)
+        .returning('*')
+        .then((aRecs) => {
+          console.log("--> update returning: ", aRecs);
+          res.status(201).json({ message: "success" });
+          return;;
+        });
+    })
+    .catch((error) => {
+      error.status = error.status || 500;
+      console.log("--- PATCH route shifts/:id, error: ", error);
       next(error);
     });
 
