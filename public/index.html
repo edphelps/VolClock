@@ -17,7 +17,7 @@
   <!--============================================== -->
   <!-- LOGIN PAGE -->
   <!--============================================== -->
-  <div class="container justify-content-center">
+  <div class="container justify-content-center" id="loginContainer">
     <h1 class="text-center">TRU VOLUNTEER CLOCK-IN</h1>
     <form id="loginForm">
       <div class="form-row d-flex justify-content-center">
@@ -25,9 +25,14 @@
       </div>
       <div class="form-row d-flex justify-content-center">
         <div class="col-s6">
-        <input maxlength="4" size="4" type="text" class="form-control" id="loginCode" placeholder="####">
+        <input maxlength="4" size="4" type="text" class="form-control" id="loginCode" placeholder="####" required>
         </div>
       </div>
+      <div class="form-row d-flex justify-content-center">
+      <div id="errorParagraph" style="display:none">
+        <h4 class="text-center text-danger">Invalid login code. Please try again</h4>
+      </div>
+    </div>
       <div class="form-row d-flex justify-content-center">
         <button type="submit" class="btn btn-primary btn-lg">LOGIN</button>
       </div>
@@ -56,7 +61,7 @@
 
         <!-- COLUMN welcome + name -->
         <div class="row pb-3 justify-content-center">
-          <h2 id="app-title" class=" font-weight-bold text-center">Welcome Jane Doe!</h2>
+          <h2 id="app-title" class=" font-weight-bold text-center"></h2>
         </div> <!-- col -->
 
         <!-- COLUMN change user button -->
@@ -166,7 +171,7 @@
       <div id="contactSupervisorForm" style="display:none">
         <form>
           <h2 class="text-center">Message for Supervisor:</h2>
-          <h3 class="text-center">From Jane Doe</h3>
+          <h3 id="notifyName" class="text-center"></h3>
           <div class="form-group">
               <textarea class="form-control" id="contactSupervisorTextArea" rows="5"></textarea>
             </div>
@@ -182,7 +187,7 @@
           <div class="col-6">
         <form>
           <h2 class="text-center mb-3">Input Time Off</h2>
-            <h3 class="text-center">For Jane Doe</h3>
+            <h3 id="nameTimeOff" class="text-center"></h3>
           <div class="form-row mb-4">
             <div class="col">
               <label for="start">Start Date</label>
