@@ -1,5 +1,6 @@
 const express = require('express');
 const knex = require('../knex');
+const routeCatch = require('./routeCatch')
 const { chkBodyParams } = require('./params'); // destructure the chkBodyParams out of require('./params') returned object
 
 const router = express.Router();
@@ -16,8 +17,8 @@ function getDateToday() {
 /* **************************************************
 *  GET /user/:user_id/current
 *  Get shift record if user is currently clocked in.
-*  If not clocked in, determine user was clocked in earlier
-*  in the day.
+*  If not clocked in, determine user was clocked in earlier in the day.
+*
 *  Return
 *    if user currently clocked in
 *      200: {
@@ -68,15 +69,14 @@ router.get('/user/:user_id/current', (req, res, next) => {
         });
     })
     .catch((error) => {
-      console.log("%%% GET route /user/:user_id/current :", error);
-      throw new Error(error.message); // set Error object to call stack rather than knex internals
+      next(routeCatch(`--- GET route /user/${req.params.user_id}/current `, error));
     });
 });
 
 
 /* **************************************************
 *  GET /user/:user_id
-*  Get shift history for user
+*  Get complete shift history for user
 *  Return
 *      200: {
 *         shifts: [ { id, start, … }, { id, start, ... } ]
@@ -102,13 +102,13 @@ router.get('/user/:user_id', (req, res, next) => {
         res.status(200).json({ shifts: "null", message: `user ${req.params.user_id} has no shift history` });
         return;
       }
+
       // return user's shift history
       res.status(200).json({ shifts: aRecs });
       return;
     })
     .catch((error) => {
-      console.log("%%% GET route shifts/user/:id :", error);
-      throw new Error(error.message); // set Error object to call stack rather than knex internals
+      next(routeCatch(`--- GET route shifts/user/${req.params.user_id}`, error));
     });
 });
 
@@ -166,12 +166,10 @@ router.post('', (req, res, next) => {
         });
     })
     .catch((error) => {
-      error.status = error.status || 500;
-      console.log("--- POST route shifts/user/:id, error: ", error);
-      next(error);
+      next(routeCatch(`--- POST route shifts/user/${req.params.user_id}, error: `, error));
     });
-
 });
+
 
 /* **************************************************
 *  PATCH /
@@ -188,21 +186,21 @@ router.patch('/:id', (req, res, next) => {
     .where('id', req.params.id)
     .then((aRecs) => {
       if (!aRecs.length) {
-        console.log("-- error, can't find shift");
-        const error = new Error(`unable to clock-out, record not found for id: req.params.id`);
+        console.log("-- PATCH route throw error, can't find shift");
+        const error = new Error(`unable to clock-out, record not found for id: ${req.params.id}`);
         error.status = 401;
         throw error; // send to .catch() below.
                      // MUST throw to prevent following .then()'s from executing
       }
       if (aRecs[0].end_time) {
-        console.log("-- error, shift already clocked out");
-        const error = new Error(`unable to clock-out, shfit already clocked out for id: req.params.id`);
+        console.log("-- PATCH route throw error, shift already clocked out");
+        const error = new Error(`unable to clock-out, shift already clocked out for id: ${req.params.id}`);
         error.status = 401;
         throw error; // send to .catch() below.
                      // MUST throw to prevent following .then()'s from executing
       }
     })
-    // clock-out
+    // clock-out the shift
     .then(() => {
       knex('shifts')
         .update({ end_time: new Date() })
@@ -210,16 +208,13 @@ router.patch('/:id', (req, res, next) => {
         .returning('*')
         .then((aRecs) => {
           console.log("--> update returning: ", aRecs);
-          res.status(201).json({ message: "success" });
-          return;;
+          res.status(201).json({ shift: aRecs[0] });
+          return;
         });
     })
     .catch((error) => {
-      error.status = error.status || 500;
-      console.log("--- PATCH route shifts/:id, error: ", error);
-      next(error);
+      next(routeCatch(`-- PATCH ${req.params.id} route catch error: `, error));
     });
-
 });
 
 module.exports = router;

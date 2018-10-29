@@ -65,9 +65,12 @@ app.use((err, req, res, next) => {
   const status = err.status || 500;
   console.log("======================= APP ERROR IN CONTROLLER =======================");
   console.log('status: ',status);
-  console.log(err);
   console.log('-------');
-  console.log(restructureError(err));
+  console.log('raw error: ',err);
+  console.log('-------');
+  console.log('error that would go back to AJAX: ', err.toString());
+  console.log('-------');
+  console.log('restructured error: ', restructureError(err));
   console.log("^^^^^^^^^^^^^^^^^^^^^^^ APP ERROR IN CONTROLLER ^^^^^^^^^^^^^^^^^^^^^^");
   res.status(status).json(restructureError(err));
   next();
