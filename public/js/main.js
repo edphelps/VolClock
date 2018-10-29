@@ -18,4 +18,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // start with the home menu choice
   onMenuClockIn();
+  
 });
