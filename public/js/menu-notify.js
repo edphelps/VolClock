@@ -1,4 +1,10 @@
 
+let timeOffButton = null;
+let timeOffForm = null;
+let notifySupervisorButton = null;
+let notifyForm = null;
+let buttonOptions = null;
+
 /* ==================================================
 *  onMenuNotify()
 *
@@ -9,17 +15,6 @@ function onMenuNotify() {
   changeMenuAndContentArea("nav--notify", gelemContentNotify);
 }
 
-const timeOffButton = document.getElementById('time-off-button')
-const timeOffForm = document.getElementById('inputTimeOffForm')
-const notifySupervisorButton = document.getElementById('notify-button')
-const notifyForm = document.getElementById('contactSupervisorForm')
-const buttonOptions = document.getElementById('contactButtons')
-
-//functions
-notifySupervisorClick()
-notifySupervisorPost()
-timeOffClick()
-timeOffPost()
 
 //When Notify button clicked, notify form appears
 function notifySupervisorClick() {
@@ -53,3 +48,22 @@ function timeOffPost() {
     buttonOptions.style.display=""
   })
 }
+
+/* ==================================================
+*  DOM loaded, setup and set button event listener
+* =================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("DOM loaded for menu-notify.js");
+
+  timeOffButton = document.getElementById('time-off-button');
+  timeOffForm = document.getElementById('inputTimeOffForm');
+  notifySupervisorButton = document.getElementById('notify-button');
+  notifyForm = document.getElementById('contactSupervisorForm');
+  buttonOptions = document.getElementById('contactButtons');
+
+  //functions
+  notifySupervisorClick();
+  notifySupervisorPost();
+  timeOffClick();
+  timeOffPost();
+});
