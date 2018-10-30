@@ -41,6 +41,14 @@ http GET localhost:3000/users/2
 ***************************************************** */
 router.get('/:id', (req, res, next) => {
   let saveUser = null;
+  let oResponse = {
+    user: null,
+    roles: null,
+    last_role: null
+  }
+
+  // TODO:  These queries should run in parallel with Promise.all()
+
   knex('users')
     .where('users.id', req.params.id)
     .returning('*')
@@ -52,7 +60,7 @@ router.get('/:id', (req, res, next) => {
         error.status = 404;
         throw error;
       }
-      saveUser = user[0];
+      oResponse.user = user[0];
     })
     .then(() => {
       // console.log("GET -- getting user roles");
@@ -61,9 +69,21 @@ router.get('/:id', (req, res, next) => {
         .where('user_id', req.params.id)
         .returning(['roles.id', 'roles.role']);
     })
-    .then((result) => {
+    .then((roles) => {
+      oResponse.roles = roles;
       // console.log("--- GET resut of roles: ", result);
-      res.status(200).send({ user: saveUser, roles: result });
+      // res.status(200).send({ user: saveUser, roles: result });
+    })
+    .then(() => {
+      return knex('shifts')
+        .where('user_id', req.params.id)
+        .orderBy('start_time', 'desc')
+        .limit(1)
+        .returning(['role_id']);
+    })
+    .then((aRecs) => {
+      oResponse.last_role = aRecs[0];
+      res.status(200).json(oResponse);
     })
     .catch((error) => {
       next(routeCatch(`--- GET /user/${req.params.user_id} route`, error));
