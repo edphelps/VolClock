@@ -9,10 +9,10 @@ const errorParagraph = document.getElementById('errorParagraph');
 const mainContainer = document.getElementById('mainContainer');
 const loginContainer = document.getElementById('loginContainer');
 
-function onsubmitLogin() {
-  console.log("onsubmitLogin");
-  const loginCode = loginCodePlaceHolder.value;
-
+// Attempt to login user from loginCode.
+// If successful the user moves to the Clock In/Out page.
+// If unsuccessful display error message and stay on login page.
+function loginUser(loginCode) {
   // compare loginCode with codes in database
   axios.get(`users/login/${loginCode}`)
     .then((data) => {
@@ -59,6 +59,12 @@ function onsubmitLogin() {
     });
 }
 
+function onsubmitLogin() {
+  console.log("onsubmitLogin");
+  const loginCode = loginCodePlaceHolder.value;
+  loginUser(loginCode);
+}
+
 /* ==================================================
 *  DOM loaded, setup and set button event listener
 * =================================================== */
@@ -90,4 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ev.preventDefault();
     onsubmitLogin();
   });
+
+  // TODO: remove this, it short-circuits the login page to login Riley Burns
+  loginUser("1234");
 });
