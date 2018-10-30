@@ -275,13 +275,14 @@
           </div>
           <div class="col-4">
             <label for='total-hours-worked'>Total Hours Worked</label>
-            <p id="total-hours-worked" class="ml-4">Total Hours Worked</p>
+            <p id="total-hours-worked" class="ml-4"></p>
           </div>
           <div class="col-4">
             <label for='total-miles-driven'>Total Miles Driven</label>
-            <p id="total-miles-driven" class="ml-4">Total Miles Driven</p>
+            <p id="total-miles-driven" class="ml-4"></p>
           </div>
         </div>
+        <br>
 
       <!-- Spinner's hidden flag controlled by js -->
       <!-- A bit of a kludge, the div around the spinner doesn't hide and adds space below menu -->
@@ -290,17 +291,8 @@
       </div>
 
       <!-- ajax data loads here -->
-      <div id="list-history" class="auto-clear">
-        <!-- onMenuHistory() loads this section via ajax... -->
-        <thead>
-          <tr>
-            <th scope="col">Role Id</th>
-            <th scope="col">Start Time</th>
-            <th scope="col">End Time</th>
-            <th scope="col">Miles</th>
-          </tr>
-        </thead>
-      </div>
+      <div id="list-history" class="auto-clear"></div>
+      <!-- onMenuHistory() loads this section via ajax... -->
 
       <!-- Displayed if there are no assignments for the volunteer -->
       <div id="no-history" hidden>
