@@ -41,7 +41,6 @@ function notifyPost() {
 
   let comment = document.forms.notifyForm.elements.notifyComment.value;
   comment = comment.trim();
-  // console.log("posting: ", comment);
 
   // // if the user entered a comment, add it to the notificuations table
   if (comment.length) {
@@ -93,6 +92,11 @@ function notifyCancel() {
 * =================================================== */
 function timeOffCancel() {
 
+  // clear form data
+  document.getElementById('vacation-start-date-input').value = "";
+  document.getElementById('vacation-end-date-input').value = "";
+  document.getElementById('time-off-text-area').value = "";
+
   // update what sections of page are visible
   timeOffFormDiv.style.display = "none";
   contactButtons.style.display = "";
@@ -107,6 +111,9 @@ function timeOffClick() {
   // update what sections of page are visible
   contactButtons.style.display = "none";
   timeOffFormDiv.style.display = "inline";
+
+  // set focus on the start date control
+  document.getElementById('vacation-start-date-input').focus();
 }
 
 /* ==================================================
@@ -114,8 +121,36 @@ function timeOffClick() {
 *  time off form post functionality
 * =================================================== */
 function timeOffPost() {
+  console.log("notify post");
 
-  // POST request goes here!
+  const start_date = document.getElementById('vacation-start-date-input').value;
+  const end_date = document.getElementById('vacation-end-date-input').value;
+  let comment = document.getElementById('time-off-text-area').value;
+  comment = comment.trim();
+
+  const oRequest = {
+    user_id: 2,
+    start_date,
+    end_date,
+    comment,
+  };
+  // console.log("Send object to AXIOS: ", oComment);
+  axios.post('notifications/', oRequest)
+    .then((data) => {
+      console.log('AXIOS data: ', data);
+      if (!data.data.notification) {
+        const err = new Error("axios post failed to return the posted record");
+        err.status = 500;
+        throw err;
+      }
+      // clear form data, AXIOS call was successful
+      document.getElementById('vacation-start-date-input').value = "";
+      document.getElementById('vacation-end-date-input').value = "";
+      document.getElementById('time-off-text-area').value = "";
+    })
+    .catch((error) => {
+      console.log("AXIOS error: ", error);
+    });
 
   // update what sections of page are visible
   timeOffFormDiv.style.display = "none";
@@ -141,10 +176,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.forms.notifyForm.addEventListener('submit', (ev) => {
     ev.preventDefault();
     notifyPost();
-  })
+  });
 
   // time off form
   timeOffFormDiv = document.getElementById('timeOffFormDiv');
   document.getElementById("time-off-cancel-button").onclick = timeOffCancel;
-  timeOffFormDiv.onsubmit = timeOffPost;
+  document.forms.timeOffForm.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    timeOffPost();
+  });
 });
