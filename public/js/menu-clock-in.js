@@ -6,14 +6,13 @@
 * =================================================== */
 function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
-  // checkStatus()
-  clockIn()
+  checkStatus()
 }
 
 const clockInDiv = document.getElementById('clockInDiv')
 const clockOutDiv = document.getElementById('clockOutDiv')
 const milesInput = document.getElementById('miles')
-
+const clockInSuccess = document.getElementById('clockInSuccess')
 
 
 //creates buttons with roles and inputs default miles
@@ -41,39 +40,56 @@ function getRoles() {
 }
 
 // check if user is already clocked in
-// function checkStatus() {
-//   axios.get(`shifts/user/${gactiveUserId}/current`)
-//
-//   .then((shift) => {
-//     if(shift.data.current_shift.end_time === null){
-//       clockInDiv.style.display = "none"
-//       clockOutDiv.style.display = "inline-block"
-//     }
-//   })
-//   .catch((eror) => {
-//     console.log(error)
-//   })
-// }
+function checkStatus() {
+  axios.get(`shifts/user/${gactiveUserId}/current`)
 
-function clockIn() {
+  .then((shift) => {
+    if(shift.data.current_shift.end_time === null){
+      clockInDiv.style.display = "none"
+      clockOutDiv.style.display = "inline-block"
+      clockInSuccess.style.display = ""
+    }
+    if (shift.data.current_shift.end_time !== null){
+      clockInDiv.style.display = ""
+      clockOutDiv.style.display = "none"
+      clockInSuccess.style.display = "none"
+    }
+  })
+  .catch((eror) => {
+    console.log(error)
+  })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
   //event listener on clock in buttons div
+  const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
+      console.log('clockin click');
+
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
-
     let dataObject = {}
     dataObject['user_id'] = gactiveUserId
     dataObject['role_id'] = roleId
     dataObject['miles'] = mileage
     console.log(dataObject);
-
     axios.post(`/shifts`, dataObject)
       .then((post) => {
         console.log(post)
+        gactiveUserShiftId = post.data.shift.id
+        checkStatus()
+
+        const clockOutButton = document.getElementById('clockOutButton')
+        clockOutButton.addEventListener('click', (ev) => {
+          axios.patch(`/shifts/${gactiveUserShiftId}`)
+          .then((shift) => {
+            checkStatus()
+          })
+        })
+      })
+      .catch(error => {
+        console.log(error)
       })
     })
 
-
-
-  //post request to shifts table with user_id, role_id, and miles
-}
+})
