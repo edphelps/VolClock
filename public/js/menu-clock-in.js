@@ -7,7 +7,6 @@
 function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
   // checkStatus()
-  clockIn()
 }
 
 const clockInDiv = document.getElementById('clockInDiv')
