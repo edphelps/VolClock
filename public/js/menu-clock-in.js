@@ -6,16 +6,15 @@
 * =================================================== */
 function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
-
+  checkStatus()
 
 }
-// //ids for shift buttons (will click to clock in)
-// const shift1 = document.getElementById('shift1')
+
 const clockInDiv = document.getElementById('clockInDiv')
 const clockOutDiv = document.getElementById('clockOutDiv')
 const milesInput = document.getElementById('miles')
-// clockIn()
-checkStatus()
+
+
 
 //creates buttons with roles and inputs default miles
 function getRoles() {
@@ -39,25 +38,17 @@ function getRoles() {
   })
 }
 
+// check if user is already clocked in
 function checkStatus() {
-  //determine if user is clocked in
-  //if clocked in, only show clock out button
-  //if NOT clocked in, only show clock in buttons
   axios.get(`shifts/user/${gactiveUserId}/current`)
-  //if clocked out then current shift = null
-  //if clocked in, current shift =
-    .then((shift) => {
-      if(shift.current_shift.end_time === null){
-        clockInDiv.style.display = "none"
-        clockOutDiv.style.display = "inline-block"
-      }
-    })
 
-
+  .then((shift) => {
+    if(shift.data.current_shift.end_time === null){
+      clockInDiv.style.display = "none"
+      clockOutDiv.style.display = "inline-block"
+    }
+  })
+  .catch((eror) => {
+    console.log(error)
+  })
 }
-// function clockIn () {
-//   //post request
-//   //event listener on buttons div
-//   //ev.target will be shift to clock in for
-//   //determine if user
-// }
