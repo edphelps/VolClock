@@ -9,54 +9,16 @@ let contactButtons = null;
 
 /* ==================================================
 *  onMenuNotify()
-*  Menu selection
+*  Initial Menu selection handler, this is where it all begins
+*  when user clicks the top menu.
 * =================================================== */
 function onMenuNotify() {
   changeMenuAndContentArea("nav--notify", gelemContentNotify);
 }
 
-function displayErrorMessage(sMessage) {
-  // document.getElementById("error-message").innerText = sMessage;
-}
-
-function clearErrorMessage() {
-  // document.getElementById("error-message").innerText = "";
-}
-
-// Logs error information AND
-//   calls displayErrorMessage() to show the error to user
-function handleError(sCalledFrom, error) {
-  console.log(`---------- AJAX error in ${sCalledFrom} ----------`);
-  if (error.response) {
-    // The request was made and the server responded with a status code
-    // that falls out of the range of 2xx
-    console.log("message: ", error.response.data.error.message);
-    console.log("error.response.data", error.response.data);
-    console.log("error.response.status", error.response.status);
-    console.log("error.response.headers", error.response.headers);
-    if (error.response.data.error) {
-      displayErrorMessage(error.response.data.error.message);
-    } else {
-      displayErrorMessage("AJAX error (1)");
-    }
-  } else if (error.request) {
-    // The request was made but no response was received
-    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-    // http.ClientRequest in node.js
-    console.log("error.request", error.request);
-    displayErrorMessage("AJAX error (2)");
-  } else {
-    // Something happened in setting up the request that triggered an Error
-    console.log('error.message: ', error.message);
-    displayErrorMessage(error.message);
-  }
-  console.log("error.config", error.config);
-  console.log("^^^^^^^^^^ AJAX error ^^^^^^^^^^^^^^^^^^^^");
-}
-
 /* ==================================================
 *  notifyClick()
-*  Switch to Notify form
+*  Clicked button to initiate the Notify form
 * =================================================== */
 function notifyClick() {
   // console.log("notifyClick");
@@ -71,7 +33,7 @@ function notifyClick() {
 
 /* ==================================================
 *  notifyPost()
-*  Notify Form submit handler
+*  Clicked Notify Form submit
 * =================================================== */
 function notifyPost() {
   // console.log("notify post");
@@ -98,7 +60,7 @@ function notifyPost() {
         document.forms.notifyForm.elements.notifyComment.value = "";
       })
       .catch((error) => {
-        console.log("AXIOS error: ", error);
+        handleError("notifyPost", error);
       });
   }
 
@@ -111,7 +73,7 @@ function notifyPost() {
 
 /* ==================================================
 *  notifyPost()
-*  Notify Form cancel functionality
+*  Clicked cancel on Notify Form
 * =================================================== */
 function notifyCancel() {
 
@@ -125,7 +87,7 @@ function notifyCancel() {
 
 /* ==================================================
 *  timeOffCancel()
-*  Time-off cancel button
+*  Clicked cancel in Time-off form
 * =================================================== */
 function timeOffCancel() {
 
@@ -139,17 +101,65 @@ function timeOffCancel() {
   contactButtons.style.display = "";
 }
 
+
 /* ==================================================
-*  timeOffClick()
-*  time off button click, time off form appears
+*  renderRecentRequests()
+*  Render the list of recent time-off requests on right side of screen
 * =================================================== */
 function renderRecentRequests() {
-  //  axios.get(`notifications/user/:user_id`, oRequest)
+
+  /* ------------------
+  *  getDateOnly()
+  --------------------- */
+  function getDateOnly(_dt) {
+    const dt = new Date(_dt); // this allows the dt param to be Date or String
+    if (isNaN(dt)) {
+      return "?";
+    }
+    return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`;
+  }
+
+  axios.get(`notifications/user/${gactiveUserId}`)
+    .then((res) => {
+      console.log("***** renderRecentRequests: ", res);
+      const elemList = document.getElementById('list-time-off');
+      elemList.innerHTML = "loading...";
+      let html = "";
+      const aNotifications = res.data.notifications;
+      if (!aNotifications) {
+        html = "no notifications to display";
+      } else {
+        html = `
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                <th scope="col">Message</th>
+              </tr>
+            </thead>`;
+        for (const oNotification of aNotifications) {
+          html += `
+              <tr>
+                <td>` + getDateOnly(`${oNotification.start_date}`) + `</td>
+                <td>` + getDateOnly(`${oNotification.end_date}`) + `</td>
+                <td>` + `${oNotification.comment}`.slice(0, 10) + `...</td>
+              </tr>`
+          }
+        html += `
+            </table>`
+      }
+      // console.log("~~~~ html: ", html);
+      elemList.innerHTML = html;
+    })
+    .catch((error) => {
+      handleError("renderRecentRequests", error);
+    });
 }
 
 /* ==================================================
 *  timeOffClick()
-*  time off button click, time off form appears
+*  Clicked button to initiate the Time-off Form
 * =================================================== */
 function timeOffClick() {
 
@@ -166,7 +176,7 @@ function timeOffClick() {
 
 /* ==================================================
 *  timeOffPost()
-*  time off form post functionality
+*  Clicked submit button on Time-Off Form
 * =================================================== */
 function timeOffPost() {
   console.log("notify post");
@@ -198,7 +208,6 @@ function timeOffPost() {
     })
     .catch((error) => {
       handleError("timeOffPost", error)
-      console.log("AXIOS error: ", error);
     });
 
   // update what sections of page are visible
