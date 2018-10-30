@@ -110,25 +110,38 @@ http POST localhost:3000/notifications user_id=4 start_date='12/26/2018' end_dat
 ***************************************************** */
 router.post('/', (req, res, next) => {
   console.log("-- POST route notifications");
+  // const oComment = {
+  //   user_id: req.body.user_id,
+  //   start_date: req.body.start_date,
+  //   end_date: req.body.end_date,
+  //   comment: req.body.comment,
+  // };
+  // console.log("POST received: ", oComment);
 
   const oParams = {
     user_id: 'int',
-    start_date: 'string',
-    end_date: 'string',
-    comment: 'string'
+    comment: 'string',
   };
-  if (!chkBodyParams(oParams, req, res, next))
+  if (!chkBodyParams(oParams, req, res, next)) {
     return;
+  }
 
   // check that start_date <= end_date
 
+  const oNotification = {
+    user_id: req.body.user_id,
+    comment: req.body.comment,
+  };
+
+  // start and end dates are optional
+  if (req.body.start_date) oNotification.start_date = req.body.start_date;
+  if (req.body.end_date) oNotification.end_date = req.body.end_date;
+
+  // console.log("");
+  // console.log("POST inserting: ", oNotification);
+  // console.log("");
   knex('notifications')
-    .insert({
-      user_id: req.body.user_id,
-      start_date: req.body.start_date,
-      end_date: req.body.end_date,
-      comment: req.body.comment,
-    })
+    .insert(oNotification)
     .returning(['id', 'user_id', 'start_date', 'end_date', 'comment'])
     .then((data) => {
       res.status(201).json({ message: "success!", notification: data[0] });

@@ -9,15 +9,21 @@
 *          an error response has already been setup in call to next(Error)
 *  ************************************************* */
 function chkBodyParam(bodyParam, type, req, res, next) {
+  console.log("chkBodyParam for: ", bodyParam);
+  let testValue = String(req.body[bodyParam]);
 
-  if (!req.body[bodyParam] || !req.body[bodyParam].trim().length) {
+  // had to change next line to handle params that were actually Numbers since
+  // AXIOS can pass a number as string OR as a Number
+  // if (!req.body[bodyParam] || !req.body[bodyParam].trim().length) {
+
+  if (!req.body[bodyParam] || !testValue.trim().length) {
     const error = new Error(`missing body param: '${bodyParam}'`);
     error.status = 400;
     next(error);
     return false;
   }
 
-  const testValue = req.body[bodyParam];
+  // const testValue = req.body[bodyParam];
   let typeCheckFailed = false;
 
   switch (type) {
@@ -64,8 +70,10 @@ function chkBodyParam(bodyParam, type, req, res, next) {
 function chkBodyParams(oBodyParams, req, res, next) {
   const aBodyParams = Object.entries(oBodyParams);
   for (const param of aBodyParams) {
-    if (!chkBodyParam(param[0], param[1], req, res, next))
+    if (!chkBodyParam(param[0], param[1], req, res, next)) {
+      console.log("chkBodyParams returning false");
       return false;
+    }
   }
   return true;
 }
