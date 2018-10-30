@@ -9,12 +9,49 @@ let contactButtons = null;
 
 /* ==================================================
 *  onMenuNotify()
-*
 *  Menu selection
 * =================================================== */
-
 function onMenuNotify() {
   changeMenuAndContentArea("nav--notify", gelemContentNotify);
+}
+
+function displayErrorMessage(sMessage) {
+  // document.getElementById("error-message").innerText = sMessage;
+}
+
+function clearErrorMessage() {
+  // document.getElementById("error-message").innerText = "";
+}
+
+// Logs error information AND
+//   calls displayErrorMessage() to show the error to user
+function handleError(sCalledFrom, error) {
+  console.log(`---------- AJAX error in ${sCalledFrom} ----------`);
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    console.log("message: ", error.response.data.error.message);
+    console.log("error.response.data", error.response.data);
+    console.log("error.response.status", error.response.status);
+    console.log("error.response.headers", error.response.headers);
+    if (error.response.data.error) {
+      displayErrorMessage(error.response.data.error.message);
+    } else {
+      displayErrorMessage("AJAX error (1)");
+    }
+  } else if (error.request) {
+    // The request was made but no response was received
+    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+    // http.ClientRequest in node.js
+    console.log("error.request", error.request);
+    displayErrorMessage("AJAX error (2)");
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    console.log('error.message: ', error.message);
+    displayErrorMessage(error.message);
+  }
+  console.log("error.config", error.config);
+  console.log("^^^^^^^^^^ AJAX error ^^^^^^^^^^^^^^^^^^^^");
 }
 
 /* ==================================================
@@ -88,7 +125,7 @@ function notifyCancel() {
 
 /* ==================================================
 *  timeOffCancel()
-*  Notify Time-off cancel functionality
+*  Time-off cancel button
 * =================================================== */
 function timeOffCancel() {
 
@@ -106,11 +143,22 @@ function timeOffCancel() {
 *  timeOffClick()
 *  time off button click, time off form appears
 * =================================================== */
+function renderRecentRequests() {
+    axios.get(`notifications/user/:user_id`, oRequest)
+}
+
+/* ==================================================
+*  timeOffClick()
+*  time off button click, time off form appears
+* =================================================== */
 function timeOffClick() {
 
   // update what sections of page are visible
   contactButtons.style.display = "none";
   timeOffFormDiv.style.display = "inline";
+
+  // render the table to display recent time-off requests
+  renderRecentRequests();
 
   // set focus on the start date control
   document.getElementById('vacation-start-date-input').focus();
