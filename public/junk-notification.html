@@ -167,25 +167,27 @@
       <!-- ............... MESSAGE TO SUPERVISOR FORM ............ -->
       <!-- ....................................................... -->
       <!-- need to add class="auto-clear" to div when form is done -->
-      <div id="contactSupervisorForm" style="display:none">
-        <form>
+      <div id="notifyFormDiv" style="display:none">
+        <form id='notifyForm'>
           <h2 class="text-center">Message for Supervisor:</h2>
           <h3 class="text-center">From Jane Doe</h3>
           <div class="form-group">
-              <textarea class="form-control" id="contactSupervisorTextArea" rows="5"></textarea>
+              <textarea class="form-control" name="notifyComment" id="notifyComment" rows="5"></textarea>
           </div>
           <div class="form-row">
             <button type="submit" class="btn btn-primary btn-lg">SUBMIT</button>
+            &nbsp;
+            <button id="notify-cancel-button" type="button" class="btn btn-danger btn-lg">CANCEL</button>
           </div>
         </form>
       </div>
 
-      <!-- ................ TIME OFF REQUEST FORM ................ -->
+      <!-- ............ TIME OFF REQUEST FORM AND LIST OF RECENT REQUESTS ................ -->
       <!-- ....................................................... -->
-      <div id="inputTimeOffForm" style="display:none">
+      <div id="timeOffFormDiv" style="display:none">
         <div class="row">
           <div class="col-6">
-
+            <!-- THE FORM -->
             <form>
               <h2 class="text-center mb-3">Input Time Off</h2>
               <h3 class="text-center">For Jane Doe</h3>
@@ -205,11 +207,13 @@
               </div>
               <div class="form-row">
                 <button type="submit" class="btn btn-primary btn-lg">SUBMIT</button>
+                &nbsp;
+                <button id="time-off-cancel-button" type="button" class="btn btn-danger btn-lg">CANCEL</button>
               </div>
             </form>
           </div> <!-- <div class="col-6"> -->
 
-          <!-- Upcoming time off list of right side of page -->
+          <!-- LIST OF REQUESTS ON THE RIGHT -->
           <div id="upcoming-time-off">
             <div class="col">
               <h4>Upcoming Time Off:</h4>

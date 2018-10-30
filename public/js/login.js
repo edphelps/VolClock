@@ -46,6 +46,6 @@ const loginContainer = document.getElementById('loginContainer')
       }
     })
     .catch((error) => {
-     console.log(error)
+      console.log(error)
     })
   })

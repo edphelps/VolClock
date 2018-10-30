@@ -1,9 +1,11 @@
 
+let notifyButton = null;
 let timeOffButton = null;
-let timeOffForm = null;
-let notifySupervisorButton = null;
-let notifyForm = null;
-let buttonOptions = null;
+
+let timeOffFormDiv = null;
+let notifyFormDiv = null;
+
+let contactButtons = null;
 
 /* ==================================================
 *  onMenuNotify()
@@ -12,41 +14,84 @@ let buttonOptions = null;
 * =================================================== */
 
 function onMenuNotify() {
-  changeMenuAndContentArea("nav--notify", gelemContentNotify);  
+  changeMenuAndContentArea("nav--notify", gelemContentNotify);
 }
 
+// When Notify button clicked, notify form appears
+function notifyClick() {
+  console.log("notifyClick");
 
-//When Notify button clicked, notify form appears
-function notifySupervisorClick() {
-  notifySupervisorButton.addEventListener('click', (ev) => {
-    buttonOptions.style.display="none"
-    notifyForm.style.display="block"
-  })
+  // update what sections of page are visible
+  contactButtons.style.display = "none";
+  notifyFormDiv.style.display = "block";
+
+  // set focus on the comment controlled
+  document.forms.notifyForm.elements.notifyComment.focus();
 }
-//Notify Form functionality
-function notifySupervisorPost(){
-  notifyForm.addEventListener('submit', (ev) => {
-    ev.preventDefault()
-    //POST request goes Here
-    notifyForm.style.display="none"
-    buttonOptions.style.display=""
-  })
+
+// Notify Form post functionality
+function notifyPost() {
+  console.log("notify post");
+
+  const comment = document.forms.notifyForm.elements.notifyComment.value.trim();
+  console.log("posting: ", message);
+
+  // // if the user entered a comment, add it to the notificuations table
+  if (comment) {
+    axios.post('notifications/', {
+      comment: comment,
+      start_date: "",
+      end_date: "",
+    })
+    .then((data) => {
+      console.log('AXIOS data: ', data)
+      })
+    // .catch(error) {
+    //   console.log("AXIOS error: ", error);
+    // }
+  }
+
+  // update what sections of page are visible
+  notifyFormDiv.style.display = "none";
+  contactButtons.style.display = "";
+
+  return false; // prevent form from actually submitting
 }
-//time off button click, time off form appears
+
+// Notify Form cancel functionality
+function notifyCancel() {
+
+  // update what sections of page are visible
+  notifyFormDiv.style.display = "none";
+  contactButtons.style.display = "";
+}
+
+// Notify Time-off cancel functionality
+function timeOffCancel() {
+
+  // update what sections of page are visible
+  timeOffFormDiv.style.display = "none";
+  contactButtons.style.display = "";
+}
+
+// time off button click, time off form appears
 function timeOffClick() {
-  timeOffButton.addEventListener('click', (ev) => {
-    buttonOptions.style.display="none"
-    timeOffForm.style.display="inline"
-  })
+
+  // update what sections of page are visible
+  contactButtons.style.display = "none";
+  timeOffFormDiv.style.display = "inline";
 }
-//time off form functionality
+
+// time off form post functionality
 function timeOffPost() {
-  timeOffForm.addEventListener('submit', (ev) => {
-    ev.preventDefault()
-    //POST request goes here!
-    timeOffForm.style.display="none"
-    buttonOptions.style.display=""
-  })
+
+  // POST request goes here!
+
+  // update what sections of page are visible
+  timeOffFormDiv.style.display = "none";
+  contactButtons.style.display = "";
+
+  return false; // prevent actual form submission
 }
 
 /* ==================================================
@@ -55,15 +100,19 @@ function timeOffPost() {
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM loaded for menu-notify.js");
 
-  timeOffButton = document.getElementById('time-off-button');
-  timeOffForm = document.getElementById('inputTimeOffForm');
-  notifySupervisorButton = document.getElementById('notify-button');
-  notifyForm = document.getElementById('contactSupervisorForm');
-  buttonOptions = document.getElementById('contactButtons');
+  // div containing the two buttons that choose which form to display
+  contactButtons = document.getElementById('contactButtons');
+  document.getElementById('notify-button').onclick = notifyClick;
+  // console.log("notify-button: ", document.getElementById('notify-button'));
+  document.getElementById('time-off-button').onclick = timeOffClick;
 
-  //functions
-  notifySupervisorClick();
-  notifySupervisorPost();
-  timeOffClick();
-  timeOffPost();
+  // notify form
+  notifyFormDiv = document.getElementById('notifyFormDiv');
+  document.getElementById("notify-cancel-button").onclick = notifyCancel;
+  notifyFormDiv.onsubmit = notifyPost;
+
+  // time off form
+  timeOffFormDiv = document.getElementById('timeOffFormDiv');
+  document.getElementById("time-off-cancel-button").onclick = timeOffCancel;
+  timeOffFormDiv.onsubmit = timeOffPost;
 });

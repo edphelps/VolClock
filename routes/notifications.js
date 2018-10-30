@@ -26,7 +26,7 @@ router.get('/user/:user_id', (req, res, next) => {
 
 /* **************************************************
 *  DELETE /:id
-*  Delete the notification
+*  Delete a notification
 *  Return, the deleted record
 http DELETE localhost:3000/notifications/2
 ***************************************************** */
@@ -53,7 +53,7 @@ router.delete('/:id', (req, res, next) => {
 
 /* **************************************************
 *  PUT /:id
-*  Update a new notification record after user edits it
+*  Update notification record with user edits
 *  @body start_date - optional, start and end for time-off requests
 *  @body end_date - optional
 *  @body comment
