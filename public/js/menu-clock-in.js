@@ -24,7 +24,6 @@ axios.get(`/users/${gactiveUserId}`)
   //loop over array of objects (roles)
   for(let el of roles) {
     //for every roles object, if there are 3 or less roles, create a button, put role text on button
-    if(roles.length <=3){
       let clockInButton = document.createElement('button')
       clockInButton.innerText = el.role
       clockInDiv.appendChild(clockInButton)
@@ -32,7 +31,7 @@ axios.get(`/users/${gactiveUserId}`)
       clockInButton.setAttribute('type', "button")
 
     }
-  }
+
   // roles.forEach((el) => {
     //if .length <= 3 create the buttons and put text on them
     // console.log(el)
