@@ -15,12 +15,13 @@ function onMenuHistory() {
       if(response.data.shifts.length === 0) {
         res.status(201).json({ message: 'success' })
       }
-
       let shiftHistoryList = document.getElementById('list-history')
       let table = document.createElement('table')
       let tableHead = document.createElement('thead')
       let tableBody = document.createElement('tbody')
 
+      table.setAttribute("class", "table table-bordered table-hover")
+      tableHead.setAttribute('class', 'bg-info')
         tableHead.innerHTML += `
           <tr>
             <th scope="col">Role Id</th>
@@ -34,8 +35,8 @@ function onMenuHistory() {
         let shiftRow = document.createElement('tr')
 
         shiftRow.innerHTML += `<td>${shift.role_id}</td>
-          <td>${shift.start_time}</td>
-          <td>${shift.end_time}</td>
+          <td>` + getDateOnly(`${shift.start_time}`) + `</td>
+          <td>` + getDateOnly(`${shift.end_time}`) + `</td>
           <td>${shift.miles}</td>`
 
       tableBody.appendChild(shiftRow)
@@ -47,4 +48,12 @@ function onMenuHistory() {
     .catch((error) => {
       console.log(error)
     })
+  }
+
+  function getDateOnly(_dt) {
+    const dt = new Date(_dt); // this allows the dt param to be Date or String
+    if (isNaN(dt))
+      return "?";
+    return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`;
+    // return dt.getMonth()+1 + "/" + dt.getDate() + "/" + dt.getFullYear();
   }
