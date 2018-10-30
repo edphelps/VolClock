@@ -14,6 +14,7 @@ function onMenuHistory() {
   axios.get(`/shifts/user/4`)
     .then((response) => {
       totalShiftHours(response)
+      totalMilesDriven(response)
       if(response.data.shifts.length === 0) { res.status(201).json({ message: 'success' })
       }
       let shiftHistoryList = document.getElementById('list-history')
@@ -51,24 +52,34 @@ function onMenuHistory() {
     })
   }
 
-  function getDateOnly(_dt) {
-    const dt = new Date(_dt); // this allows the dt param to be Date or String
-    if (isNaN(dt))
-      return "?";
-    return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`;
-    // return dt.getMonth()+1 + "/" + dt.getDate() + "/" + dt.getFullYear();
-  }
+function getDateOnly(_dt) {
+  const dt = new Date(_dt); // this allows the dt param to be Date or String
+  if (isNaN(dt))
+    return "?";
+  return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`;
+  // return dt.getMonth()+1 + "/" + dt.getDate() + "/" + dt.getFullYear();
+}
 
-  function totalShiftHours(response) {
-    let hourCount = 0
-    response.data.shifts.forEach((shift) => {
-      let runningTotal = document.getElementById('total-hours-worked')
-      let startTime = new Date(shift.start_time)
-      let endTime = new Date(shift.end_time)
-      let shiftHoursWorked = endTime - startTime
-      hourCount += shiftHoursWorked
-      console.log('hourCount>>>', hourCount)
+function totalShiftHours(response) {
+  let hourCount = 0
+  response.data.shifts.forEach((shift) => {
+    let runningTotal = document.getElementById('total-hours-worked')
+    let startTime = new Date(shift.start_time)
+    let endTime = new Date(shift.end_time)
+    let shiftHoursWorked = endTime - startTime
+    hourCount += shiftHoursWorked
 
-      runningTotal.innerText = (hourCount/1000/60/60).toFixed(1)
-    })
-  }
+    runningTotal.innerText = (hourCount/1000/60/60).toFixed(0)
+  })
+}
+
+function totalMilesDriven(response) {
+  let mileCount = 0
+  response.data.shifts.forEach((shift) => {
+    let runningTotal = document.getElementById('total-miles-driven')
+    let shiftMilesDriven = shift.miles
+    mileCount += shiftMilesDriven
+
+    runningTotal.innerText = mileCount
+  })
+}
