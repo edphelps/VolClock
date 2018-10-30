@@ -225,7 +225,7 @@
       </div>
     </div>
     </div> <!-- content--notify -->
-
+</div>
 
     <!-- ============================================= -->
     <!-- CONTENT - History -->
@@ -234,6 +234,31 @@
     <div id="content--history" class="content" hidden>
 
       <h3 class="text-center mt-3 mb-4">History</h3>
+      <div id="history-header" class="row">
+        <div class="col-4">
+          <!--dropdown menu for history year selection -->
+          <h3 class="text-center pt-3 pb-1">Year:</h3>
+            <div class="row justify-content-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">History Year</button>
+                <div class="dropdown-menu">
+                  <button class="dropdown-item" type="button">2018</button>
+                  <button class="dropdown-item" type="button">2017</button>
+                  <button class="dropdown-item" type="button">2016</button>
+                  <button class="dropdown-item" type="button">2015</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <label for='total-hours-worked'>Total Hours Worked</label>
+            <p id="total-hours-worked" class="ml-4">Total Hours Worked</p>
+          </div>
+          <div class="col-4">
+            <label for='total-miles-driven'>Total Miles Driven</label>
+            <p id="total-miles-driven" class="ml-4">Total Miles Driven</p>
+          </div>
+        </div>
 
       <!-- Spinner's hidden flag controlled by js -->
       <!-- A bit of a kludge, the div around the spinner doesn't hide and adds space below menu -->
@@ -244,6 +269,14 @@
       <!-- ajax data loads here -->
       <div id="list-history" class="auto-clear">
         <!-- onMenuHistory() loads this section via ajax... -->
+        <thead>
+          <tr>
+            <th scope="col">Role Id</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time</th>
+            <th scope="col">Miles</th>
+          </tr>
+        </thead>
       </div>
 
       <!-- Displayed if there are no assignments for the volunteer -->
