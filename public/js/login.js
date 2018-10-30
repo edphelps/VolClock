@@ -9,49 +9,85 @@ const errorParagraph = document.getElementById('errorParagraph');
 const mainContainer = document.getElementById('mainContainer');
 const loginContainer = document.getElementById('loginContainer');
 
-loginForm.addEventListener('submit', (ev) => {
-  ev.preventDefault();
+function onsubmitLogin() {
+  console.log("onsubmitLogin");
   const loginCode = loginCodePlaceHolder.value;
 
   // compare loginCode with codes in database
-  axios.get('users/login/' + loginCode)
+  axios.get(`users/login/${loginCode}`)
     .then((data) => {
-      console.log('kkkkkkkkkkk', data);
+
+      // if incorrect code, display error and stay on login form
       if(data.data.user === null) {
         errorParagraph.style.display = "inline-block";
       }
 
       // if correct code, login disappears, homepage appears
       if (data.data.user !== null) {
+
+        // // clear the login code on the form for the next time it's shown
+        // loginCodePlaceHolder.value = "";
+
+        // change section visibility
         loginContainer.style.display = "none";
         mainContainer.style.display = "";
+
+        // fill in global variable with the active user
         gactiveUserId = data.data.user.id;
+
+        // move to the clock in menu choice
         onMenuClockIn();
 
-        // set name for homepage banner
+        // set user name for homepage banner
         const welcome = document.getElementById('app-title');
         const firstName = data.data.user.fname;
         const lastName = data.data.user.lname;
         welcome.innerText = `Welcome ${firstName} ${lastName}!`;
 
-        // set name for message to Supervisor
+        // set user name for message to Supervisor
         const notifyName = document.getElementById('notifyName');
         notifyName.innerText = `From ${firstName} ${lastName}`;
 
-        // set name for time off
+        // set user name for time off
         const nameTimeOff = document.getElementById('nameTimeOff');
         nameTimeOff.innerText = `For ${firstName} ${lastName}`;
         getRoles();
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log("AXIOS error: ", error);
     });
-});
+}
+
+/* ==================================================
+*  DOM loaded, setup and set button event listener
+* =================================================== */
+function onclickChangeUser() {
+
+  // change section visibility
+  loginContainer.style.display = "";
+  mainContainer.style.display = "none";
+
+  // clear the global variable with the active user
+  gactiveUserId = null;
+
+  // clear the login code
+  loginCodePlaceHolder.value = "";
+
+  // set focus to the login code
+  loginCodePlaceHolder.focus();
+}
 
 /* ==================================================
 *  DOM loaded, setup and set button event listener
 * =================================================== */
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM loaded in login.js");
+
+  document.getElementById("change-user-button").onclick = onclickChangeUser;
+
+  loginForm.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    onsubmitLogin();
+  });
 });
