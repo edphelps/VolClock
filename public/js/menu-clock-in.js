@@ -52,6 +52,7 @@ function checkStatus() {
     if (shift.data.current_shift.end_time !== null){
       clockInDiv.style.display = ""
       clockOutDiv.style.display = "none"
+      clockInSuccess.style.display = "none"
     }
   })
   .catch((eror) => {
@@ -74,10 +75,21 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(dataObject);
     axios.post(`/shifts`, dataObject)
       .then((post) => {
+        console.log(post)
+        gactiveUserShiftId = post.data.shift.id
         checkStatus()
+
+        const clockOutButton = document.getElementById('clockOutButton')
+        clockOutButton.addEventListener('click', (ev) => {
+          axios.patch(`/shifts/${gactiveUserShiftId}`)
+          .then((shift) => {
+            checkStatus()
+          })
+        })
       })
       .catch(error => {
         console.log(error)
       })
     })
+
 })
