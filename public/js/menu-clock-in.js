@@ -13,7 +13,7 @@ function onMenuClockIn() {
 // const shift1 = document.getElementById('shift1')
 const clockInDiv = document.getElementById('clockInDiv')
 const milesInput = document.getElementById('miles')
-clockIn()
+
 //creates buttons with roles and inputs default miles
 function getRoles() {
   axios.get(`/users/${gactiveUserId}`)
@@ -31,10 +31,4 @@ function getRoles() {
       clockInButton.setAttribute('type', "button")
     }
   })
-}
-
-function clockIn() {
-  getRoles()
-  
-
 }
