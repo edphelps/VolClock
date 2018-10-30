@@ -13,7 +13,11 @@ function onMenuHistory() {
       if(response.data.shifts.length === 0) {
         res.status(201).json({ message: 'success' })
       }
-      response.data.shifts.map((shift) => {
+      response.data.shifts.forEach((shift) => {
+        let shiftHistoryList = document.querySelector('tbody.shiftHistory')
+        while(shiftHistory.firstChild) {
+          shiftHistory.removeChild(shiftHistory.firstChild)
+        }
         const row = document.createElement('tr')
         const body = ``
       })

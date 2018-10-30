@@ -14,6 +14,12 @@ exports.seed = function(knex, Promise) {
         {id: 7, user_id: 2, role_id: 6, start_time: new Date(), end_time: null,       miles: 4},
         {id: 8, user_id: 2, role_id: 7, start_time: new Date(), end_time: null,       miles: 4},
         {id: 9, user_id: 2, role_id: 8, start_time: new Date(), end_time: null,       miles: 4},
+        {id: 10, user_id: 4, role_id: 8, start_time: new Date('2018-10-21 14:00:00 UTC'), end_time: new Date('2018-10-21 15:00:00 UTC'), miles: 4},
+        {id: 11, user_id: 4, role_id: 8, start_time: new Date('2018-10-21 14:00:00 UTC'), end_time: new Date('2018-10-21 15:00:00 UTC'), miles: 4},
+        {id: 12, user_id: 4, role_id: 8, start_time: new Date('2018-10-21 14:00:00 UTC'), end_time: new Date('2018-10-21 15:00:00 UTC'), miles: 4},
+        {id: 13, user_id: 4, role_id: 8, start_time: new Date('2018-10-21 14:00:00 UTC'), end_time: new Date('2018-10-21 15:00:00 UTC'), miles: 4},
+        {id: 14, user_id: 4, role_id: 8, start_time: new Date('2018-10-21 14:00:00 UTC'), end_time: new Date('2018-10-21 15:00:00 UTC'), miles: 4},
+        {id: 15, user_id: 4, role_id: 8, start_time: new Date('2018-10-21 14:00:00 UTC'), end_time: new Date('2018-10-21 15:00:00 UTC'), miles: 4},
       ])
       .then(() => {
                  // Moves id column (PK) auto-incremented to correct value after inserts
