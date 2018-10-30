@@ -10,10 +10,11 @@
 * =================================================== */
 function onMenuHistory() {
   changeMenuAndContentArea("nav--history", gelemContentHistory)
+
   axios.get(`/shifts/user/4`)
     .then((response) => {
-      if(response.data.shifts.length === 0) {
-        res.status(201).json({ message: 'success' })
+      totalShiftHours(response)
+      if(response.data.shifts.length === 0) { res.status(201).json({ message: 'success' })
       }
       let shiftHistoryList = document.getElementById('list-history')
       let table = document.createElement('table')
@@ -56,4 +57,18 @@ function onMenuHistory() {
       return "?";
     return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`;
     // return dt.getMonth()+1 + "/" + dt.getDate() + "/" + dt.getFullYear();
+  }
+
+  function totalShiftHours(response) {
+    let hourCount = 0
+    response.data.shifts.forEach((shift) => {
+      let runningTotal = document.getElementById('total-hours-worked')
+      let startTime = new Date(shift.start_time)
+      let endTime = new Date(shift.end_time)
+      let shiftHoursWorked = endTime - startTime
+      hourCount += shiftHoursWorked
+      console.log('hourCount>>>', hourCount)
+
+      runningTotal.innerText = (hourCount/1000/60/60).toFixed(1)
+    })
   }
