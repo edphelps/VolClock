@@ -67,7 +67,7 @@
         <!-- COLUMN change user button -->
         <div class="col pb-4 align-items-center">
               <div class="text-right">
-                <button type="button" class="btn btn-primary btn-sm">Change user</button>
+                <button id="change-user-button" type="button" class="btn btn-primary btn-sm">Change user</button>
           </div>
         </div> <!-- col -->
 
@@ -155,78 +155,90 @@
 
     <div id="content--notify" class="content justify-content-center">
 
-    <div id="contactButtons" class="row">
-    <div class="col-6">
-    <!-- <h3 class="mt-3 mb-4 ml-4">Notify Supervisor</h3> -->
-    <button id="notify-button" type="button" class=" ml-4 btn btn-primary btn-lg">Notify Supervisor</button>
-  </div>
-  <div class="col-6">
-    <!-- <h3 class="mt-3 mb-4 ml-4">Input Time Off</h3> -->
-    <button id="time-off-button" type="button" class=" ml-4 btn btn-primary btn-lg">Input Time Off</button>
-  </div>
-</div>
-    <!-- Message to Supervisor Form -->
-    <!-- need to add class="auto-clear" to div when form is done -->
-      <div id="contactSupervisorForm" style="display:none">
-        <form>
-          <h2 class="text-center">Message for Supervisor:</h2>
-          <h3 id="notifyName" class="text-center"></h3>
-          <div class="form-group">
-              <textarea class="form-control" id="contactSupervisorTextArea" rows="5"></textarea>
-            </div>
-            <div class="form-row">
-                <button type="submit" class="btn btn-primary btn-lg">SUBMIT</button>
-            </div>
-        </form>
-      </div>
+      <!-- INITAL PAGE BUTTONS: Notify Supervisor / Input Time Off -->
+      <!-- ....................................................... -->
+      <div id="contactButtons" class="row">
+        <div class="col-6">
+          <!-- <h3 class="mt-3 mb-4 ml-4">Notify Supervisor</h3> -->
+          <button id="notify-button" type="button" class=" ml-4 btn btn-primary btn-lg">Notify Supervisor</button>
+        </div> <!-- col -->
+        <div class="col-6">
+          <!-- <h3 class="mt-3 mb-4 ml-4">Input Time Off</h3> -->
+          <button id="time-off-button" type="button" class=" ml-4 btn btn-primary btn-lg">Input Time Off</button>
+        </div> <!-- col -->
+      </div> <!-- row -->
 
-      <!-- Input Time Off Form -->
-      <div id="inputTimeOffForm" style="display:none">
-        <div class="row">
-          <div class="col-6">
-        <form>
-          <h2 class="text-center mb-3">Input Time Off</h2>
-            <h3 id="nameTimeOff" class="text-center"></h3>
-          <div class="form-row mb-4">
-            <div class="col">
-              <label for="start">Start Date</label>
-              <input class="form-control" type="date" id="vacation-start-date-input">
-            </div>
-            <div class="col">
-              <label for="start">End Date</label>
-              <input class="form-control" type="date" id="vacation-end-date-input">
-            </div>
-          </div>
-          <div class="form-group mt-4">
-              <label for="time-off">Comments</label>
-              <textarea class="form-control" id="time-off-text-area" rows="5"></textarea>
+      <!-- ............... MESSAGE TO SUPERVISOR FORM ............ -->
+      <!-- ....................................................... -->
+      <!-- need to add class="auto-clear" to div when form is done -->
+      <div id="notifyFormDiv" style="display:none">
+        <form id='notifyForm'>
+          <h2 class="text-center">Message for Supervisor:</h2>
+          <h3 class="text-center">From Jane Doe</h3>
+          <div class="form-group">
+              <textarea class="form-control" name="notifyComment" id="notifyComment" rows="5"></textarea>
           </div>
           <div class="form-row">
-              <button type="submit" class="btn btn-primary btn-lg">SUBMIT</button>
+            <button type="submit" class="btn btn-primary btn-lg">SUBMIT</button>
+            &nbsp;
+            <button id="notify-cancel-button" type="button" class="btn btn-danger btn-lg">CANCEL</button>
           </div>
         </form>
       </div>
 
-      <!--Upcoming Time Off -->
-      <div id="upcoming-time-off">
-        <div class="col">
-        <h4>Upcoming Time Off:</h4>
-        <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Start</th>
-      <th scope="col">End</th>
-      <th scope="col">Message</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-      </div>
-      </div>
-    </div>
-    </div> <!-- content--notify -->
-</div>
+      <!-- ............ TIME OFF REQUEST FORM AND LIST OF RECENT REQUESTS ................ -->
+      <!-- ....................................................... -->
+      <div id="timeOffFormDiv" style="display:none">
+        <div class="row">
+          <div class="col-6">
+            <!-- THE FORM -->
+            <form id=timeOffForm>
+              <h2 class="text-center mb-3">Input Time Off</h2>
+              <h3 class="text-center">For Jane Doe</h3>
+              <div class="form-row">
+                <div class="col form-group">
+                  <label class="form-label" for="vacation-start-date-input">Start Date</label>
+                  <input class="form-control" type="date" id="vacation-start-date-input" required>
+                </div>
+                <div class="col form-group">
+                  <label class="form-label" for="vacation-end-date-input">End Date</label>
+                  <input class="form-control" type="date" id="vacation-end-date-input" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="time-off">Comments</label>
+                <textarea class="form-control" id="time-off-text-area" rows="3"></textarea>
+              </div>
+              <div class="form-row">
+                <button type="submit" class="btn btn-primary btn-lg">SUBMIT</button>
+                &nbsp;
+                <button id="time-off-cancel-button" type="button" class="btn btn-danger btn-lg">CANCEL</button>
+              </div>
+            </form>
+          </div> <!-- <div class="col-6"> -->
+
+          <!-- LIST OF REQUESTS ON THE RIGHT -->
+          <div id="upcoming-time-off">
+            <div class="col">
+              <h4>Upcoming Time Off:</h4>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Start</th>
+                    <th scope="col">End</th>
+                    <th scope="col">Message</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div> <!-- col -->
+          </div> <!--Upcoming Time Off -->
+
+        </div> <!-- row -->
+      </div> <!-- Input Time Off Form -->
+
+    </div>  <!-- content--notify -->
 
     <!-- ============================================= -->
     <!-- CONTENT - History -->
