@@ -144,7 +144,7 @@ function timeOffCancel() {
 *  time off button click, time off form appears
 * =================================================== */
 function renderRecentRequests() {
-    axios.get(`notifications/user/:user_id`, oRequest)
+  //  axios.get(`notifications/user/:user_id`, oRequest)
 }
 
 /* ==================================================
@@ -197,6 +197,7 @@ function timeOffPost() {
       document.getElementById('time-off-text-area').value = "";
     })
     .catch((error) => {
+      handleError("timeOffPost", error)
       console.log("AXIOS error: ", error);
     });
 
