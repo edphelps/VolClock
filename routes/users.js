@@ -82,7 +82,7 @@ router.get('/:id', (req, res, next) => {
         .returning(['role_id']);
     })
     .then((aRecs) => {
-      oResponse.last_role = aRecs[0];
+      oResponse.last_role = (aRecs.length===0) ? null : oResponse.last_role = aRecs[0];
       res.status(200).json(oResponse);
     })
     .catch((error) => {
