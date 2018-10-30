@@ -55,25 +55,25 @@ function getRoles() {
 //   })
 // }
 
-function clockIn() {
+document.addEventListener('DOMContentLoaded', () => {
   //event listener on clock in buttons div
+  const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
+      console.log('clockin click');
+
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
-
     let dataObject = {}
     dataObject['user_id'] = gactiveUserId
     dataObject['role_id'] = roleId
     dataObject['miles'] = mileage
     console.log(dataObject);
-
     axios.post(`/shifts`, dataObject)
       .then((post) => {
         console.log(post)
       })
+      .catch(error => {
+        console.log(error)
+      })
     })
-
-
-
-  //post request to shifts table with user_id, role_id, and miles
-}
+})
