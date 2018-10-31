@@ -7,12 +7,40 @@
 function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
   checkStatus()
+  // dropdownRoles()
 }
+const dropDown = document.getElementById('dropdownRoles')
 const clockInDiv = document.getElementById('clockInDiv')
 const clockOutDiv = document.getElementById('clockOutDiv')
 const milesInput = document.getElementById('miles')
 const clockInSuccess = document.getElementById('clockInSuccess')
 const milesForm = document.getElementById('milesForm')
+//creates drop down list of all roles
+function dropdownRoles(){
+  axios.get('/roles')
+  .then(roles => {
+    let roleArray = roles.data.roles
+    let sortedRoles = []
+
+    for (let el of roleArray){
+      sortedRoles.push(el.role)
+      sortedRoles.sort()
+
+    }
+
+    let other = sortedRoles.indexOf('Other')
+    let splicedRole = sortedRoles.splice(other, 1)
+    sortedRoles.push(splicedRole[0])
+
+    for (let el of sortedRoles){
+      let listItem = document.createElement('button')
+      listItem.setAttribute('class', 'dropdown-item')
+      listItem.innerText = el
+      dropDown.appendChild(listItem)
+   }
+  })
+}
+
 //creates buttons with roles and inputs default miles
 function getRoles() {
   axios.get(`/users/${gactiveUserId}`)
@@ -60,6 +88,7 @@ function checkStatus() {
   })
 }
 document.addEventListener('DOMContentLoaded', () => {
+  dropdownRoles()
   //event listener on clock in buttons div
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
@@ -101,3 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     })
 })
+
+
+// <button class="dropdown-item" type="button">Cashier</button>
