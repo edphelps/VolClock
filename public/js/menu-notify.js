@@ -4,6 +4,7 @@ let timeOffButton = null;
 
 let timeOffFormDiv = null;
 let notifyFormDiv = null;
+let reviewDiv = null;
 
 let contactButtons = null;
 
@@ -29,6 +30,109 @@ function notifyClick() {
 
   // set focus on the comment control
   document.forms.notifyForm.elements.notifyComment.focus();
+}
+
+/* ==================================================
+*  deleteNotication()
+*  Clicked delete button for a notification in review list of notifications.
+* =================================================== */
+function deleteNotification(id) {
+  console.log("*** delelete preparing to delete: ", id);
+  axios.delete(`notifications/${id}`)
+    .then((res) => {
+      console.log("");console.log("*** delete res: ", res);console.log("");
+      if (!res.data.notification) {
+        const err = new Error(`Notification ${id} already deleted`);
+        err.status = 500;
+        throw err;
+      }
+      // re-render the review page
+      reviewClick();
+    })
+    .catch((err) => {
+      handleError("deleteNotication", err);
+    });
+}
+
+function test() {
+  const a = [ "2018-10-31T16:27:43.366Z", "2018-10-31T16:27:50.519Z" ];
+  a.sort((a, b) => { return a < b })
+  console.log(a);
+}
+
+// test();
+
+/* ==================================================
+*  reviewClick()
+*  Clicked button to initiate the Review page
+* =================================================== */
+function reviewClick() {
+  // console.log("reviewClick");
+
+  // update what sections of page are visible
+  contactButtons.style.display = "none";
+  reviewDiv.style.display = "block";
+
+  /* ------------------
+  *  getDateOnly()
+  --------------------- */
+  function getDateOnly(_dt) {
+    const dt = new Date(_dt); // this allows the dt param to be Date or String
+    if (isNaN(dt)) {
+      return "?";
+    }
+    return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`;
+  }
+  // ------------------
+
+  axios.get(`notifications/user/${gactiveUserId}`)
+    .then((res) => {
+      const elemList = document.getElementById('list-review');
+      elemList.innerHTML = "loading...";
+      let html = "";
+
+      // get the list of notifcations and sort with more recently added first
+      const aNotifications = res.data.notifications;
+      aNotifications.sort((a, b) => ((a.created_at < b.created_at) ? 1 : -1));
+
+      html = `
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">type</th>
+              <th scope="col">message</th>
+              <th scope="col">added</th>
+            </tr>
+          </thead>`;
+      for (const oNotification of aNotifications) {
+        html += `
+            <tr>
+              <td><a href="#" onclick=deleteNotification(${oNotification.id})><i class="fas fa-trash-alt"></i></a>&nbsp;`
+                   + ((oNotification.start_date) ? 'time-off' : 'notification') + `</td>`;
+        if (oNotification.start_date) {
+          html += `
+              <td>` + getDateOnly(`${oNotification.start_date}`) + ` - ` + getDateOnly(`${oNotification.end_date}`) + `<br>
+                   ${oNotification.comment}</td>`;
+        } else {
+          html += `
+              <td>${oNotification.comment}</td>`;
+        }
+        html += `
+              <td>` + getDateOnly(`${oNotification.created_at}`) + `</td>
+            <tr>`;
+      }
+      html += `
+          </table>`;
+
+      if (!aNotifications.length) {
+        html += "<h5 class='pl-2'>There are no notifications to list</h5>"
+      }
+      // console.log("---- html: ", html);
+      elemList.innerHTML = html;
+    })
+    .catch((error) => {
+      handleError("renderRecentRequests", error);
+    });
 }
 
 /* ==================================================
@@ -72,7 +176,7 @@ function notifyPost() {
 }
 
 /* ==================================================
-*  notifyPost()
+*  notifyCancel()
 *  Clicked cancel on Notify Form
 * =================================================== */
 function notifyCancel() {
@@ -82,6 +186,16 @@ function notifyCancel() {
 
   // update what sections of page are visible
   notifyFormDiv.style.display = "none";
+  contactButtons.style.display = "";
+}
+
+/* ==================================================
+*  reviewDone()
+*  Clicked done on Review pagw
+* =================================================== */
+function reviewDone() {
+  // update what sections of page are visible
+  reviewDiv.style.display = "none";
   contactButtons.style.display = "";
 }
 
@@ -106,56 +220,56 @@ function timeOffCancel() {
 *  renderRecentRequests()
 *  Render the list of recent time-off requests on right side of screen
 * =================================================== */
-function renderRecentRequests() {
-
-  /* ------------------
-  *  getDateOnly()
-  --------------------- */
-  function getDateOnly(_dt) {
-    const dt = new Date(_dt); // this allows the dt param to be Date or String
-    if (isNaN(dt)) {
-      return "?";
-    }
-    return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`;
-  }
-
-  axios.get(`notifications/user/${gactiveUserId}`)
-    .then((res) => {
-      console.log("***** renderRecentRequests: ", res);
-      const elemList = document.getElementById('list-time-off');
-      elemList.innerHTML = "loading...";
-      let html = "";
-      const aNotifications = res.data.notifications;
-      if (!aNotifications) {
-        html = "no notifications to display";
-      } else {
-        html = `
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Start</th>
-                <th scope="col">End</th>
-                <th scope="col">Message</th>
-              </tr>
-            </thead>`;
-        for (const oNotification of aNotifications) {
-          html += `
-              <tr>
-                <td>` + getDateOnly(`${oNotification.start_date}`) + `</td>
-                <td>` + getDateOnly(`${oNotification.end_date}`) + `</td>
-                <td>` + `${oNotification.comment}`.slice(0, 10) + `...</td>
-              </tr>`
-          }
-        html += `
-            </table>`
-      }
-      // console.log("~~~~ html: ", html);
-      elemList.innerHTML = html;
-    })
-    .catch((error) => {
-      handleError("renderRecentRequests", error);
-    });
-}
+// function renderRecentRequests() {
+//
+//   /* ------------------
+//   *  getDateOnly()
+//   --------------------- */
+//   function getDateOnly(_dt) {
+//     const dt = new Date(_dt); // this allows the dt param to be Date or String
+//     if (isNaN(dt)) {
+//       return "?";
+//     }
+//     return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`;
+//   }
+//
+//   axios.get(`notifications/user/${gactiveUserId}`)
+//     .then((res) => {
+//       console.log("***** renderRecentRequests: ", res);
+//       const elemList = document.getElementById('list-time-off');
+//       elemList.innerHTML = "loading...";
+//       let html = "";
+//       const aNotifications = res.data.notifications;
+//       if (!aNotifications) {
+//         html = "no notifications to display";
+//       } else {
+//         html = `
+//           <table class="table">
+//             <thead>
+//               <tr>
+//                 <th scope="col">Start</th>
+//                 <th scope="col">End</th>
+//                 <th scope="col">Message</th>
+//               </tr>
+//             </thead>`;
+//         for (const oNotification of aNotifications) {
+//           html += `
+//               <tr>
+//                 <td>` + getDateOnly(`${oNotification.start_date}`) + `</td>
+//                 <td>` + getDateOnly(`${oNotification.end_date}`) + `</td>
+//                 <td>` + `${oNotification.comment}`.slice(0, 10) + `...</td>
+//               </tr>`
+//           }
+//         html += `
+//             </table>`
+//       }
+//       // console.log("---- html: ", html);
+//       elemList.innerHTML = html;
+//     })
+//     .catch((error) => {
+//       handleError("renderRecentRequests", error);
+//     });
+// }
 
 /* ==================================================
 *  timeOffClick()
@@ -168,7 +282,7 @@ function timeOffClick() {
   timeOffFormDiv.style.display = "inline";
 
   // render the table to display recent time-off requests
-  renderRecentRequests();
+  // renderRecentRequests();
 
   // set focus on the start date control
   document.getElementById('vacation-start-date-input').focus();
@@ -227,6 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
   contactButtons = document.getElementById('contactButtons');
   document.getElementById('notify-button').onclick = notifyClick;
   document.getElementById('time-off-button').onclick = timeOffClick;
+  document.getElementById('review-button').onclick = reviewClick;
 
   // notify form
   notifyFormDiv = document.getElementById('notifyFormDiv');
@@ -243,4 +358,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ev.preventDefault();
     timeOffPost();
   });
+
+  // review list of notifications and time-off
+  reviewDiv = document.getElementById('reviewDiv');
+  document.getElementById("review-return-button").onclick = reviewDone;
 });
