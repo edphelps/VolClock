@@ -255,19 +255,19 @@
       <div id="history-header" class="row">
         <div class="col-4">
           <!--dropdown menu for history year selection -->
-          <h3 class="text-center pt-3 pb-1">Year:</h3>
+          <h3 class="text-center mt-4 mb-1">Year:</h3>
             <div class="row justify-content-center">
               <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">History Year</button>
-                <div id='years-worked-list' class="dropdown-menu auto-clear"></div>
+                <select class="custom-select auto-clear" id='years-worked-list'>
+                </select>
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-4 mt-4">
             <label for='total-hours-worked'>Total Hours Worked</label>
             <p id="total-hours-worked" class="ml-4"></p>
           </div>
-          <div class="col-4">
+          <div class="col-4 mt-4">
             <label for='total-miles-driven'>Total Miles Driven</label>
             <p id="total-miles-driven" class="ml-4"></p>
           </div>
@@ -297,7 +297,69 @@
 
     <div id="content--schedule" class="content justify-content-center">
 
-      <h1>Schedule</h1>
+      <!-- <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" width='20px'>Day</th>
+            <th scope="col">Assignments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Sun</th>
+            <td><div id="assigment-sun">assignment<br>time-time</div></td>
+          </tr>
+          <tr>
+            <th scope="row">Mon</th>
+            <td><div id="assigment-mon">assignment<br>time-time</div></td>
+          </tr>
+          <tr>
+            <th scope="row">Tue</th>
+            <td><div id="assigment-tue">assignment<br>time-time</div></td>
+          </tr>
+          <tr>
+            <th scope="row">Wed</th>
+            <td><div id="assigment-wed">assignment<br>time-time</div></td>
+          </tr>
+          <tr>
+            <th scope="row">Thu</th>
+            <td><div id="assigment-thu">assignment<br>time-time</div></td>
+          </tr>
+          <tr>
+            <th scope="row">Fri</th>
+            <td><div id="assigment-fri">assignment<br>time-time</div></td>
+          </tr>
+          <tr>
+            <th scope="row">Sat</th>
+            <td><div id="assigment-sat">assignment<br>time-time</div></td>
+          </tr>
+        </tbody>
+      </table> -->
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th class='text-center' scope="col">Sun</th>
+            <th class='text-center' scope="col">Mon</th>
+            <th class='text-center' scope="col">Tue</th>
+            <th class='text-center' scope="col">Wed</th>
+            <th class='text-center' scope="col">Thu</th>
+            <th class='text-center' scope="col">Fri</th>
+            <th class='text-center' scope="col">Sat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class='text-center'><div id="assigment-sun"></div>assig<br>10:30<br>|<br>12:30</td>
+            <td class='text-center'><div id="assigment-mon"></div>assig<br>10:30<br>|<br>12:30</td>
+            <td class='text-center'><div id="assigment-tue"></div>assig<br>time</td>
+            <td class='text-center'><div id="assigment-wed"></div>assig<br>time</td>
+            <td class='text-center'><div id="assigment-thu"></div>assig<br>time</td>
+            <td class='text-center'><div id="assigment-fri"></div>assig<br>time</td>
+            <td class='text-center'><div id="assigment-sat"></div>assig<br>time</td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>  <!-- content--schedule -->
 

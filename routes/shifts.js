@@ -76,10 +76,10 @@ router.get('/user/:user_id/current', (req, res, next) => {
 
 /* **************************************************
 *  GET /user/:user_id
-*  Get complete shift history for user
+*  Get complete shift history for user + add the role text
 *  Return
 *      200: {
-*         shifts: [ { id, start, … }, { id, start, ... } ]
+*         shifts: [ { role, id (shift id), start, … }, { ... } ]
 *         }
 *      404: {
 *         shifts: "null",
@@ -93,7 +93,9 @@ router.get('/user/:user_id', (req, res, next) => {
 
   // get all past shifts for user
   knex('shifts')
+    .join('roles', 'roles.id', 'role_id')
     .where('user_id', req.params.user_id)
+    .select( [ 'shifts.*', 'roles.role'] )
     .then((aRecs) => {
       console.log("--> qry returning: ", aRecs);
 
