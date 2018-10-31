@@ -8,9 +8,8 @@ let gelemContentNotify = null;
 let gelemContentHistory = null;
 let gactiveUserId = null;
 let gactiveUserShiftId = null;
+let gtoday = null;
 
 // object used to cancel current AJAX data loads requests if another is made.
 // Ex: user clicks the menu multiple times while a page is loading data.
 let goCancelAjax = null;
-let gstartTime = null;
-let gtoday = null;

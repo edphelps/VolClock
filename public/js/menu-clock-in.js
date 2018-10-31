@@ -44,12 +44,15 @@ function checkStatus() {
       clockOutDiv.style.display = "inline-block"
       clockInSuccess.style.display = ""
       milesForm.style.display = "none"
-      milesInput.value = 0
     }
     if (shift.data.current_shift.end_time !== null){
       clockInDiv.style.display = ""
       clockOutDiv.style.display = "none"
       clockInSuccess.style.display = "none"
+      milesForm.style.display = ""
+    }
+    if(shift.data.previous_shift_today === true){
+      milesForm.style.display = "none"
     }
   })
   .catch((eror) => {
@@ -61,19 +64,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
       console.log('clockin click');
+
+    axios.get(`/shifts/user/${gactiveUserId}/current`)
+    .then((shift) => {
+      if(shift.data.previous_shift_today === true) {
+        milesInput.value = 0
+      }
+    })
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
+
+
+
     let dataObject = {}
     dataObject['user_id'] = gactiveUserId
     dataObject['role_id'] = roleId
     dataObject['miles'] = mileage
-    console.log(dataObject);
+
     axios.post(`/shifts`, dataObject)
       .then((post) => {
-        console.log(post)
+
         gactiveUserShiftId = post.data.shift.id
         checkStatus()
         const clockOutButton = document.getElementById('clockOutButton')
+
+
         clockOutButton.addEventListener('click', (ev) => {
           axios.patch(`/shifts/${gactiveUserShiftId}`)
           .then((shift) => {
