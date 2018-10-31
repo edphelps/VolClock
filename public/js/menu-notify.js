@@ -99,7 +99,7 @@ function reviewClick() {
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">type</th>
+              <th scope="col">type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
               <th scope="col">message</th>
               <th scope="col">added</th>
             </tr>
@@ -108,7 +108,7 @@ function reviewClick() {
         html += `
             <tr>
               <td><a href="#" onclick=deleteNotification(${oNotification.id})><i class="fas fa-trash-alt"></i></a>&nbsp;`
-                   + ((oNotification.start_date) ? 'time-off' : 'notification') + `</td>`;
+                   + ((oNotification.start_date) ? 'off' : 'note') + `</td>`;
         if (oNotification.start_date) {
           html += `
               <td>` + getDateOnly(`${oNotification.start_date}`) + ` - ` + getDateOnly(`${oNotification.end_date}`) + `<br>
@@ -125,7 +125,7 @@ function reviewClick() {
           </table>`;
 
       if (!aNotifications.length) {
-        html += "<h5 class='pl-2'>There are no notifications to list</h5>"
+        html += "<h5 class='pl-2'>There are no notifications to list</h5>";
       }
       // console.log("---- html: ", html);
       elemList.innerHTML = html;

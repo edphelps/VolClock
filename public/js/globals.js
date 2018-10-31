@@ -6,6 +6,7 @@
 let gelemContentClockIn = null;
 let gelemContentNotify = null;
 let gelemContentHistory = null;
+let gelemContentSchedule = null;
 let gactiveUserId = null;
 let gactiveUserShiftId = null;
 
