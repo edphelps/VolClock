@@ -88,9 +88,13 @@ function totalMilesDriven(response) {
 
 function yearsWorked(response) {
   let yearsListHtml = document.getElementById('years-worked-list')
+  let dateSet = new Set()
   response.data.shifts.forEach((shift) => {
-  yearsListHtml.innerHTML += `<button class="dropdown-item" type="button">${shift.end_time}</button>`
-  console.log('shifts>>>', shift)
-  console.log('shifts.end_date>>>', shift.end_time)
-})
+    let shiftEnd = new Date(shift.end_time)
+    let endYear = shiftEnd.getFullYear()
+    dateSet.add(endYear)
+  })
+  dateSet.forEach((value) => {
+    yearsListHtml.innerHTML += `<button class="dropdown-item" type="button">${value}</button>`
+  })
 }
