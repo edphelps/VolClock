@@ -99,6 +99,15 @@ h4.text-center.text-danger {
   padding: 15px;
 }
 
+.dropdown-item > a:hover {
+    background-color: red;
+    background-image: none;
+}
+.dropdown-item:hover {
+  background-color: rgb(62, 175, 56);
+}
+
+
 /* Marker for divs that are filled in by ajax.
    When changing to another menu all divs with this class are set to "".
    This prevents the problem of the card accordians shadowing each other's
