@@ -17,6 +17,7 @@ function onMenuHistory() {
       totalShiftHours(response)
       totalMilesDriven(response)
       yearsWorked(response)
+      yearShiftHistory(response)
 
       if(response.data.shifts.length === 0) { res.status(201).json({ message: 'success' }) }
       let shiftHistoryList = document.getElementById('list-history')
@@ -94,7 +95,10 @@ function yearsWorked(response) {
   response.data.shifts.forEach((shift) => {
     let shiftEnd = new Date(shift.end_time)
     let endYear = shiftEnd.getFullYear()
-    dateSet.add(endYear)
+    if (endYear < 1970) {
+    } else {
+      dateSet.add(endYear)
+    }
   })
   dateSet.forEach((value) => {
     yearsListHtml.innerHTML += `<button class="dropdown-item" type="button">${value}</button>`
@@ -102,16 +106,22 @@ function yearsWorked(response) {
   })
 }
 
-function yearShiftHistory(reponse) {
+function yearShiftHistory(response) {
   // Loop through all table rows, and hide those who don't match the search query
-  // response.data.shifts.forEach((shift) => {
-  //   td = document.getElementById('years-worked-list')
-  //   if (td) {
-  //     if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-  //       tr[i].style.display = "";
-  //     } else {
-  //       tr[i].style.display = "none";
-  //     }
-  //   }
-  // }
+  response.data.shifts.forEach((shift) => {
+    td = document.getElementById('years-worked-list')
+    let shiftEnd = new Date(shift.end_time)
+    td.onchange = function() {
+      console.log('ev.tagrget>>>', ev.tagrget)
+      if (td) {
+        if (td.innerHTML === shiftEnd) {
+          // shift.display = "";
+        } else {
+          // shift.display = "none";
+        }
+      }
+    }
+    console.log('td>>>', td)
+    console.log('shiftEnd', shiftEnd)
+  })
 }
