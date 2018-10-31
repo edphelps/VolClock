@@ -27,7 +27,8 @@ router.get('/user/:user_id', (req, res, next) => {
 /* **************************************************
 *  DELETE /:id
 *  Delete a notification
-*  Return, the deleted record
+*  Return
+*    200: { notification: { id, start_date, ... } }
 http DELETE localhost:3000/notifications/2
 ***************************************************** */
 router.delete('/:id', (req, res, next) => {
@@ -44,7 +45,7 @@ router.delete('/:id', (req, res, next) => {
         throw error;
       }
       // return notifcation that was deleted
-      res.status(200).json(aRecs[0]);
+      res.status(200).json({ notification: aRecs[0] });
     })
     .catch((error) => {
       next(routeCatch(`--- DELETE /notifications/${req.params.id}  route`, error));

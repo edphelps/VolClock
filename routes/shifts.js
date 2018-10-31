@@ -127,7 +127,7 @@ router.post('', (req, res, next) => {
   const oParams = {
     user_id: 'int',
     role_id: 'int',
-    miles: 'string',
+    // miles: 'string', OPTIONAL PARAM
   };
   if (!chkBodyParams(oParams, req, res, next))
     return;
@@ -135,7 +135,7 @@ router.post('', (req, res, next) => {
     // id: not-passed-to-create-new-record
     user_id: req.body.user_id,
     role_id: req.body.role_id,
-    miles: req.body.miles,
+    miles: (req.body.miles) ? req.body.miles : "0",
     start_time: new Date(),
     // end_time: null until user clocks-out
   };
