@@ -20,27 +20,58 @@ function dropdownRoles(){
   axios.get('/roles')
   .then(roles => {
     let roleArray = roles.data.roles
-    let sortedRoles = []
+
+    roleArray.sort(function(a, b) {
+      return a.role - b.role  ||  a.role.localeCompare(b.role)
+    })
+
+    let other = roleArray.find(el => el.role === 'Other')
+    let otherIndex = roleArray.indexOf(other)
+    let spliced = roleArray.splice(otherIndex, 1)
+
+    roleArray.push(spliced[0])
 
     for (let el of roleArray){
-      sortedRoles.push(el.role)
-      sortedRoles.sort()
-
-    }
-
-    let other = sortedRoles.indexOf('Other')
-    let splicedRole = sortedRoles.splice(other, 1)
-    sortedRoles.push(splicedRole[0])
-
-    for (let el of sortedRoles){
       let listItem = document.createElement('button')
       listItem.setAttribute('class', 'dropdown-item')
-      listItem.innerText = el
+      listItem.innerText = el.role
+      listItem.setAttribute('id', el.id)
       dropDown.appendChild(listItem)
-   }
+      //sortedRoles.sort()
+    }
   })
 }
 
+//function for sending post request from drop down menu list item
+function sendDropDownRole() {
+  dropDown.addEventListener('click', (ev) => {
+
+    let mileage = parseInt(milesInput.value)
+    let roleId = parseInt(ev.target.id)
+    console.log(roleId);
+
+    let dataObject = {}
+    dataObject['user_id'] = gactiveUserId
+    dataObject['role_id'] = roleId
+    dataObject['miles'] = mileage
+
+  //   axios.post(`/shifts`, dataObject)
+  //     .then((post) => {
+  //
+  //       gactiveUserShiftId = post.data.shift.id
+  //       checkStatus()
+  //       const clockOutButton = document.getElementById('clockOutButton')
+  //
+  //
+  //       clockOutButton.addEventListener('click', (ev) => {
+  //         axios.patch(`/shifts/${gactiveUserShiftId}`)
+  //         .then((shift) => {
+  //           checkStatus()
+  //         })
+  //   })
+  // })
+})
+}
 //creates buttons with roles and inputs default miles
 function getRoles() {
   axios.get(`/users/${gactiveUserId}`)
@@ -89,6 +120,7 @@ function checkStatus() {
 }
 document.addEventListener('DOMContentLoaded', () => {
   dropdownRoles()
+  sendDropDownRole()
   //event listener on clock in buttons div
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
