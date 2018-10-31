@@ -45,10 +45,38 @@ function dropdownRoles(){
 //function for sending post request from drop down menu list item
 function sendDropDownRole() {
   dropDown.addEventListener('click', (ev) => {
+    console.log(ev.target.id)
+    let mileage = parseInt(milesInput.value)
+    let roleId = parseInt(ev.target.id)
 
+    let dataObject = {}
+    dataObject['user_id'] = gactiveUserId
+    dataObject['role_id'] = roleId
+    dataObject['miles'] = mileage
+
+    axios.post(`/shifts`, dataObject)
+      .then((post) => {
+
+        gactiveUserShiftId = post.data.shift.id
+        checkStatus()
+        // const clockOutButton = document.getElementById('clockOutButton')
+        const clockOutButton = document.getElementById('clockOutButton')
+
+
+        clockOutButton.addEventListener('click', (ev) => {
+          axios.patch(`/shifts/${gactiveUserShiftId}`)
+          .then((shift) => {
+            checkStatus()
+          })
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
 
   })
 }
+
 
 //creates buttons with roles and inputs default miles
 function getRoles() {
@@ -90,6 +118,7 @@ function checkStatus() {
     }
     if(shift.data.previous_shift_today === true){
       milesForm.style.display = "none"
+      milesInput.value = 0
     }
   })
   .catch((eror) => {
