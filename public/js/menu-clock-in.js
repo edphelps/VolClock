@@ -95,7 +95,7 @@ function getRoles() {
       let clockInButton = document.createElement('button')
       clockInButton.innerText = el.role
       clockInDiv.appendChild(clockInButton)
-      clockInButton.setAttribute('class', "btn btn-primary btn-lg btn-block")
+      clockInButton.setAttribute('class', "btn btn-success btn-lg btn-block ")
       clockInButton.setAttribute('type', "button")
       clockInButton.setAttribute('id', el.id)
     }
