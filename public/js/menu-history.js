@@ -1,6 +1,6 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//   onMenuHistory()
-// })
+let shifts = null
+let currentYear = null
+let yearString = 2018
 
 /* ==================================================
 *  onMenuHistory()
@@ -13,42 +13,16 @@ function onMenuHistory() {
 
   axios.get(`/shifts/user/${gactiveUserId}`)
     .then((response) => {
+      shifts = response.data.shifts
 
-      totalShiftHours(response)
-      totalMilesDriven(response)
       yearsWorked(response)
       yearShiftHistory(response)
 
-      if(response.data.shifts.length === 0) { res.status(201).json({ message: 'success' }) }
-      let shiftHistoryList = document.getElementById('list-history')
-      let table = document.createElement('table')
-      let tableHead = document.createElement('thead')
-      let tableBody = document.createElement('tbody')
-
-      table.setAttribute("class", "table table-bordered table-hover")
-      tableHead.setAttribute('class', 'bg-info')
-        tableHead.innerHTML += `
-          <tr>
-            <th scope="col">Role Id</th>
-            <th scope="col">Start Time</th>
-            <th scope="col">End Time</th>
-            <th scope="col">Miles</th>
-          </tr>`
-
-      response.data.shifts.forEach((shift) => {
-        let shiftRow = document.createElement('tr')
-
-        shiftRow.innerHTML += `<td>${shift.role_id}</td>
-          <td>` + `${shift.start_time}` + `</td>
-          <td>` + `${shift.end_time}` + `</td>
-          <td>${shift.miles}</td>`
-
-          tableBody.appendChild(shiftRow)
-      })
-
-        table.appendChild(tableHead)
-        table.appendChild(tableBody)
-        shiftHistoryList.appendChild(table)
+      if(shifts.length === 0) { res.status(201).json({ message: 'success' }) }
+      // call table construction
+      renderTable(yearString)
+      totalShiftHours(response)
+      totalMilesDriven(response)
     })
     .catch((error) => {
       console.log(error)
@@ -66,7 +40,7 @@ function getDateOnly(_dt) {
 // calculates the total shift hours for user
 function totalShiftHours(response) {
   let hourCount = 0
-  response.data.shifts.forEach((shift) => {
+  shifts.forEach((shift) => {
     let totalHoursHtml = document.getElementById('total-hours-worked')
     let startTime = new Date(shift.start_time)
     let endTime = new Date(shift.end_time)
@@ -82,7 +56,7 @@ function totalShiftHours(response) {
 // calculates the total miles driven for all shifts
 function totalMilesDriven(response) {
   let mileCount = 0
-  response.data.shifts.forEach((shift) => {
+  shifts.forEach((shift) => {
     let totalMilesHtml = document.getElementById('total-miles-driven')
     mileCount += shift.miles
     totalMilesHtml.innerText = mileCount
@@ -92,7 +66,7 @@ function totalMilesDriven(response) {
 function yearsWorked(response) {
   let yearsListHtml = document.getElementById('years-worked-list')
   let dateSet = new Set()
-  response.data.shifts.forEach((shift) => {
+  shifts.forEach((shift) => {
     let shiftEnd = new Date(shift.end_time)
     let endYear = shiftEnd.getFullYear()
     if (endYear < 1970) {
@@ -102,26 +76,72 @@ function yearsWorked(response) {
   })
   dateSet.forEach((value) => {
     yearsListHtml.innerHTML += `<option>${value}</option>`
-
   })
 }
 
 function yearShiftHistory(response) {
   // Loop through all table rows, and hide those who don't match the search query
-  response.data.shifts.forEach((shift) => {
-    td = document.getElementById('years-worked-list')
+  shifts.forEach((shift) => {
+    let yearsWorkedListHtml = document.getElementById('years-worked-list')
     let shiftEnd = new Date(shift.end_time)
-    td.onchange = function() {
-      console.log('ev.tagrget>>>', ev.tagrget)
-      if (td) {
-        if (td.innerHTML === shiftEnd) {
-          // shift.display = "";
-        } else {
-          // shift.display = "none";
-        }
+    yearsWorkedListHtml.onchange = function(ev) {
+      let shiftHistoryList = document.getElementById('list-history')
+      while(shiftHistoryList.firstChild) {
+        shiftHistoryList.removeChild(shiftHistoryList.firstChild)
       }
+      yearString = ev.target.value
+      renderTable(yearString)
+      console.log('ev.target>>>', ev.target.value)
     }
-    console.log('td>>>', td)
-    console.log('shiftEnd', shiftEnd)
   })
+}
+
+
+// render table for shifts within selected calendar year
+function renderTable(yearString) {
+  let year = parseInt(yearString)
+
+  shifts.forEach((shift) => {
+    let shiftEnd = new Date(shift.end_time)
+    let endYear = shiftEnd.getFullYear()
+    currentYear = endYear
+    console.log('currentYear>>>', currentYear)
+  })
+
+  let thisYearShifts = shifts.filter(shift => {
+    let shiftEnd = new Date(shift.end_time)
+    let endYear = shiftEnd.getFullYear()
+    return endYear === year
+  })
+
+  let shiftHistoryList = document.getElementById('list-history')
+  let table = document.createElement('table')
+  let tableHead = document.createElement('thead')
+  let tableBody = document.createElement('tbody')
+
+  table.setAttribute("class", "table table-bordered table-hover")
+  tableHead.setAttribute('class', 'bg-info')
+    tableHead.innerHTML += `
+      <tr>
+        <th scope="col">Role Id</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
+        <th scope="col">Miles</th>
+      </tr>`
+
+  thisYearShifts.forEach((shift) => {
+    let shiftRow = document.createElement('tr')
+    let shiftStart = new Date(shift.start_time).toLocaleString()
+    let shiftEnd = new Date(shift.end_time).toLocaleString()
+    shiftRow.innerHTML += `<td>${shift.role}</td>
+      <td>` + shiftStart + `</td>
+      <td>` + shiftEnd + `</td>
+      <td>${shift.miles}</td>`
+
+      tableBody.appendChild(shiftRow)
+  })
+
+    table.appendChild(tableHead)
+    table.appendChild(tableBody)
+    shiftHistoryList.appendChild(table)
 }
