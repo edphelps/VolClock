@@ -46,32 +46,9 @@ function dropdownRoles(){
 function sendDropDownRole() {
   dropDown.addEventListener('click', (ev) => {
 
-    let mileage = parseInt(milesInput.value)
-    let roleId = parseInt(ev.target.id)
-    console.log(roleId);
-
-    let dataObject = {}
-    dataObject['user_id'] = gactiveUserId
-    dataObject['role_id'] = roleId
-    dataObject['miles'] = mileage
-
-  //   axios.post(`/shifts`, dataObject)
-  //     .then((post) => {
-  //
-  //       gactiveUserShiftId = post.data.shift.id
-  //       checkStatus()
-  //       const clockOutButton = document.getElementById('clockOutButton')
-  //
-  //
-  //       clockOutButton.addEventListener('click', (ev) => {
-  //         axios.patch(`/shifts/${gactiveUserShiftId}`)
-  //         .then((shift) => {
-  //           checkStatus()
-  //         })
-  //   })
-  // })
-})
+  })
 }
+
 //creates buttons with roles and inputs default miles
 function getRoles() {
   axios.get(`/users/${gactiveUserId}`)
