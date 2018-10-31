@@ -87,12 +87,14 @@ function checkStatus() {
     console.log(error)
   })
 }
+
+
 document.addEventListener('DOMContentLoaded', () => {
-  dropdownRoles()
+  //creates dropdown button with the list of available roles
+
   //event listener on clock in buttons div
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
-      console.log('clockin click');
 
     axios.get(`/shifts/user/${gactiveUserId}/current`)
     .then((shift) => {
@@ -102,9 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
-
-
-
     let dataObject = {}
     dataObject['user_id'] = gactiveUserId
     dataObject['role_id'] = roleId
@@ -129,7 +128,5 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(error)
       })
     })
+
 })
-
-
-// <button class="dropdown-item" type="button">Cashier</button>
