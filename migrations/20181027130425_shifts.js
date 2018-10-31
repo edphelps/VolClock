@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
 	return knex.schema.createTable('shifts', function(table) {
 		// TABLE COLUMN DEFINITIONS HERE
-		table.increments().primary
+		table.increments().primary()
 		table.integer('user_id').notNullable()
 		table.integer('role_id').notNullable()
 		table.foreign('user_id').references('users.id').onDelete('CASCADE')
