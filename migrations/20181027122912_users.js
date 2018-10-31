@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
 	return knex.schema.createTable(`users`, function(table) {
 		// TABLE COLUMN DEFINITIONS HERE
-		table.increments().notNullable()
+		table.increments().notNullable().primary()
 		table.varchar(`fname`, 255).notNullable()
 		table.varchar(`lname`, 255).notNullable()
 		table.varchar(`login_code`, 4).notNullable()

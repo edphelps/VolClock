@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const usersRouter = require('./routes/users');
 const shiftsRouter = require('./routes/shifts');
+const assignmentsRouter = require('./routes/assignments');
 const rolesRouter = require('./routes/roles');
 const notificationsRouter = require('./routes/notifications');
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/shifts', shiftsRouter);
+app.use('/assignments', assignmentsRouter);
 app.use('/roles', rolesRouter);
 app.use('/notifications', notificationsRouter);
 
