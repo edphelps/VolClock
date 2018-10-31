@@ -186,7 +186,7 @@
           <h2 class="text-center">Message for Supervisor:</h2>
           <h3 class="text-center" id="notifyName"></h3>
           <div class="form-group">
-              <textarea class="form-control" name="notifyComment" id="notifyComment" rows="5"></textarea>
+              <textarea class="form-control" name="notifyComment" id="notifyComment" rows="5" required></textarea>
           </div>
           <div class="form-row">
             <button type="submit" class="btn btn-primary btn-lg">SUBMIT</button>
@@ -231,17 +231,8 @@
           <div id="upcoming-time-off">
             <div class="col">
               <h4>Upcoming Time Off:</h4>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Start</th>
-                    <th scope="col">End</th>
-                    <th scope="col">Message</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
+              <div id="list-time-off">
+              </div>
             </div> <!-- col -->
           </div> <!--Upcoming Time Off -->
 
