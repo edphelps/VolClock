@@ -39,8 +39,8 @@ function onMenuHistory() {
         let shiftRow = document.createElement('tr')
 
         shiftRow.innerHTML += `<td>${shift.role_id}</td>
-          <td>` + getDateOnly(`${shift.start_time}`) + `</td>
-          <td>` + getDateOnly(`${shift.end_time}`) + `</td>
+          <td>` + `${shift.start_time}` + `</td>
+          <td>` + `${shift.end_time}` + `</td>
           <td>${shift.miles}</td>`
 
           tableBody.appendChild(shiftRow)
@@ -101,7 +101,7 @@ function yearsWorked(response) {
     }
   })
   dateSet.forEach((value) => {
-    yearsListHtml.innerHTML += `<button class="dropdown-item" type="button">${value}</button>`
+    yearsListHtml.innerHTML += `<option>${value}</option>`
 
   })
 }
