@@ -8,14 +8,11 @@ function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
   checkStatus()
 }
-
 const clockInDiv = document.getElementById('clockInDiv')
 const clockOutDiv = document.getElementById('clockOutDiv')
 const milesInput = document.getElementById('miles')
 const clockInSuccess = document.getElementById('clockInSuccess')
 const milesForm = document.getElementById('milesForm')
-
-
 //creates buttons with roles and inputs default miles
 function getRoles() {
   axios.get(`/users/${gactiveUserId}`)
@@ -23,7 +20,6 @@ function getRoles() {
     let roles = data.data.roles
     let miles = data.data.user.miles_default
     milesInput.value = miles
-
   //loop over roles array and create buttons with role names
   for(let el of roles) {
     // console.log(el.id)
@@ -39,11 +35,9 @@ function getRoles() {
     console.log(error)
   })
 }
-
 // check if user is already clocked in
 function checkStatus() {
   axios.get(`shifts/user/${gactiveUserId}/current`)
-
   .then((shift) => {
     if(shift.data.current_shift.end_time === null){
       clockInDiv.style.display = "none"
@@ -62,13 +56,11 @@ function checkStatus() {
     console.log(error)
   })
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   //event listener on clock in buttons div
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
       console.log('clockin click');
-
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
     let dataObject = {}
@@ -81,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(post)
         gactiveUserShiftId = post.data.shift.id
         checkStatus()
-
         const clockOutButton = document.getElementById('clockOutButton')
         clockOutButton.addEventListener('click', (ev) => {
           axios.patch(`/shifts/${gactiveUserShiftId}`)
@@ -94,5 +85,4 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(error)
       })
     })
-
 })
