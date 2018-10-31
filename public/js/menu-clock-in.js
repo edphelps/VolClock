@@ -83,6 +83,10 @@ function getRoles() {
   axios.get(`/users/${gactiveUserId}`)
   .then((data) => {
     let roles = data.data.roles
+    roles.sort((a,b) => {
+      return a.role - b.role || a.role.localeCompare(b.role)
+    })
+    console.log(roles);
     let miles = data.data.user.miles_default
     milesInput.value = miles
   //loop over roles array and create buttons with role names
