@@ -10,6 +10,12 @@ exports.seed = function(knex, Promise) {
         {id: 3, user_id: 3, role_id: 3},
         {id: 4, user_id: 4, role_id: 4},
         {id: 5, user_id: 4, role_id: 12},
+        {id: 6, user_id: 4, role_id: 10},
+        {id: 7, user_id: 4, role_id: 9},
+        {id: 8, user_id: 4, role_id: 7},
+        {id: 9, user_id: 4, role_id: 6},
+        {id: 10, user_id: 4, role_id: 11},
+
 
       ])
       .then(() => {

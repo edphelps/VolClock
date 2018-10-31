@@ -20,32 +20,73 @@ function dropdownRoles(){
   axios.get('/roles')
   .then(roles => {
     let roleArray = roles.data.roles
-    let sortedRoles = []
+
+    roleArray.sort(function(a, b) {
+      return a.role - b.role  ||  a.role.localeCompare(b.role)
+    })
+
+    let other = roleArray.find(el => el.role === 'Other')
+    let otherIndex = roleArray.indexOf(other)
+    let spliced = roleArray.splice(otherIndex, 1)
+
+    roleArray.push(spliced[0])
 
     for (let el of roleArray){
-      sortedRoles.push(el.role)
-      sortedRoles.sort()
-
-    }
-
-    let other = sortedRoles.indexOf('Other')
-    let splicedRole = sortedRoles.splice(other, 1)
-    sortedRoles.push(splicedRole[0])
-
-    for (let el of sortedRoles){
       let listItem = document.createElement('button')
       listItem.setAttribute('class', 'dropdown-item')
-      listItem.innerText = el
+      listItem.innerText = el.role
+      listItem.setAttribute('id', el.id)
       dropDown.appendChild(listItem)
-   }
+      //sortedRoles.sort()
+    }
   })
 }
+
+//function for sending post request from drop down menu list item
+function sendDropDownRole() {
+  dropDown.addEventListener('click', (ev) => {
+    console.log(ev.target.id)
+    let mileage = parseInt(milesInput.value)
+    let roleId = parseInt(ev.target.id)
+
+    let dataObject = {}
+    dataObject['user_id'] = gactiveUserId
+    dataObject['role_id'] = roleId
+    dataObject['miles'] = mileage
+
+    axios.post(`/shifts`, dataObject)
+      .then((post) => {
+
+        gactiveUserShiftId = post.data.shift.id
+        checkStatus()
+        // const clockOutButton = document.getElementById('clockOutButton')
+        const clockOutButton = document.getElementById('clockOutButton')
+
+
+        clockOutButton.addEventListener('click', (ev) => {
+          axios.patch(`/shifts/${gactiveUserShiftId}`)
+          .then((shift) => {
+            checkStatus()
+          })
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+  })
+}
+
 
 //creates buttons with roles and inputs default miles
 function getRoles() {
   axios.get(`/users/${gactiveUserId}`)
   .then((data) => {
     let roles = data.data.roles
+    roles.sort((a,b) => {
+      return a.role - b.role || a.role.localeCompare(b.role)
+    })
+    console.log(roles);
     let miles = data.data.user.miles_default
     milesInput.value = miles
   //loop over roles array and create buttons with role names
@@ -81,18 +122,21 @@ function checkStatus() {
     }
     if(shift.data.previous_shift_today === true){
       milesForm.style.display = "none"
+      milesInput.value = 0
     }
   })
   .catch((eror) => {
     console.log(error)
   })
 }
+
+
 document.addEventListener('DOMContentLoaded', () => {
   dropdownRoles()
+  sendDropDownRole()
   //event listener on clock in buttons div
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
-      console.log('clockin click');
 
     axios.get(`/shifts/user/${gactiveUserId}/current`)
     .then((shift) => {
@@ -102,9 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
-
-
-
     let dataObject = {}
     dataObject['user_id'] = gactiveUserId
     dataObject['role_id'] = roleId
@@ -129,7 +170,5 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(error)
       })
     })
+
 })
-
-
-// <button class="dropdown-item" type="button">Cashier</button>
