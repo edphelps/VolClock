@@ -13,6 +13,7 @@ const clockInDiv = document.getElementById('clockInDiv')
 const clockOutDiv = document.getElementById('clockOutDiv')
 const milesInput = document.getElementById('miles')
 const clockInSuccess = document.getElementById('clockInSuccess')
+const milesForm = document.getElementById('milesForm')
 
 
 //creates buttons with roles and inputs default miles
@@ -48,6 +49,8 @@ function checkStatus() {
       clockInDiv.style.display = "none"
       clockOutDiv.style.display = "inline-block"
       clockInSuccess.style.display = ""
+      milesForm.style.display = "none"
+      milesInput.value = 0
     }
     if (shift.data.current_shift.end_time !== null){
       clockInDiv.style.display = ""
