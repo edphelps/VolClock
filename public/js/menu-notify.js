@@ -92,10 +92,8 @@ function reviewClick() {
       let html = "";
 
       // get the list of notifcations and sort with more recently added first
-      let aNotifications = res.data.notifications;
-      console.log("BEFORE SORT: ", aNotifications);
-      aNotifications = aNotifications.sort((a, b) => ((a.created_at < b.created_at) ? 1 : -1));
-      console.log("AFTER SORT: ", aNotifications);
+      const aNotifications = res.data.notifications;
+      aNotifications.sort((a, b) => ((a.created_at < b.created_at) ? 1 : -1));
 
       html = `
         <table class="table">
