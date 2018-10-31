@@ -69,10 +69,12 @@ function totalShiftHours(response) {
     let totalHoursHtml = document.getElementById('total-hours-worked')
     let startTime = new Date(shift.start_time)
     let endTime = new Date(shift.end_time)
-    let shiftHoursWorked = endTime - startTime
-    hourCount += shiftHoursWorked
-
-    totalHoursHtml.innerText = (hourCount/1000/60/60).toFixed(0)
+    if (endTime > startTime) {
+      let shiftHoursWorked = endTime - startTime
+      hourCount += shiftHoursWorked
+    } else {
+    }
+  totalHoursHtml.innerText = (hourCount/1000/60/60).toFixed(0)
   })
 }
 
@@ -96,5 +98,20 @@ function yearsWorked(response) {
   })
   dateSet.forEach((value) => {
     yearsListHtml.innerHTML += `<button class="dropdown-item" type="button">${value}</button>`
+
   })
+}
+
+function yearShiftHistory(reponse) {
+  // Loop through all table rows, and hide those who don't match the search query
+  // response.data.shifts.forEach((shift) => {
+  //   td = document.getElementById('years-worked-list')
+  //   if (td) {
+  //     if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+  //       tr[i].style.display = "";
+  //     } else {
+  //       tr[i].style.display = "none";
+  //     }
+  //   }
+  // }
 }
