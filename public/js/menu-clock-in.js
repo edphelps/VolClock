@@ -134,6 +134,7 @@ function checkStatus() {
       somethingElse.style.display = "none"
       roleDropper.style.display = "none"
       clockInPrompt.style.display = "none"
+      seperatorLine.style.display = "none"
     }
     if (shift.data.current_shift.end_time !== null){
       clockInDiv.style.display = ""

@@ -84,6 +84,7 @@ h1.text-center {
 }
 .btn-lg {
   margin-top: 10px;
+  font-family: 'Arimo', sans-serif;
 }
 h4.text-center.text-danger {
   font-size: 15px;
@@ -111,7 +112,7 @@ button.btn.btn-success.dropdown-toggle {
   background-color: rgb(62, 175, 56);
 }
 #clockOutButton {
-
+  margin-bottom: 25px;
   height:80px;
 
 }
