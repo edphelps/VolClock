@@ -7,7 +7,7 @@
 function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
   checkStatus()
-
+  getGActiveUserId()
 }
 
 //html elements
@@ -52,7 +52,6 @@ function sendDropDownRole() {
   dropDown.addEventListener('click', (ev) => {
     somethingElse.style.display = "none"
     roleDropper.style.display = "none"
-
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
     let dataObject = {}
@@ -75,12 +74,16 @@ function sendDropDownRole() {
 
 //sends an end time to db when clock out button is clicked
 function clockOutPatch() {
+  // checkStatus()
   const clockOutButton = document.getElementById('clockOutButton')
   clockOutButton.addEventListener('click', (ev) => {
     somethingElse.style.display = ""
     roleDropper.style.display = ""
+
     axios.patch(`/shifts/${gactiveUserShiftId}`)
     .then((shift) => {
+      // console.log(shift);
+
       checkStatus()
     })
     .catch((error) => {
@@ -145,6 +148,7 @@ function checkStatus() {
 
 //DOMContentLoaded.
 document.addEventListener('DOMContentLoaded', () => {
+  // getGActiveUserId()
   dropdownRoles()
   sendDropDownRole()
   clockOutPatch()
@@ -177,3 +181,16 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     })
 })
+
+//grabs active users current shift when login submit is clicked and sets the gactiveUserShiftId
+//global variable to their current shift
+//this is called in the onMenuClockIn function which is called when the login button is clicked
+function getGActiveUserId(){
+axios.get(`/shifts/user/${gactiveUserId}/current`)
+.then((shift) => {
+  gactiveUserShiftId = shift.data.current_shift.id
+})
+.catch((err) => {
+  console.log(err)
+})
+}

@@ -16,7 +16,6 @@ function loginUser(loginCode) {
   // compare loginCode with codes in database
   axios.get(`users/login/${loginCode}`)
     .then((data) => {
-
       // if incorrect code, display error and stay on login form
       if(data.data.user === null) {
         errorParagraph.style.display = "inline-block";
@@ -34,6 +33,8 @@ function loginUser(loginCode) {
 
         // fill in global variable with the active user
         gactiveUserId = data.data.user.id;
+
+        //gactiveUserShiftId = data.data.shift.id
 
         // move to the clock in menu choice
         onMenuClockIn();
