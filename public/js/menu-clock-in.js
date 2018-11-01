@@ -7,7 +7,10 @@
 function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
   checkStatus()
+
 }
+
+//html elements
 const dropDown = document.getElementById('dropdownRoles')
 const clockInDiv = document.getElementById('clockInDiv')
 const clockOutDiv = document.getElementById('clockOutDiv')
@@ -16,6 +19,8 @@ const clockInSuccess = document.getElementById('clockInSuccess')
 const milesForm = document.getElementById('milesForm')
 const somethingElse = document.getElementById('somethingElse')
 const roleDropper = document.getElementById('roleDropper')
+
+
 //creates drop down list of all roles
 function dropdownRoles(){
   axios.get('/roles')
@@ -42,38 +47,45 @@ function dropdownRoles(){
   })
 }
 
-//function for sending post request from drop down menu list item
+//function for sending post request to db from drop down menu list item
 function sendDropDownRole() {
   dropDown.addEventListener('click', (ev) => {
-    console.log(ev.target.id)
+    somethingElse.style.display = "none"
+    roleDropper.style.display = "none"
+
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
-
     let dataObject = {}
+
     dataObject['user_id'] = gactiveUserId
     dataObject['role_id'] = roleId
     dataObject['miles'] = mileage
 
     axios.post(`/shifts`, dataObject)
       .then((post) => {
-
         gactiveUserShiftId = post.data.shift.id
         checkStatus()
-        // const clockOutButton = document.getElementById('clockOutButton')
-        const clockOutButton = document.getElementById('clockOutButton')
-
-
-        clockOutButton.addEventListener('click', (ev) => {
-          axios.patch(`/shifts/${gactiveUserShiftId}`)
-          .then((shift) => {
-            checkStatus()
-          })
-        })
       })
       .catch(error => {
         console.log(error)
       })
+  })
+}
 
+
+//sends an end time to db when clock out button is clicked
+function clockOutPatch() {
+  const clockOutButton = document.getElementById('clockOutButton')
+  clockOutButton.addEventListener('click', (ev) => {
+    somethingElse.style.display = ""
+    roleDropper.style.display = ""
+    axios.patch(`/shifts/${gactiveUserShiftId}`)
+    .then((shift) => {
+      checkStatus()
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   })
 }
 
@@ -103,6 +115,8 @@ function getRoles() {
     console.log(error)
   })
 }
+
+
 // check if user is already clocked in
 function checkStatus() {
   axios.get(`shifts/user/${gactiveUserId}/current`)
@@ -112,9 +126,6 @@ function checkStatus() {
       clockOutDiv.style.display = "inline-block"
       clockInSuccess.style.display = ""
       milesForm.style.display = "none"
-      // somethingElse.style.display = "none"
-      // roleDropper.style.display = "none"
-
     }
     if (shift.data.current_shift.end_time !== null){
       clockInDiv.style.display = ""
@@ -132,11 +143,12 @@ function checkStatus() {
   })
 }
 
-
+//DOMContentLoaded.
 document.addEventListener('DOMContentLoaded', () => {
   dropdownRoles()
   sendDropDownRole()
-  //event listener on clock in buttons div
+  clockOutPatch()
+  //event listener on clock in buttons div. hides dropdown div when button is clicked
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
     somethingElse.style.display = "none"
@@ -147,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         milesInput.value = 0
       }
     })
+
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
     let dataObject = {}
@@ -156,24 +169,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     axios.post(`/shifts`, dataObject)
       .then((post) => {
-
         gactiveUserShiftId = post.data.shift.id
         checkStatus()
-        const clockOutButton = document.getElementById('clockOutButton')
-
-
-        clockOutButton.addEventListener('click', (ev) => {
-          somethingElse.style.display = ""
-          roleDropper.style.display = ""
-          axios.patch(`/shifts/${gactiveUserShiftId}`)
-          .then((shift) => {
-            checkStatus()
-          })
-        })
       })
       .catch(error => {
         console.log(error)
       })
     })
-
 })
