@@ -102,6 +102,8 @@ h4.text-center.text-danger {
 button.btn.btn-success.dropdown-toggle {
   margin-left: 25px;
   margin-right: 20px;
+  margin-bottom: 25px;
+  height: 50px;
 }
 
 
@@ -116,15 +118,20 @@ button.btn.btn-success.dropdown-toggle {
 #roleParagraph {
   font-family: 'Arimo', sans-serif;
   letter-spacing: 1px;
-  font-size: 20px;
+  font-size: 25px;
+  margin-top: 20px;
 }
 #milesForm {
   font-family: 'Arimo', sans-serif;
   letter-spacing: 1px;
 }
+#seperatorLine {
+  border-top: 1px solid rgb(167, 168, 170);
+}
 #somethingElse {
   font-family: 'Arimo', sans-serif;
-  letter-spacing: 1px;
+  font-size: 25px;
+  letter-spacing: 2px;
 }
 .nav-item.nav-link {
   font-family: 'Arimo', sans-serif;
@@ -140,6 +147,12 @@ button.btn.btn-success.dropdown-toggle {
 .btn{
   font-family: 'Arimo', sans-serif;
   letter-spacing: 2px;
+}
+#clockInPrompt{
+  font-family: 'Arimo', sans-serif;
+  font-size: 25px;
+  letter-spacing: 2px;
+  margin-top: 20px;
 }
 #change-user-button.btn.btn-primary.btn-sm{
   letter-spacing: 0px;
