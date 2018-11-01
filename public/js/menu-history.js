@@ -84,7 +84,7 @@ function yearsWorked(response) {
 function yearShiftHistory(response) {
   shifts.forEach((shift) => {
     let yearsWorkedListHtml = document.getElementById('years-worked-list')
-    let shiftEnd = new Date(shift.end_time)
+    let shiftEnd = new Date(shift.start_time)
     yearsWorkedListHtml.onchange = function(ev) {
       onChangeYear(ev)
     }
@@ -105,14 +105,14 @@ function onChangeYear(ev) {
 function renderTable(yearString) {
   let year = parseInt(yearString)
   shifts.forEach((shift) => {
-    let shiftEnd = new Date(shift.end_time)
+    let shiftEnd = new Date(shift.start_time)
     let endYear = shiftEnd.getFullYear()
     currentYear = endYear
   })
 
   // filter out shifts for current year
   let thisYearShifts = shifts.filter(shift => {
-    let shiftEnd = new Date(shift.end_time)
+    let shiftEnd = new Date(shift.start_time)
     let endYear = shiftEnd.getFullYear()
     return endYear === year
   })
@@ -143,6 +143,7 @@ function renderTable(yearString) {
     let shiftRow = document.createElement('tr')
     let shiftStart = new Date(shift.start_time).toLocaleString()
     let shiftEnd = new Date(shift.end_time).toLocaleString()
+    if (shiftEnd === '12/31/1969, 5:00:00 PM') { shiftEnd = 'Currently Clocked In'}
     shiftRow.innerHTML += `<td>${shift.role}</td>
       <td>` + shiftStart + `</td>
       <td>` + shiftEnd + `</td>
