@@ -7,7 +7,6 @@
 function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
   checkStatus()
-  // dropdownRoles()
 }
 const dropDown = document.getElementById('dropdownRoles')
 const clockInDiv = document.getElementById('clockInDiv')
@@ -15,6 +14,8 @@ const clockOutDiv = document.getElementById('clockOutDiv')
 const milesInput = document.getElementById('miles')
 const clockInSuccess = document.getElementById('clockInSuccess')
 const milesForm = document.getElementById('milesForm')
+const somethingElse = document.getElementById('somethingElse')
+const roleDropper = document.getElementById('roleDropper')
 //creates drop down list of all roles
 function dropdownRoles(){
   axios.get('/roles')
@@ -37,7 +38,6 @@ function dropdownRoles(){
       listItem.innerText = el.role
       listItem.setAttribute('id', el.id)
       dropDown.appendChild(listItem)
-      //sortedRoles.sort()
     }
   })
 }
@@ -86,7 +86,6 @@ function getRoles() {
     roles.sort((a,b) => {
       return a.role - b.role || a.role.localeCompare(b.role)
     })
-    console.log(roles);
     let miles = data.data.user.miles_default
     milesInput.value = miles
   //loop over roles array and create buttons with role names
@@ -113,6 +112,9 @@ function checkStatus() {
       clockOutDiv.style.display = "inline-block"
       clockInSuccess.style.display = ""
       milesForm.style.display = "none"
+      // somethingElse.style.display = "none"
+      // roleDropper.style.display = "none"
+
     }
     if (shift.data.current_shift.end_time !== null){
       clockInDiv.style.display = ""
@@ -137,7 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
   //event listener on clock in buttons div
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
-
+    somethingElse.style.display = "none"
+    roleDropper.style.display = "none"
     axios.get(`/shifts/user/${gactiveUserId}/current`)
     .then((shift) => {
       if(shift.data.previous_shift_today === true) {
@@ -160,6 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         clockOutButton.addEventListener('click', (ev) => {
+          somethingElse.style.display = ""
+          roleDropper.style.display = ""
           axios.patch(`/shifts/${gactiveUserShiftId}`)
           .then((shift) => {
             checkStatus()
