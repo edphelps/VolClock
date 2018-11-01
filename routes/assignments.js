@@ -18,14 +18,11 @@ function getDateToday() {
 *  GET /user/:user_id
 *  Get repeating assgnments for user_id plus looks up the role text
 
-*  The "dow" field is 0-based starting on Sunday (so )
+*  The "dow" field is 0-based starting on Sunday.
+*  If user has no assignments then [] is returned.
 *  Return
 *      200: {
 *         assignments: [ { role, id (assignments), start, … }, { ... } ]
-*         }
-*      404: {
-*         assignments: "null",
-*         message: "no repeatng assignments"
 *         }
 *
 http GET localhost:3000/assignments/user/2
@@ -40,12 +37,6 @@ router.get('/user/:user_id', (req, res, next) => {
     .select(['assignments.*', 'roles.role'])
     .then((aRecs) => {
       console.log("--> qry returning: ", aRecs);
-
-      // user has no assignments
-      if (aRecs.length === 0) {
-        res.status(200).json({ assignments: "null", message: `user ${req.params.user_id} has no assignments` });
-        return;
-      }
 
       // return user's assignments
       res.status(200).json({ assignments: aRecs });

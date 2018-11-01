@@ -18,9 +18,9 @@ function getTimeOnly(_dt) {
 // ------------------
 
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+// $(function () {
+//   $('[data-toggle="tooltip"]').tooltip()
+// })
 
 /* ==================================================
 *  onMenuSchedule()
@@ -32,11 +32,11 @@ function onMenuSchedule() {
 
   axios.get(`assignments/user/${gactiveUserId}`)
     .then((res) => {
-      const elemTTTest = document.getElementById("tttest");
-      // elemTTTest.tooltip();
-
-      console.log("res: ", res);
+      console.log("------------------");
+      console.log("gactiveUserId: ", gactiveUserId);
+      console.log("--- onMenuSchedule res: ", res);
       const aAssignments = res.data.assignments;
+      console.log("--- onMenuSchedule aAssignments: ", aAssignments);
 
       aAssignments.sort((a, b) => {
         if (a.dow !== b.dow) return a.dow - b.dow;

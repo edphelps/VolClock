@@ -77,7 +77,7 @@ app.use((err, req, res, next) => {
   console.log('restructured error: ', restructureError(err));
   console.log("^^^^^^^^^^^^^^^^^^^^^^^ APP ERROR IN CONTROLLER ^^^^^^^^^^^^^^^^^^^^^^");
   res.status(status).json(restructureError(err));
-  next();
+  // next();
 });
 
 // error handler from original express-generator
