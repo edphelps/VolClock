@@ -9,7 +9,7 @@ exports.seed = function(knex, Promise) {
         {id: 2, fname: 'Riley', lname: 'Burns', login_code: '1234', miles_default: 15},
         {id: 3, fname: 'Bennet', lname: 'Omalu', login_code: '1235', miles_default: 8},
         {id: 4, fname: 'Kanye', lname: 'West', login_code: '0000', miles_default: 6},
-        {id: 5, fname: 'Super', lname: 'visor', login_code: '9999', miles_default: 0},
+        {id: 5, fname: 'Admin', lname: 'User', login_code: '9999', miles_default: 0},
       ])
       .then(() => {
 				 // Moves id column (PK) auto-incremented to correct value after inserts

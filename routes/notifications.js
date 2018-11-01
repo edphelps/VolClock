@@ -25,6 +25,26 @@ router.get('/user/:user_id', (req, res, next) => {
 });
 
 /* **************************************************
+*  GET /
+*  Get all notifications with the user name added
+*  Return
+*    200 { notifications: [ { fname, lname, id (notification), user_id, start_date, ... }, { id, user_id, start_date, ... } ]
+http GET localhost:3000/notifications
+***************************************************** */
+router.get('/', (req, res, next) => {
+  console.log(`-- GET / route notifications`);
+  knex("notifications")
+    .join('users','user_id','users.id')
+    .select(['notifications.*', 'users.fname', 'users.lname'])
+    .then((aRecs) => {
+      res.status(200).json({ notifications: aRecs });
+    })
+    .catch((error) => {
+      next(routeCatch(`--- GET / route`, error));
+    });
+});
+
+/* **************************************************
 *  DELETE /:id
 *  Delete a notification
 *  Return
