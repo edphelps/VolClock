@@ -20,7 +20,7 @@ function onMenuHistory() {
 
       if(shifts.length === 0) { res.status(201).json({ message: 'success' }) }
       // call table construction
-      renderTable(yearString)
+      onChangeYear()
 
     })
     .catch((error) => {
@@ -31,12 +31,11 @@ function onMenuHistory() {
 function getDateOnly(_dt) {
   const dt = new Date(_dt); // this allows the dt param to be Date or String
   if (isNaN(dt))
-    return "?";
-  return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`;
-  // return dt.getMonth()+1 + "/" + dt.getDate() + "/" + dt.getFullYear();
+    return '?'
+  return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`
 }
 
-// calculates the total shift hours for user
+// calculate users total shift hours for current year
 function totalShiftHours(thisYearShifts) {
   let hourCount = 0
   thisYearShifts.forEach((shift) => {
@@ -52,7 +51,7 @@ function totalShiftHours(thisYearShifts) {
   })
 }
 
-// calculates the total miles driven for all shifts
+// calculates the total miles driven for current year shifts
 function totalMilesDriven(thisYearShifts) {
   let mileCount = 0
   thisYearShifts.forEach((shift) => {
@@ -62,6 +61,7 @@ function totalMilesDriven(thisYearShifts) {
   })
 }
 
+// loop through all shifts and create year dropdown for years with shift history
 function yearsWorked(response) {
   let yearsListHtml = document.getElementById('years-worked-list')
   let dateSet = new Set()
@@ -73,44 +73,54 @@ function yearsWorked(response) {
       dateSet.add(endYear)
     }
   })
-  dateSet.forEach((value) => {
+  let dateArray = Array.from(dateSet)
+  dateArray.sort().reverse()
+  dateArray.forEach((value) => {
     yearsListHtml.innerHTML += `<option>${value}</option>`
   })
 }
 
+// loop through each shift and only select years that match current year
 function yearShiftHistory(response) {
-  // loop through each shift and
   shifts.forEach((shift) => {
     let yearsWorkedListHtml = document.getElementById('years-worked-list')
     let shiftEnd = new Date(shift.end_time)
     yearsWorkedListHtml.onchange = function(ev) {
-      let shiftHistoryList = document.getElementById('list-history')
-      while(shiftHistoryList.firstChild) {
-        shiftHistoryList.removeChild(shiftHistoryList.firstChild)
-      }
-      yearString = ev.target.value
-      renderTable(yearString)
+      onChangeYear(ev)
     }
   })
+}
+
+// create new table with selected years shifts upone changing year (dropdown)
+function onChangeYear(ev) {
+  let shiftHistoryList = document.getElementById('list-history')
+  while(shiftHistoryList.firstChild) {
+    shiftHistoryList.removeChild(shiftHistoryList.firstChild)
+  }
+  yearString = document.getElementById('years-worked-list').value
+  renderTable(yearString)
 }
 
 // render table for shifts within selected calendar year
 function renderTable(yearString) {
   let year = parseInt(yearString)
-
-
   shifts.forEach((shift) => {
     let shiftEnd = new Date(shift.end_time)
     let endYear = shiftEnd.getFullYear()
     currentYear = endYear
   })
 
+  // filter out shifts for current year
   let thisYearShifts = shifts.filter(shift => {
     let shiftEnd = new Date(shift.end_time)
     let endYear = shiftEnd.getFullYear()
     return endYear === year
-  }).sort(shifts.id).reverse()
-  console.log('thisYearShifts>>>', thisYearShifts)
+  })
+
+  // sort shifts by most recent shift id
+  thisYearShifts.sort((a,b) => {
+    return a.id - b.id
+  }).reverse()
 
   totalShiftHours(thisYearShifts)
   totalMilesDriven(thisYearShifts)
