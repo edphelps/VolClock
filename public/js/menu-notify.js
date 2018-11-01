@@ -1,7 +1,7 @@
 
 // let notifyButton = null;
 // let timeOffButton = null;
-
+const notifyHeader = document.getElementById('notifyHeader')
 let timeOffFormDiv = null;
 let notifyFormDiv = null;
 let reviewDiv = null;
@@ -43,7 +43,7 @@ function notifyClick() {
   // update what sections of page are visible
   contactButtons.style.display = "none";
   notifyFormDiv.style.display = "block";
-
+  notifyHeader.style.display = "none"
   // set focus on the comment control
   document.forms.notifyForm.elements.notifyComment.focus();
 }
@@ -80,6 +80,7 @@ function reviewClick() {
   // update what sections of page are visible
   contactButtons.style.display = "none";
   reviewDiv.style.display = "block";
+  notifyHeader.style.display = "none"
 
   /* ------------------
   *  getDateOnly()
@@ -178,6 +179,7 @@ function notifyPost() {
   // update what sections of page are visible
   notifyFormDiv.style.display = "none";
   contactButtons.style.display = "";
+  notifyHeader.style.display = "none"
 
   return false; // prevent form from actually submitting
 }
