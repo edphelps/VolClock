@@ -17,11 +17,6 @@ function getTimeOnly(_dt) {
 }
 // ------------------
 
-
-// $(function () {
-//   $('[data-toggle="tooltip"]').tooltip()
-// })
-
 /* ==================================================
 *  onMenuSchedule()
 *  Initial Menu selection handler, this is where it all begins
@@ -40,10 +35,10 @@ function onMenuSchedule() {
 
       aAssignments.sort((a, b) => {
         if (a.dow !== b.dow) return a.dow - b.dow;
-        return a.start_time - b.start_time;
+        return new Date(a.start_time) - new Date(b.start_time);
       });
 
-      console.log("sorted: ", aAssignments);
+      console.log("sorted xx: ", aAssignments);
 
       for (let dow = 0; dow <= 6; dow++) {
         const elemDow = document.getElementById(`assignment-${dow}`);
@@ -53,7 +48,7 @@ function onMenuSchedule() {
           if (assignment.dow === dow) {
             html += `
                <span data-toggle="tooltip" data-placement="top" title="${assignment.role}">
-                 <a href='#'>${assignment.role.slice(0, 7)}..</a>
+                 <a href='#'>${assignment.role.slice(0, 12)}</a>
                </span><br>
                ${getTimeOnly(assignment.start_time)}<br>
                ${getTimeOnly(assignment.end_time)}<br><br>`;
@@ -62,7 +57,7 @@ function onMenuSchedule() {
         if (html === "") html = 'n/a';
         elemDow.innerHTML = html;
       }
-      // get the tooltips added above to display properly
+      // get the tooltips added above to display properly (this is from bootstrp docs)
       $('[data-toggle="tooltip"]').tooltip();
     })
     .catch((error) => {
