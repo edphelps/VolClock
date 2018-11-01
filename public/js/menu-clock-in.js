@@ -8,6 +8,7 @@ function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
   checkStatus()
   getGActiveUserId()
+  getRoles()
 }
 
 //html elements

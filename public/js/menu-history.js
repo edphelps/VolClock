@@ -10,6 +10,7 @@ let yearString = 2018
 * =================================================== */
 function onMenuHistory() {
   changeMenuAndContentArea("nav--history", gelemContentHistory)
+  
 
   axios.get(`/shifts/user/${gactiveUserId}`)
     .then((response) => {
