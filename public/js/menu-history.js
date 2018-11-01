@@ -10,7 +10,7 @@ let yearString = 2018
 * =================================================== */
 function onMenuHistory() {
   changeMenuAndContentArea("nav--history", gelemContentHistory)
-  
+
 
   axios.get(`/shifts/user/${gactiveUserId}`)
     .then((response) => {
@@ -34,6 +34,20 @@ function getDateOnly(_dt) {
   if (isNaN(dt))
     return '?'
   return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`
+}
+
+function getTimeOnly(_dt) {
+  const dt = new Date(_dt); // this allows the dt param to be Date or String
+  if (isNaN(dt)) {
+    return "?";
+  }
+  let hrs = dt.getHours() + 1;
+  const am = (hrs < 12);
+  if (12 < hrs) hrs -= 12;
+  const mins = dt.getMinutes();
+
+  return `${hrs}:${(mins < 10 ? '0' : '')}${mins}${(am) ? 'a' : 'p'}`;
+  // return `${dt.getHours() + 1}:${dt.getMinutes()}`;
 }
 
 // calculate users total shift hours for current year
@@ -137,22 +151,30 @@ function renderTable(yearString) {
         <th scope="col">Shift Date</th>
         <th scope="col">Start Time</th>
         <th scope="col">End Time</th>
+        <th scope="col">Hours Worked</th>
         <th scope="col">Miles</th>
       </tr>`
 
   thisYearShifts.forEach((shift) => {
     let shiftRow = document.createElement('tr')
     let shiftStartInfo = new Date(shift.start_time)
+    let shiftEndInfo = new Date(shift.end_time)
     let shiftYear = shiftStartInfo.toDateString()
-    let shiftStart = new Date(shift.start_time).toLocaleTimeString()
-    let shiftEnd = new Date(shift.end_time).toLocaleTimeString()
+    let shiftStartShort = getTimeOnly(shift.start_time)
+    let shiftEndShort = getTimeOnly(shift.end_time)
     let shiftEndQualifier = new Date(shift.end_time).toLocaleString()
-
-    if (shiftEndQualifier === '12/31/1969, 5:00:00 PM') { shiftEnd = 'Currently Clocked In'}
+    let shiftHoursWorked = 0
+    if (shiftEndInfo > shiftStartInfo) {
+      shiftHoursWorked = ((shiftEndInfo - shiftStartInfo)/1000/60/60).toFixed(1)
+    } else {
+    }
+    // let shiftHoursWorked = ((shiftEndInfo - shiftStartInfo)/1000/60/60)
+    if (shiftEndQualifier === '12/31/1969, 5:00:00 PM') { shiftEndShort = 'Clocked In'}
     shiftRow.innerHTML += `<td>${shift.role}</td>
       <td>` + shiftYear + `</td>
-      <td>` + shiftStart + `</td>
-      <td>` + shiftEnd + `</td>
+      <td>` + shiftStartShort + `</td>
+      <td>` + shiftEndShort + `</td>
+      <td>` + shiftHoursWorked + `</td>
       <td>${shift.miles}</td>`
 
       tableBody.appendChild(shiftRow)
