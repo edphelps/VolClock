@@ -15,6 +15,8 @@ const clockOutDiv = document.getElementById('clockOutDiv')
 const milesInput = document.getElementById('miles')
 const clockInSuccess = document.getElementById('clockInSuccess')
 const milesForm = document.getElementById('milesForm')
+const somethingElse = document.getElementById('somethingElse')
+const roleDropper = document.getElementById('roleDropper')
 //creates drop down list of all roles
 function dropdownRoles(){
   axios.get('/roles')
@@ -113,6 +115,9 @@ function checkStatus() {
       clockOutDiv.style.display = "inline-block"
       clockInSuccess.style.display = ""
       milesForm.style.display = "none"
+      // somethingElse.style.display = "none"
+      // roleDropper.style.display = "none"
+
     }
     if (shift.data.current_shift.end_time !== null){
       clockInDiv.style.display = ""
@@ -137,7 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
   //event listener on clock in buttons div
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
-
+    somethingElse.style.display = "none"
+    roleDropper.style.display = "none"
     axios.get(`/shifts/user/${gactiveUserId}/current`)
     .then((shift) => {
       if(shift.data.previous_shift_today === true) {
@@ -160,6 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         clockOutButton.addEventListener('click', (ev) => {
+          somethingElse.style.display = ""
+          roleDropper.style.display = ""
           axios.patch(`/shifts/${gactiveUserShiftId}`)
           .then((shift) => {
             checkStatus()
