@@ -1,12 +1,15 @@
 
-let notifyButton = null;
-let timeOffButton = null;
+// let notifyButton = null;
+// let timeOffButton = null;
 
 let timeOffFormDiv = null;
 let notifyFormDiv = null;
 let reviewDiv = null;
 
 let contactButtons = null;
+
+// track the last user so we can reset when a new user logs in
+let lastUser = 0;
 
 /* ==================================================
 *  onMenuNotify()
@@ -15,6 +18,18 @@ let contactButtons = null;
 * =================================================== */
 function onMenuNotify() {
   changeMenuAndContentArea("nav--notify", gelemContentNotify);
+
+  // if a new user has logged in we want to reset what sections are visible
+  // and any lingering content the last user may have typed into a message or
+  // time-off request
+  if (lastUser != gactiveUserId) {
+
+    // clear lingering content and reset to show the main three buttons
+    notifyCancel();
+    timeOffCancel();
+
+    lastUser = gactiveUserId;
+  }
 }
 
 /* ==================================================

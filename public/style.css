@@ -9,7 +9,8 @@ body {
 
 /* background banner at top of page */
 #banner {
-  background: url("./images/banner.png") no-repeat center;
+  /* background: url("./images/jason-leung-1064184-unsplash.jpg") no-repeat center; */
+  background-image: linear-gradient(to bottom right, white, rgb(219, 242, 213));
 }
 
 #logo {
@@ -124,6 +125,13 @@ h4.text-center.text-danger {
   letter-spacing: 2px;
   margin-top: 2em;
   font-weight: 900;
+}
+.btn{
+  font-family: 'Arimo', sans-serif;
+  letter-spacing: 2px;
+}
+#change-user-button.btn.btn-primary.btn-sm{
+  letter-spacing: 0px;
 }
 /* Marker for divs that are filled in by ajax.
    When changing to another menu all divs with this class are set to "".

@@ -42,7 +42,7 @@ router.get('/user/:user_id/current', (req, res, next) => {
     .where('start_time', ">", getDateToday())
     .whereNull('end_time')
     .then((aRecs) => {
-      console.log("--> qry returning: ", aRecs);
+      // console.log("--> qry returning: ", aRecs);
 
       // user is currently clocked in
       if (aRecs.length !== 0) {
@@ -56,7 +56,7 @@ router.get('/user/:user_id/current', (req, res, next) => {
         .where('start_time', ">", getDateToday())
         .whereNotNull('end_time')
         .then((aEarlierRecs) => {
-          console.log("** aRecs testing shift earlier today: ", aEarlierRecs);
+          // console.log("** aRecs testing shift earlier today: ", aEarlierRecs);
 
           // clocked in earlier in the day
           if (aEarlierRecs.length) {
@@ -97,7 +97,7 @@ router.get('/user/:user_id', (req, res, next) => {
     .where('user_id', req.params.user_id)
     .select( [ 'shifts.*', 'roles.role'] )
     .then((aRecs) => {
-      console.log("--> qry returning: ", aRecs);
+      // console.log("--> qry returning: ", aRecs);
 
       // user has no history
       if (aRecs.length === 0) {
@@ -204,18 +204,26 @@ router.patch('/:id', (req, res, next) => {
     })
     // clock-out the shift
     .then(() => {
-      knex('shifts')
+      return knex('shifts')
         .update({ end_time: new Date() })
         .where('id', req.params.id)
+        .where(`end_time`, null)
         .returning('*')
-        .then((aRecs) => {
-          console.log("--> update returning: ", aRecs);
-          res.status(201).json({ shift: aRecs[0] });
-          return;
-        });
+      })
+    .then((aRecs) => {
+      console.log("--> update 2 returning: ", aRecs);
+      if (!aRecs.length) {
+        console.log("-- PATCH 2 route throw error, shift already clocked out");
+        const error = new Error(`unable to clock-out, shift already clocked out for id: ${req.params.id}`);
+        error.status = 401;
+        throw error; // send to .catch() below.
+                     // MUST throw to prevent following .then()'s from executing
+      }
+      res.status(201).json({ shift: aRecs[0] });
+      return;
     })
     .catch((error) => {
-      next(routeCatch(`-- PATCH ${req.params.id} route catch error: `, error));
+      next(routeCatch(`-- PATCH 3 ${req.params.id} route catch error: `, error));
     });
 });
 
