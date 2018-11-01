@@ -53,8 +53,8 @@ function dropdownRoles(){
 //function for sending post request to db from drop down menu list item
 function sendDropDownRole() {
   dropDown.addEventListener('click', (ev) => {
-    somethingElse.style.display = "none"
-    roleDropper.style.display = "none"
+    // somethingElse.style.display = "none"
+    // roleDropper.style.display = "none"
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
     let dataObject = {}
@@ -67,6 +67,7 @@ function sendDropDownRole() {
       .then((post) => {
         gactiveUserShiftId = post.data.shift.id
         checkStatus()
+        changeRoleParagaraph()
       })
       .catch(error => {
         console.log(error)
@@ -77,7 +78,6 @@ function sendDropDownRole() {
 
 //sends an end time to db when clock out button is clicked
 function clockOutPatch() {
-  // checkStatus()
   const clockOutButton = document.getElementById('clockOutButton')
   clockOutButton.addEventListener('click', (ev) => {
     somethingElse.style.display = ""
@@ -85,8 +85,6 @@ function clockOutPatch() {
     location.reload()
     axios.patch(`/shifts/${gactiveUserShiftId}`)
     .then((shift) => {
-      // console.log(shift);
-
       checkStatus()
     })
     .catch((error) => {
@@ -132,12 +130,16 @@ function checkStatus() {
       clockOutDiv.style.display = "inline-block"
       clockInSuccess.style.display = ""
       milesForm.style.display = "none"
+      somethingElse.style.display = "none"
+      roleDropper.style.display = "none"
     }
     if (shift.data.current_shift.end_time !== null){
       clockInDiv.style.display = ""
       clockOutDiv.style.display = "none"
       clockInSuccess.style.display = "none"
       milesForm.style.display = ""
+      somethingElse.style.display = ""
+      roleDropper.style.display = ""
     }
     if(shift.data.previous_shift_today === true){
       milesForm.style.display = "none"
@@ -158,8 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
   //event listener on clock in buttons div. hides dropdown div when button is clicked
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
-    somethingElse.style.display = "none"
-    roleDropper.style.display = "none"
     axios.get(`/shifts/user/${gactiveUserId}/current`)
     .then((shift) => {
       console.log(shift);
