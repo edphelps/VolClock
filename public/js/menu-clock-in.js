@@ -9,6 +9,7 @@ function onMenuClockIn() {
   checkStatus()
   getGActiveUserId()
   getRoles()
+  changeRoleParagaraph()
 }
 
 //html elements
