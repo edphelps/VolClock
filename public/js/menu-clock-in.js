@@ -80,7 +80,7 @@ function clockOutPatch() {
   clockOutButton.addEventListener('click', (ev) => {
     somethingElse.style.display = ""
     roleDropper.style.display = ""
-
+    location.reload()
     axios.patch(`/shifts/${gactiveUserShiftId}`)
     .then((shift) => {
       // console.log(shift);
