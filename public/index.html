@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <!-- Google Font CSS -->
+  <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
   <!-- App CSS -->
   <link rel="stylesheet" href="./style.css">
   <title>TRU Care Thrift Store</title>
@@ -61,7 +63,7 @@
 
         <!-- COLUMN welcome + name -->
         <div class="row pb-3 justify-content-center">
-          <h2 id="app-title" class=" font-weight-bold text-center"></h2>
+          <h2 id="app-title" class="text-center"></h2>
         </div> <!-- col -->
 
         <!-- COLUMN change user button -->
@@ -136,8 +138,8 @@
   <hr><hr/>
 
     <!--dropdown menu for other availabe shifts -->
-  <h3 class="text-center pt-3 pb-1">Here for something else?</h3>
-    <div class="row justify-content-center">
+  <h3 class="text-center pt-3 pb-1" id="somethingElse">Here for something else?</h3>
+    <div class="row justify-content-center" id="roleDropper">
       <div class="btn-group">
       <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Thrift Store Jobs
