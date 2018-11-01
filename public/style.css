@@ -133,6 +133,27 @@ h4.text-center.text-danger {
 #change-user-button.btn.btn-primary.btn-sm{
   letter-spacing: 0px;
 }
+
+/* **************************************************
+ * NOTIFY SECTION
+ ****************************************************/
+  h2.text-center {
+    font-family: 'Arimo', sans-serif;
+    font-size: 30px;
+    letter-spacing: 2px;
+    font-style: italic;
+  }
+  h3.text-center.mt-4.mb-1{
+    font-family: 'Arimo', sans-serif;
+    font-size: 17px;
+    letter-spacing: 1px;
+  }
+  label {
+    letter: 1px;
+  }
+
+
+
 /* Marker for divs that are filled in by ajax.
    When changing to another menu all divs with this class are set to "".
    This prevents the problem of the card accordians shadowing each other's
