@@ -7,7 +7,6 @@
 function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
   checkStatus()
-  // dropdownRoles()
 }
 const dropDown = document.getElementById('dropdownRoles')
 const clockInDiv = document.getElementById('clockInDiv')
@@ -39,7 +38,6 @@ function dropdownRoles(){
       listItem.innerText = el.role
       listItem.setAttribute('id', el.id)
       dropDown.appendChild(listItem)
-      //sortedRoles.sort()
     }
   })
 }
@@ -88,7 +86,6 @@ function getRoles() {
     roles.sort((a,b) => {
       return a.role - b.role || a.role.localeCompare(b.role)
     })
-    console.log(roles);
     let miles = data.data.user.miles_default
     milesInput.value = miles
   //loop over roles array and create buttons with role names
