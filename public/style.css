@@ -108,13 +108,11 @@ h4.text-center.text-danger {
   background-color: rgb(62, 175, 56);
 }
 #clockOutButton {
-  width: 45%;
-  height:0;
-  padding-bottom: 40%;
-  border-radius: 50%;
-  border:10px solid #cfdcec;
-  overflow:hidden;
+
+  height:80px;
+
 }
+
 .nav-item.nav-link {
   font-family: 'Arimo', sans-serif;
   letter-spacing: 1px;
