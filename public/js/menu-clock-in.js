@@ -207,7 +207,6 @@ function getGActiveUserId(){
 function changeRoleParagaraph() {
   axios.get(`/shifts/user/${gactiveUserId}/current`)
   .then((shift) => {
-    console.log(shift);
     roleParagraph.innerText = `Clocked-in: ${shift.data.current_shift.role}`
   })
   .catch((err) => {
