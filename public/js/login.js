@@ -52,7 +52,7 @@ function loginUser(loginCode) {
         // set user name for time off
         const nameTimeOff = document.getElementById('nameTimeOff');
         nameTimeOff.innerText = `For ${firstName} ${lastName}`;
-        getRoles();
+      
       }
     })
     .catch((error) => {

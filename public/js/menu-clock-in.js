@@ -8,6 +8,7 @@ function onMenuClockIn() {
   changeMenuAndContentArea("nav--clock-in", gelemContentClockIn);
   checkStatus()
   getGActiveUserId()
+  getRoles()
 }
 
 //html elements
@@ -79,7 +80,7 @@ function clockOutPatch() {
   clockOutButton.addEventListener('click', (ev) => {
     somethingElse.style.display = ""
     roleDropper.style.display = ""
-
+    location.reload()
     axios.patch(`/shifts/${gactiveUserShiftId}`)
     .then((shift) => {
       // console.log(shift);

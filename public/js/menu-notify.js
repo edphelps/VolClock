@@ -18,6 +18,7 @@ let lastUser = 0;
 * =================================================== */
 function onMenuNotify() {
   changeMenuAndContentArea("nav--notify", gelemContentNotify);
+  
 
   // if a new user has logged in we want to reset what sections are visible
   // and any lingering content the last user may have typed into a message or
