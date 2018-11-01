@@ -53,8 +53,7 @@ function dropdownRoles(){
 //function for sending post request to db from drop down menu list item
 function sendDropDownRole() {
   dropDown.addEventListener('click', (ev) => {
-    // somethingElse.style.display = "none"
-    // roleDropper.style.display = "none"
+
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
     let dataObject = {}
@@ -194,6 +193,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function getGActiveUserId(){
   axios.get(`/shifts/user/${gactiveUserId}/current`)
   .then((shift) => {
+    if(shift.data.previous_shift_today === true) {
+      milesInput.value = 0
+    }
     gactiveUserShiftId = shift.data.current_shift.id
 
   })
@@ -207,6 +209,9 @@ function getGActiveUserId(){
 function changeRoleParagaraph() {
   axios.get(`/shifts/user/${gactiveUserId}/current`)
   .then((shift) => {
+    if(shift.data.previous_shift_today === true) {
+      milesInput.value = 0
+    }
     roleParagraph.innerText = `Clocked-in: ${shift.data.current_shift.role}`
   })
   .catch((err) => {
