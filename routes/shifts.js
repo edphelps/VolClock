@@ -15,6 +15,36 @@ function getDateToday() {
 }
 
 /* **************************************************
+*  autoClockOut
+*  Clock out any shifts from previous days with thrift store closing time
+*  Returns a knex Promise
+***************************************************** */
+function autoClockOut() {
+  console.log("autoClockOut");
+
+  const aPromises = [];
+
+  return knex('shifts')
+    .where('start_time', '<', getDateToday())
+    .whereNull('end_time')
+    .then((aRecs) => {
+      console.log('autoClose aRecs: ', aRecs);
+      for (const oRec of aRecs) {
+        const dtStartTime = new Date(oRec.start_time);
+        const endTime = new Date(
+          dtStartTime.getFullYear(),
+          dtStartTime.getMonth(),
+          dtStartTime.getDate(),
+          17,30,0);
+        aPromises.push(knex('shifts')
+          .update({ end_time: endTime })
+          .where('id', oRec.id));
+      }
+    })
+    .then(() => Promise.all(aPromises));
+}
+
+/* **************************************************
 *  GET /user/:user_id/current
 *  Get shift record if user is currently clocked in.
 *  If not clocked in, determine user was clocked in earlier in the day.
@@ -77,6 +107,7 @@ router.get('/user/:user_id/current', (req, res, next) => {
 /* **************************************************
 *  GET /user/:user_id
 *  Get complete shift history for user + add the role text
+*  Runs the autoClockOut() to ensure past days' shifts are clocked out
 *  Return
 *      200: {
 *         shifts: [ { role, id (shift id), start, … }, { ... } ]
@@ -91,11 +122,14 @@ http GET localhost:3000/shifts/user/2
 router.get('/user/:user_id', (req, res, next) => {
   console.log("-- GET route shifts/user/:id: ", req.params.user_id);
 
-  // get all past shifts for user
-  knex('shifts')
-    .join('roles', 'roles.id', 'role_id')
-    .where('user_id', req.params.user_id)
-    .select( [ 'shifts.*', 'roles.role'] )
+  autoClockOut()
+    // get all past shifts for user
+    .then(() => {
+      return knex('shifts')
+        .join('roles', 'roles.id', 'role_id')
+        .where('user_id', req.params.user_id)
+        .select( [ 'shifts.*', 'roles.role'] )
+    })
     .then((aRecs) => {
       // console.log("--> qry returning: ", aRecs);
 
@@ -112,6 +146,27 @@ router.get('/user/:user_id', (req, res, next) => {
     .catch((error) => {
       next(routeCatch(`--- GET route shifts/user/${req.params.user_id}`, error));
     });
+  // // get all past shifts for user
+  // knex('shifts')
+  //   .join('roles', 'roles.id', 'role_id')
+  //   .where('user_id', req.params.user_id)
+  //   .select( [ 'shifts.*', 'roles.role'] )
+  //   .then((aRecs) => {
+  //     // console.log("--> qry returning: ", aRecs);
+  //
+  //     // user has no history
+  //     if (aRecs.length === 0) {
+  //       res.status(200).json({ shifts: "null", message: `user ${req.params.user_id} has no shift history` });
+  //       return;
+  //     }
+  //
+  //     // return user's shift history
+  //     res.status(200).json({ shifts: aRecs });
+  //     return;
+  //   })
+  //   .catch((error) => {
+  //     next(routeCatch(`--- GET route shifts/user/${req.params.user_id}`, error));
+  //   });
 });
 
 /* **************************************************
