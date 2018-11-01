@@ -186,11 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
 //global variable to their current shift
 //this is called in the onMenuClockIn function which is called when the login button is clicked
 function getGActiveUserId(){
-axios.get(`/shifts/user/${gactiveUserId}/current`)
-.then((shift) => {
-  gactiveUserShiftId = shift.data.current_shift.id
-})
-.catch((err) => {
-  console.log(err)
-})
+  axios.get(`/shifts/user/${gactiveUserId}/current`)
+  .then((shift) => {
+    gactiveUserShiftId = shift.data.current_shift.id
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 }
