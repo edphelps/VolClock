@@ -38,10 +38,24 @@ function loginUser(loginCode) {
 
         // move to the clock in or admin menu choice
         if (loginCode == ADMIN_USER_CODE) {
-          console.log("&& loading admin");
+
+          // hide the other menu choices and un hide the admin menu choice
+          document.getElementById('nav--clock-in').setAttribute("hidden", true);
+          document.getElementById('nav--notify').setAttribute("hidden", true);
+          document.getElementById('nav--schedule').setAttribute("hidden", true);
+          document.getElementById('nav--history').setAttribute("hidden", true);
+          document.getElementById('nav--admin').removeAttribute('hidden');
+
           onMenuAdmin();
         } else {
-          console.log("&& loading regulat");
+
+          // hide the other menu choices and un hide the admin menu choice
+          document.getElementById('nav--clock-in').removeAttribute('hidden');
+          document.getElementById('nav--notify').removeAttribute('hidden');
+          document.getElementById('nav--schedule').removeAttribute('hidden');
+          document.getElementById('nav--history').removeAttribute('hidden');
+          document.getElementById('nav--admin').setAttribute("hidden", true);
+
           onMenuClockIn();
         }
 
@@ -105,5 +119,5 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // TODO: remove this, it short-circuits the login page to login Riley Burns
-  loginUser("1234");
+  // loginUser("1234");
 });

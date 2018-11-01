@@ -5,18 +5,9 @@
 *  when user clicks the top menu.
 * =================================================== */
 function onMenuAdmin() {
-  // hide the other menu choices and un hide the admin menu choice
-  document.getElementById('nav--clock-in').setAttribute("hidden", true);
-  document.getElementById('nav--notify').setAttribute("hidden", true);
-  document.getElementById('nav--schedule').setAttribute("hidden", true);
-  document.getElementById('nav--history').setAttribute("hidden", true);
-  document.getElementById('nav--admin').removeAttribute('hidden');
-
   changeMenuAndContentArea("nav--admin", gelemContentAdmin);
-
   renderAdminReview();
 }
-
 
 /* ==================================================
 *  deleteNoticationAdmin()
