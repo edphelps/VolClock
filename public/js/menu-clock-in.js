@@ -9,9 +9,11 @@ function onMenuClockIn() {
   checkStatus()
   getGActiveUserId()
   getRoles()
+  changeRoleParagaraph()
 }
 
 //html elements
+const roleParagraph = document.getElementById('roleParagraph')
 const dropDown = document.getElementById('dropdownRoles')
 const clockInDiv = document.getElementById('clockInDiv')
 const clockOutDiv = document.getElementById('clockOutDiv')
@@ -160,6 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
     roleDropper.style.display = "none"
     axios.get(`/shifts/user/${gactiveUserId}/current`)
     .then((shift) => {
+      console.log(shift);
+
       if(shift.data.previous_shift_today === true) {
         milesInput.value = 0
       }
@@ -176,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((post) => {
         gactiveUserShiftId = post.data.shift.id
         checkStatus()
+        changeRoleParagaraph()
       })
       .catch(error => {
         console.log(error)
@@ -190,6 +195,19 @@ function getGActiveUserId(){
   axios.get(`/shifts/user/${gactiveUserId}/current`)
   .then((shift) => {
     gactiveUserShiftId = shift.data.current_shift.id
+
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
+//changes paragraph text to match role that they clock in as. called when clock in button is clicked
+//and called in onMenuClockIn so that it updates when a new user logs in
+function changeRoleParagaraph() {
+  axios.get(`/shifts/user/${gactiveUserId}/current`)
+  .then((shift) => {
+    roleParagraph.innerText = `Clocked-in: ${shift.data.current_shift.role}`
   })
   .catch((err) => {
     console.log(err)
