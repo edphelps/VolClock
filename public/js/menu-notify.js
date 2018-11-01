@@ -116,7 +116,7 @@ function reviewClick() {
         html += `
             <tr>
               <td><a href="#" onclick=deleteNotification(${oNotification.id})><i class="fas fa-trash-alt"></i></a>&nbsp;`
-                   + ((oNotification.start_date) ? 'off' : 'note') + `</td>`;
+                   + ((oNotification.start_date) ? 'time-off' : 'note') + `</td>`;
         if (oNotification.start_date) {
           html += `
               <td>` + getDateOnly(`${oNotification.start_date}`) + ` - ` + getDateOnly(`${oNotification.end_date}`) + `<br>

@@ -54,7 +54,7 @@ function onMenuSchedule() {
                ${getTimeOnly(assignment.end_time)}<br><br>`;
           }
         }
-        if (html === "") html = 'n/a';
+        if (html === "") html = '--';
         elemDow.innerHTML = html;
       }
       // get the tooltips added above to display properly (this is from bootstrp docs)
