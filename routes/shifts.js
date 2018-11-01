@@ -46,13 +46,13 @@ function autoClockOut() {
 
 /* **************************************************
 *  GET /user/:user_id/current
-*  Get shift record if user is currently clocked in.
+*  Get shift record if user is currently clocked in PLUS the role text
 *  If not clocked in, determine user was clocked in earlier in the day.
 *
 *  Return
 *    if user currently clocked in
 *      200: {
-*        current_shift: { id, start, ... }
+*        current_shift: { role, id (shift), start, ... }
 *      }
 *    if user not currently clocked in
 *      200: {
@@ -68,9 +68,11 @@ router.get('/user/:user_id/current', (req, res, next) => {
 
   // check if user is currently clocked into a shift
   knex('shifts')
+    .join('roles', 'roles.id', 'role_id')
     .where('user_id', req.params.user_id)
     .where('start_time', ">", getDateToday())
     .whereNull('end_time')
+    .select(['shifts.*', 'roles.role'])
     .then((aRecs) => {
       // console.log("--> qry returning: ", aRecs);
 
