@@ -22,7 +22,8 @@ const clockInSuccess = document.getElementById('clockInSuccess')
 const milesForm = document.getElementById('milesForm')
 const somethingElse = document.getElementById('somethingElse')
 const roleDropper = document.getElementById('roleDropper')
-
+const clockInPrompt = document.getElementById('clockInPrompt')
+const seperatorLine = document.getElementById('seperatorLine')
 
 //creates drop down list of all roles
 function dropdownRoles(){
@@ -131,12 +132,16 @@ function checkStatus() {
       milesForm.style.display = "none"
       somethingElse.style.display = "none"
       roleDropper.style.display = "none"
+      clockInPrompt.style.display = "none"
+      seperatorLine.style.display = "none"
     }
     if (shift.data.current_shift.end_time !== null){
       clockInDiv.style.display = ""
       clockOutDiv.style.display = "none"
       clockInSuccess.style.display = "none"
       milesForm.style.display = ""
+      clockInPrompt.style.display = ""
+      seperatorLine.style.display = ""
       somethingElse.style.display = ""
       roleDropper.style.display = ""
     }
