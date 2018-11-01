@@ -99,11 +99,12 @@ h4.text-center.text-danger {
   background-color: lavender;
   padding: 15px;
 }
-
-.dropdown-item > a:hover {
-    background-color: red;
-    background-image: none;
+button.btn.btn-success.dropdown-toggle {
+  margin-left: 25px;
+  margin-right: 20px;
 }
+
+
 .dropdown-item:hover {
   background-color: rgb(62, 175, 56);
 }
@@ -112,7 +113,19 @@ h4.text-center.text-danger {
   height:80px;
 
 }
-
+#roleParagraph {
+  font-family: 'Arimo', sans-serif;
+  letter-spacing: 1px;
+  font-size: 20px;
+}
+#milesForm {
+  font-family: 'Arimo', sans-serif;
+  letter-spacing: 1px;
+}
+#somethingElse {
+  font-family: 'Arimo', sans-serif;
+  letter-spacing: 1px;
+}
 .nav-item.nav-link {
   font-family: 'Arimo', sans-serif;
   letter-spacing: 1px;
