@@ -131,10 +131,10 @@ function renderTable(yearString) {
   let tableBody = document.createElement('tbody')
 
   table.setAttribute("class", "table table-bordered table-hover")
-  tableHead.setAttribute('class', 'bg-info')
     tableHead.innerHTML += `
       <tr>
         <th scope="col">Role Id</th>
+        <th scope="col">Shift Date</th>
         <th scope="col">Start Time</th>
         <th scope="col">End Time</th>
         <th scope="col">Miles</th>
@@ -142,10 +142,15 @@ function renderTable(yearString) {
 
   thisYearShifts.forEach((shift) => {
     let shiftRow = document.createElement('tr')
-    let shiftStart = new Date(shift.start_time).toLocaleString()
-    let shiftEnd = new Date(shift.end_time).toLocaleString()
-    if (shiftEnd === '12/31/1969, 5:00:00 PM') { shiftEnd = 'Currently Clocked In'}
+    let shiftStartInfo = new Date(shift.start_time)
+    let shiftYear = shiftStartInfo.toDateString()
+    let shiftStart = new Date(shift.start_time).toLocaleTimeString()
+    let shiftEnd = new Date(shift.end_time).toLocaleTimeString()
+    let shiftEndQualifier = new Date(shift.end_time).toLocaleString()
+
+    if (shiftEndQualifier === '12/31/1969, 5:00:00 PM') { shiftEnd = 'Currently Clocked In'}
     shiftRow.innerHTML += `<td>${shift.role}</td>
+      <td>` + shiftYear + `</td>
       <td>` + shiftStart + `</td>
       <td>` + shiftEnd + `</td>
       <td>${shift.miles}</td>`
