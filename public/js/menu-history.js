@@ -21,8 +21,7 @@ function onMenuHistory() {
       if(shifts.length === 0) { res.status(201).json({ message: 'success' }) }
       // call table construction
       renderTable(yearString)
-      totalShiftHours(response)
-      totalMilesDriven(response)
+
     })
     .catch((error) => {
       console.log(error)
@@ -38,9 +37,9 @@ function getDateOnly(_dt) {
 }
 
 // calculates the total shift hours for user
-function totalShiftHours(response) {
+function totalShiftHours(thisYearShifts) {
   let hourCount = 0
-  shifts.forEach((shift) => {
+  thisYearShifts.forEach((shift) => {
     let totalHoursHtml = document.getElementById('total-hours-worked')
     let startTime = new Date(shift.start_time)
     let endTime = new Date(shift.end_time)
@@ -54,9 +53,9 @@ function totalShiftHours(response) {
 }
 
 // calculates the total miles driven for all shifts
-function totalMilesDriven(response) {
+function totalMilesDriven(thisYearShifts) {
   let mileCount = 0
-  shifts.forEach((shift) => {
+  thisYearShifts.forEach((shift) => {
     let totalMilesHtml = document.getElementById('total-miles-driven')
     mileCount += shift.miles
     totalMilesHtml.innerText = mileCount
@@ -80,7 +79,7 @@ function yearsWorked(response) {
 }
 
 function yearShiftHistory(response) {
-  // Loop through all table rows, and hide those who don't match the search query
+  // loop through each shift and
   shifts.forEach((shift) => {
     let yearsWorkedListHtml = document.getElementById('years-worked-list')
     let shiftEnd = new Date(shift.end_time)
@@ -91,29 +90,30 @@ function yearShiftHistory(response) {
       }
       yearString = ev.target.value
       renderTable(yearString)
-      console.log('ev.target>>>', ev.target.value)
     }
   })
 }
-
 
 // render table for shifts within selected calendar year
 function renderTable(yearString) {
   let year = parseInt(yearString)
 
+
   shifts.forEach((shift) => {
     let shiftEnd = new Date(shift.end_time)
     let endYear = shiftEnd.getFullYear()
     currentYear = endYear
-    console.log('currentYear>>>', currentYear)
   })
 
   let thisYearShifts = shifts.filter(shift => {
     let shiftEnd = new Date(shift.end_time)
     let endYear = shiftEnd.getFullYear()
     return endYear === year
-  })
+  }).sort(shifts.id).reverse()
+  console.log('thisYearShifts>>>', thisYearShifts)
 
+  totalShiftHours(thisYearShifts)
+  totalMilesDriven(thisYearShifts)
   let shiftHistoryList = document.getElementById('list-history')
   let table = document.createElement('table')
   let tableHead = document.createElement('thead')
