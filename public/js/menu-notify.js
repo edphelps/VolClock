@@ -104,19 +104,18 @@ function reviewClick() {
       aNotifications.sort((a, b) => ((a.created_at < b.created_at) ? 1 : -1));
 
       html = `
-        <table class="table">
+        <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-              <th scope="col">message</th>
-              <th scope="col">added</th>
+              <th scope="col">del</th>
+              <th scope="col">message or time-off</th>
+              <th scope="col" class="text-center">added</th>
             </tr>
           </thead>`;
       for (const oNotification of aNotifications) {
         html += `
             <tr>
-              <td><a href="#" onclick=deleteNotification(${oNotification.id})><i class="fas fa-trash-alt"></i></a>&nbsp;`
-                   + ((oNotification.start_date) ? 'time-off' : 'note') + `</td>`;
+              <td><a href="#" onclick=deleteNotification(${oNotification.id})><i class="fas fa-trash-alt"></i></a>`;
         if (oNotification.start_date) {
           html += `
               <td>` + getDateOnly(`${oNotification.start_date}`) + ` - ` + getDateOnly(`${oNotification.end_date}`) + `<br>
@@ -126,7 +125,7 @@ function reviewClick() {
               <td>${oNotification.comment}</td>`;
         }
         html += `
-              <td>` + getDateOnly(`${oNotification.created_at}`) + `</td>
+              <td class="text-center">` + getDateOnly(`${oNotification.created_at}`) + `</td>
             <tr>`;
       }
       html += `
