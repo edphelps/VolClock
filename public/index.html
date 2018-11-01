@@ -105,8 +105,8 @@
 <div id="content--clock-in" class="content">
 
       <!--Buttons for usual shifts -->
-  <div id="clockInDiv" class="auto-clear">
-  <h3 class="text-center pb-3 mt-3 mb-4">Clock in</h3>
+<h3 id="clockInPrompt" class="text-center">Click a button below to clock in</h3>
+  <div id="clockInDiv" class="auto-clear container">
   </div>
 
   <div id="clockInSuccess" class="conatiner"style="display:none">
@@ -133,11 +133,15 @@
       </div>
     </div>
   </form>
-  <hr><hr/>
-
+  <div class="container">
+    <div id="seperatorLine"class="row mt-5"></div>
+  </div>
     <!--dropdown menu for other availabe shifts -->
-  <h3 class="text-center pt-3 pb-1" id="somethingElse">Here for something else?</h3>
-    <div class="row justify-content-center" id="roleDropper">
+    <div class="container justify-content-center" id="roleDropper">
+    <div class="row justify-content-center">
+      <h3 class="text-center pt-3 pb-1" id="somethingElse">Here for something else?</h3>
+    </div>
+    <div class="row justify-content-center">
       <div class="btn-group">
       <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Thrift Store Jobs
@@ -145,6 +149,7 @@
       <div class="dropdown-menu" id="dropdownRoles">
       </div>
     </div>
+</div>
   </div>
 </div> <!-- content--clock-in -->
 

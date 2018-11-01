@@ -22,7 +22,8 @@ const clockInSuccess = document.getElementById('clockInSuccess')
 const milesForm = document.getElementById('milesForm')
 const somethingElse = document.getElementById('somethingElse')
 const roleDropper = document.getElementById('roleDropper')
-
+const clockInPrompt = document.getElementById('clockInPrompt')
+const seperatorLine = document.getElementById('seperatorLine')
 
 //creates drop down list of all roles
 function dropdownRoles(){
@@ -53,8 +54,7 @@ function dropdownRoles(){
 //function for sending post request to db from drop down menu list item
 function sendDropDownRole() {
   dropDown.addEventListener('click', (ev) => {
-    // somethingElse.style.display = "none"
-    // roleDropper.style.display = "none"
+
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
     let dataObject = {}
@@ -132,12 +132,16 @@ function checkStatus() {
       milesForm.style.display = "none"
       somethingElse.style.display = "none"
       roleDropper.style.display = "none"
+      clockInPrompt.style.display = "none"
+      seperatorLine.style.display = "none"
     }
     if (shift.data.current_shift.end_time !== null){
       clockInDiv.style.display = ""
       clockOutDiv.style.display = "none"
       clockInSuccess.style.display = "none"
       milesForm.style.display = ""
+      clockInPrompt.style.display = ""
+      seperatorLine.style.display = ""
       somethingElse.style.display = ""
       roleDropper.style.display = ""
     }
@@ -194,6 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function getGActiveUserId(){
   axios.get(`/shifts/user/${gactiveUserId}/current`)
   .then((shift) => {
+    if(shift.data.previous_shift_today === true) {
+      milesInput.value = 0
+    }
     gactiveUserShiftId = shift.data.current_shift.id
 
   })
@@ -207,6 +214,9 @@ function getGActiveUserId(){
 function changeRoleParagaraph() {
   axios.get(`/shifts/user/${gactiveUserId}/current`)
   .then((shift) => {
+    if(shift.data.previous_shift_today === true) {
+      milesInput.value = 0
+    }
     roleParagraph.innerText = `Clocked-in: ${shift.data.current_shift.role}`
   })
   .catch((err) => {

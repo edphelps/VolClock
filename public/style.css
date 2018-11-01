@@ -84,6 +84,7 @@ h1.text-center {
 }
 .btn-lg {
   margin-top: 10px;
+  font-family: 'Arimo', sans-serif;
 }
 h4.text-center.text-danger {
   font-size: 15px;
@@ -99,20 +100,40 @@ h4.text-center.text-danger {
   background-color: lavender;
   padding: 15px;
 }
-
-.dropdown-item > a:hover {
-    background-color: red;
-    background-image: none;
+button.btn.btn-success.dropdown-toggle {
+  margin-left: 25px;
+  margin-right: 20px;
+  margin-bottom: 25px;
+  height: 50px;
 }
+
+
 .dropdown-item:hover {
   background-color: rgb(62, 175, 56);
 }
 #clockOutButton {
-
+  margin-bottom: 25px;
   height:80px;
 
 }
-
+#roleParagraph {
+  font-family: 'Arimo', sans-serif;
+  letter-spacing: 1px;
+  font-size: 25px;
+  margin-top: 20px;
+}
+#milesForm {
+  font-family: 'Arimo', sans-serif;
+  letter-spacing: 1px;
+}
+#seperatorLine {
+  border-top: 1px solid rgb(167, 168, 170);
+}
+#somethingElse {
+  font-family: 'Arimo', sans-serif;
+  font-size: 25px;
+  letter-spacing: 2px;
+}
 .nav-item.nav-link {
   font-family: 'Arimo', sans-serif;
   letter-spacing: 1px;
@@ -127,6 +148,12 @@ h4.text-center.text-danger {
 .btn{
   font-family: 'Arimo', sans-serif;
   letter-spacing: 2px;
+}
+#clockInPrompt{
+  font-family: 'Arimo', sans-serif;
+  font-size: 25px;
+  letter-spacing: 2px;
+  margin-top: 20px;
 }
 #change-user-button.btn.btn-primary.btn-sm{
   letter-spacing: 0px;
