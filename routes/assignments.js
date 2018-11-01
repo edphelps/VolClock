@@ -16,12 +16,12 @@ function getDateToday() {
 
 /* **************************************************
 *  GET /user/:user_id
-*  Get repeating assgnments for user_id
+*  Get repeating assgnments for user_id plus looks up the role text
 
 *  The "dow" field is 0-based starting on Sunday (so )
 *  Return
 *      200: {
-*         assignments: [ { id, start, … }, { id, start, ... } ]
+*         assignments: [ { role, id (assignments), start, … }, { ... } ]
 *         }
 *      404: {
 *         assignments: "null",
@@ -36,6 +36,8 @@ router.get('/user/:user_id', (req, res, next) => {
   // get all assignments for user
   knex('assignments')
     .where('user_id', req.params.user_id)
+    .join('roles', 'roles.id', 'role_id')
+    .select(['assignments.*', 'roles.role'])
     .then((aRecs) => {
       console.log("--> qry returning: ", aRecs);
 
