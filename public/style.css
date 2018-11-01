@@ -106,8 +106,25 @@ h4.text-center.text-danger {
 .dropdown-item:hover {
   background-color: rgb(62, 175, 56);
 }
-
-
+#clockOutButton {
+  width: 45%;
+  height:0;
+  padding-bottom: 40%;
+  border-radius: 50%;
+  border:10px solid #cfdcec;
+  overflow:hidden;
+}
+.nav-item.nav-link {
+  font-family: 'Arimo', sans-serif;
+  letter-spacing: 1px;
+}
+#app-title.text-center {
+  font-family: 'Arimo', sans-serif;
+  font-size: 35px;
+  letter-spacing: 2px;
+  margin-top: 2em;
+  font-weight: 900;
+}
 /* Marker for divs that are filled in by ajax.
    When changing to another menu all divs with this class are set to "".
    This prevents the problem of the card accordians shadowing each other's
