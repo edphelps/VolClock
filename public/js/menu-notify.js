@@ -54,14 +54,6 @@ function deleteNotification(id) {
     });
 }
 
-function test() {
-  const a = [ "2018-10-31T16:27:43.366Z", "2018-10-31T16:27:50.519Z" ];
-  a.sort((a, b) => { return a < b })
-  console.log(a);
-}
-
-// test();
-
 /* ==================================================
 *  reviewClick()
 *  Clicked button to initiate the Review page
@@ -148,7 +140,7 @@ function notifyPost() {
   // // if the user entered a comment, add it to the notificuations table
   if (comment.length) {
     const oComment = {
-      user_id: 2,
+      user_id: gactiveUserId,
       comment,
     };
     // console.log("Send object to AXIOS: ", oComment);
@@ -301,7 +293,7 @@ function timeOffPost() {
   comment = comment.trim();
 
   const oRequest = {
-    user_id: 2,
+    user_id: gactiveUserId,
     start_date,
     end_date,
     comment,
