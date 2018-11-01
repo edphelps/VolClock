@@ -25,10 +25,10 @@ exports.seed = function(knex, Promise) {
         {id: 18, user_id: 4, role_id: 8, start_time: new Date('2017-10-27 14:00:00 UTC'), end_time: new Date('2017-10-27 21:00:00 UTC'), miles: 4},
         {id: 19, user_id: 1, role_id: 8, start_time: new Date('2016-10-28 14:00:00 UTC'), end_time: new Date('2016-10-28 19:00:00 UTC'), miles: 4},
         {id: 20, user_id: 1, role_id: 8, start_time: new Date('2016-10-29 16:45:00 UTC'), end_time: new Date('2016-10-29 20:00:00 UTC'), miles: 4},
-        {id: 21, user_id: 1, role_id: 8, start_time: new Date('2016-10-30 14:00:00 UTC'), end_time: new Date('2016-10-30 22:00:00 UTC'), miles: 4},
+        {id: 21, user_id: 1, role_id: 8, start_time: new Date('2016-10-30 14:00:00 UTC'), end_time: new Date('2016-10-30 16:00:00 UTC'), miles: 4},
         {id: 22, user_id: 2, role_id: 8, start_time: new Date('2016-10-30 14:00:00 UTC'), end_time: new Date('2016-10-30 22:00:00 UTC'), miles: 4},
-        {id: 23, user_id: 2, role_id: 6, start_time: new Date('2016-10-30 14:00:00 UTC'), end_time: new Date('2016-10-30 22:00:00 UTC'), miles: 4},
-        {id: 24, user_id: 2, role_id: 5, start_time: new Date('2016-10-30 14:00:00 UTC'), end_time: new Date('2016-10-30 22:00:00 UTC'), miles: 4},
+        {id: 23, user_id: 2, role_id: 6, start_time: new Date('2016-10-30 14:00:00 UTC'), end_time: new Date('2016-10-30 16:00:00 UTC'), miles: 4},
+        {id: 24, user_id: 2, role_id: 5, start_time: new Date('2016-10-30 14:00:00 UTC'), end_time: new Date('2016-10-30 17:00:00 UTC'), miles: 4},
         {id: 25, user_id: 2, role_id: 8, start_time: new Date('2016-10-30 14:00:00 UTC'), end_time: new Date('2016-10-30 22:00:00 UTC'), miles: 4},
       ])
       .then(() => {

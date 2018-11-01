@@ -93,6 +93,7 @@
           <a id="nav--notify" class="nav-item nav-link" href="#">Notify supervisor </a>
           <a id="nav--schedule" class="nav-item nav-link" href="#">Schedule </a>
           <a id="nav--history" class="nav-item nav-link" href="#">My history </a>
+          <a id="nav--admin" class="nav-item nav-link" href="#" hidden>Admin </a>
         </div>
       </div>
     </nav>
@@ -305,45 +306,6 @@
 
     <div id="content--schedule" class="content justify-content-center">
 
-      <!-- <table class="table">
-        <thead>
-          <tr>
-            <th scope="col" width='20px'>Day</th>
-            <th scope="col">Assignments</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Sun</th>
-            <td><div id="assigment-sun">assignment<br>time-time</div></td>
-          </tr>
-          <tr>
-            <th scope="row">Mon</th>
-            <td><div id="assigment-mon">assignment<br>time-time</div></td>
-          </tr>
-          <tr>
-            <th scope="row">Tue</th>
-            <td><div id="assigment-tue">assignment<br>time-time</div></td>
-          </tr>
-          <tr>
-            <th scope="row">Wed</th>
-            <td><div id="assigment-wed">assignment<br>time-time</div></td>
-          </tr>
-          <tr>
-            <th scope="row">Thu</th>
-            <td><div id="assigment-thu">assignment<br>time-time</div></td>
-          </tr>
-          <tr>
-            <th scope="row">Fri</th>
-            <td><div id="assigment-fri">assignment<br>time-time</div></td>
-          </tr>
-          <tr>
-            <th scope="row">Sat</th>
-            <td><div id="assigment-sat">assignment<br>time-time</div></td>
-          </tr>
-        </tbody>
-      </table> -->
-
       <table class="table">
         <thead>
           <tr>
@@ -372,6 +334,30 @@
     </div>  <!-- content--schedule -->
 
 
+    <!-- ============================================= -->
+    <!-- CONTENT - Admin -->
+    <!-- ============================================= -->
+
+    <div id="content--admin" class="content justify-content-center">
+
+      <!-- ................ ADMIN REVIEW REQUESTS ................ -->
+      <!-- ....................................................... -->
+
+      <div id="reviewDiv-admin">
+        <div id="review-admin">
+          <div class="row">
+            <div class="col">
+              <h2 class="text-center">Review Notifications</h2>
+            </div> <!-- col -->
+          </div> <!-- row -->
+          <div id="list-review-admin">
+          </div>
+        </div> <!--list-review-admin -->
+      </div> <!-- reviewDiv-admin -->
+
+    </div>  <!-- content-admin -->
+
+
   <!-- ============================================= -->
   <!-- SCRIPT FILE LOADS -->
   <!-- ============================================= -->
@@ -389,6 +375,7 @@
   <script src="./js/menu-notify.js" charset="utf-8"></script>
   <script src="./js/menu-history.js" charset="utf-8"></script>
   <script src="./js/menu-schedule.js" charset="utf-8"></script>
+  <script src="./js/menu-admin.js" charset="utf-8"></script>
   <script src="./js/main.js" charset="utf-8"></script>
 </body>
 

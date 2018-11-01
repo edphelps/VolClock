@@ -36,8 +36,14 @@ function loginUser(loginCode) {
 
         //gactiveUserShiftId = data.data.shift.id
 
-        // move to the clock in menu choice
-        onMenuClockIn();
+        // move to the clock in or admin menu choice
+        if (loginCode == ADMIN_USER_CODE) {
+          console.log("&& loading admin");
+          onMenuAdmin();
+        } else {
+          console.log("&& loading regulat");
+          onMenuClockIn();
+        }
 
         // set user name for homepage banner
         const welcome = document.getElementById('app-title');
@@ -45,14 +51,14 @@ function loginUser(loginCode) {
         const lastName = data.data.user.lname;
         welcome.innerText = `Welcome ${firstName} ${lastName}!`;
 
-        // set user name for message to Supervisor
-        const notifyName = document.getElementById('notifyName');
-        notifyName.innerText = `From ${firstName} ${lastName}`;
+        // // set user name for message to Supervisor
+        // const notifyName = document.getElementById('notifyName');
+        // notifyName.innerText = `From ${firstName} ${lastName}`;
+        //
+        // // set user name for time off
+        // const nameTimeOff = document.getElementById('nameTimeOff');
+        // nameTimeOff.innerText = `For ${firstName} ${lastName}`;
 
-        // set user name for time off
-        const nameTimeOff = document.getElementById('nameTimeOff');
-        nameTimeOff.innerText = `For ${firstName} ${lastName}`;
-      
       }
     })
     .catch((error) => {
