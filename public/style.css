@@ -92,7 +92,7 @@ h4.text-center.text-danger {
 }
 
 /* *****************************************
-*  PAGE CONTENT AREA
+*  PAGE CONTENT AREA / CLOCK IN/OUT PAGE
 ******************************************** */
 
 /* content area below the menu bar */
@@ -177,6 +177,31 @@ button.btn.btn-success.dropdown-toggle {
     letter: 1px;
   }
 
+/* *******************************************
+*  SCHEDULE SECTION
+*********************************************/
+th.text-center {
+  font-family: 'Arimo', sans-serif;
+  letter-spacing: 1px;
+}
+#shiftsHeader {
+  font-family: 'Arimo', sans-serif;
+  font-size: 25px;
+  letter-spacing: 2px;
+  margin-top: 20px;
+  margin-bottom: 35px;
+}
+
+
+/* *******************************************
+* HISTORY SECTION
+*********************************************/
+#historyHeader {
+  font-family: 'Arimo', sans-serif;
+  font-size: 25px;
+  letter-spacing: 2px;
+  margin-top: 20px;
+}
 
 
 /* Marker for divs that are filled in by ajax.
