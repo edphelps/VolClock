@@ -36,18 +36,17 @@ function getDateOnly(_dt) {
   return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`
 }
 
-function getTimeOnly(_dt) {
-  const dt = new Date(_dt); // this allows the dt param to be Date or String
+function getSmallTimeOnly(_dt) {
+  const dt = new Date(_dt) // this allows the dt param to be Date or String
   if (isNaN(dt)) {
     return "?";
   }
-  let hrs = dt.getHours() + 1;
-  const am = (hrs < 12);
-  if (12 < hrs) hrs -= 12;
-  const mins = dt.getMinutes();
+  let hrs = dt.getHours() 
+  const am = (hrs < 12)
+  if (12 < hrs) hrs -= 12
+  const mins = dt.getMinutes()
 
-  return `${hrs}:${(mins < 10 ? '0' : '')}${mins}${(am) ? 'a' : 'p'}`;
-  // return `${dt.getHours() + 1}:${dt.getMinutes()}`;
+  return `${hrs}:${(mins < 10 ? '0' : '')}${mins}${(am) ? 'a' : 'p'}`
 }
 
 // calculate users total shift hours for current year
@@ -160,10 +159,15 @@ function renderTable(yearString) {
     let shiftStartInfo = new Date(shift.start_time)
     let shiftEndInfo = new Date(shift.end_time)
     let shiftYear = shiftStartInfo.toDateString()
-    let shiftStartShort = getTimeOnly(shift.start_time)
-    let shiftEndShort = getTimeOnly(shift.end_time)
+    let shiftStartShort = getSmallTimeOnly(shift.start_time)
+    let shiftEndShort = getSmallTimeOnly(shift.end_time)
     let shiftEndQualifier = new Date(shift.end_time).toLocaleString()
     let shiftHoursWorked = 0
+    console.log('startTime>>>', shiftStartInfo)
+    console.log('endTime>>>', shiftEndInfo)
+    console.log('shiftStartShort>>>', shiftStartShort)
+    console.log('shiftEndShort>>>', shiftEndShort);
+
     if (shiftEndInfo > shiftStartInfo) {
       shiftHoursWorked = ((shiftEndInfo - shiftStartInfo)/1000/60/60).toFixed(1)
     } else {
