@@ -12,7 +12,7 @@ exports.seed = function(knex, Promise) {
         {id: 5, user_id: 2, role_id: 4, start_time: new Date('2018-10-14 14:00:00 UTC'), end_time: new Date('2018-10-14 16:00:00 UTC'), miles: 4},
         {id: 6, user_id: 2, role_id: 5, start_time: new Date('2018-10-15 14:00:00 UTC'), end_time: new Date('2018-10-15 17:00:00 UTC'), miles: 4},
         {id: 7, user_id: 2, role_id: 6, start_time: new Date('2018-10-16 14:00:00 UTC'), end_time: new Date('2018-10-16 22:00:00 UTC'), miles: 4},
-        {id: 8, user_id: 2, role_id: 7, start_time: new Date('2018-10-17 17:00:00 UTC'), end_time: new Date('2018-10-17 14:00:00 UTC'), miles: 4},
+        {id: 8, user_id: 2, role_id: 7, start_time: new Date('2018-10-17 17:00:00 UTC'), end_time: new Date('2018-10-17 19:45:00 UTC'), miles: 4},
         {id: 9, user_id: 2, role_id: 8, start_time: new Date('2018-10-18 14:00:00 UTC'), end_time: new Date('2018-10-18 21:00:00 UTC'), miles: 4},
         {id: 10, user_id: 2, role_id: 8, start_time: new Date('2018-10-19 14:00:00 UTC'), end_time: new Date('2018-10-19 15:00:00 UTC'), miles: 4},
         {id: 11, user_id: 2, role_id: 8, start_time: new Date('2017-10-20 14:00:00 UTC'), end_time: new Date('2017-10-20 15:00:00 UTC'), miles: 4},

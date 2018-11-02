@@ -32,6 +32,7 @@ to clock out.  If a user forgets to clock out the system will automatically
 clock them out at with a system-designated end time.
 
 ![Example](screenshots/clockin.png)
+
 ![Example](screenshots/clockout.png)
 
 ***
