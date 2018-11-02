@@ -82,6 +82,10 @@ function cancelPendingAjaxLoad() {
 * =================================================== */
 function changeMenuAndContentArea(sMenuBtnID, elemContent) {
 
+  // When moving to a menu need to clear the timer that the clockin page sets
+  // that kick user to the login page when they are inactive for too long.
+  clearClockinTimeout();
+
   // hide all content sections
   const aElemContent = document.querySelectorAll(".content");
   for (const elem of aElemContent) {

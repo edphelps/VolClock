@@ -1,4 +1,24 @@
 
+// how many secnods before this page kicks back to login
+const TIMEOUT_SECONDS = 30;
+
+// clear the timeout that sends user back to login page
+function clearClockinTimeout() {
+  console.log(`((( clearing timeout: ${gTimeoutId} )))`);
+  if (gTimeoutId)
+    clearTimeout(gTimeoutId);
+  gTimeoutId = null;
+}
+
+// restart the timeout that sends the yser back to the login page
+function resetClockinTimeout() {
+  clearClockinTimeout();
+  console.log(`((( SETTING timeout: ${gTimeoutId} )))`);
+  gTimeoutId = setTimeout(() => {
+    location.reload();
+  }, TIMEOUT_SECONDS * 1000);
+}
+
 /* ==================================================
 *  onMenuClockIn()
 *
@@ -10,6 +30,8 @@ function onMenuClockIn() {
   getGActiveUserId()
   getRoles()
   changeRoleParagaraph()
+
+  resetClockinTimeout();
 }
 
 //html elements
@@ -54,6 +76,7 @@ function dropdownRoles(){
 //function for sending post request to db from drop down menu list item
 function sendDropDownRole() {
   dropDown.addEventListener('click', (ev) => {
+    resetClockinTimeout();
 
     let mileage = parseInt(milesInput.value)
     let roleId = parseInt(ev.target.id)
@@ -80,9 +103,10 @@ function sendDropDownRole() {
 function clockOutPatch() {
   const clockOutButton = document.getElementById('clockOutButton')
   clockOutButton.addEventListener('click', (ev) => {
+    resetClockinTimeout();
     somethingElse.style.display = ""
     roleDropper.style.display = ""
-    location.reload()
+    // location.reload()
     axios.patch(`/shifts/${gactiveUserShiftId}`)
     .then((shift) => {
       checkStatus()
@@ -164,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //event listener on clock in buttons div. hides dropdown div when button is clicked
   const clockInDiv = document.getElementById('clockInDiv')
   clockInDiv.addEventListener('click', (ev) => {
+    resetClockinTimeout();
     axios.get(`/shifts/user/${gactiveUserId}/current`)
     .then((shift) => {
       console.log(shift);
