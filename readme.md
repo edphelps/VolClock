@@ -6,6 +6,7 @@ supervisor. The application records volunteers' time and number of miles driven
 for each shift.  The application is designed to be as simple as possible to
 meet the needs of a community with a range of computer experience and comfort.
 
+***
 # Login Page
 
 Volunteers login with a four digit code, which may be the last four digits of
@@ -13,6 +14,7 @@ their phone number (examples 0000, 1234).  Supervisor can log in with a special 
 
 ![Example](screenshots/login.png)
 
+***
 # Clock In / Out Page
 
 The user is presented buttons for the roles they typically perform, as designated
@@ -32,6 +34,7 @@ clock them out at with a system-designated end time.
 ![Example](screenshots/clockin.png)
 ![Example](screenshots/clockout.png)
 
+***
 # Notify Supervisor Page
 
 The volunteer can choose to:
@@ -41,10 +44,14 @@ The volunteer can choose to:
 * review and delete messages and time off requests
 
 ![Example](screenshots/notify-menu.png)
+
 ![Example](screenshots/notify-message.png)
+
 ![Example](screenshots/notify-timeoff.png)
+
 ![Example](screenshots/notify-review.png)
 
+***
 # Schedule Page
 
 Shows the days, times, and roles the volunteer has volunteered to perform
@@ -52,6 +59,7 @@ each week.
 
 ![Example](screenshots/schedule.png)
 
+***
 # History Page
 
 Shows the volunteer's history of volunteer service.  A selection list allows
@@ -60,9 +68,10 @@ the chosen year.
 
 ![Example](screenshots/history.png)
 
-# Admin Page 
+***
+# Admin Page
 
 When the supervisor logs in (9999) they are presented with a list of all messages
 and time off notifications from the volunteers.
 
-![Example](screenshots/admin.png)
+![Example](screenshots/admin-review.png)
