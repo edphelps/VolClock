@@ -118,6 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     onsubmitLogin();
   });
 
-  // TODO: remove this, it short-circuits the login page to login Riley Burns
+  // TODO: remove this, it short-circuits the login page to login Riley Burns, user.id = 2
   // loginUser("1234");
 });

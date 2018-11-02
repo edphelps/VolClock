@@ -1,7 +1,7 @@
 
 // let notifyButton = null;
 // let timeOffButton = null;
-const notifyHeader = document.getElementById('notifyHeader')
+let notifyHeader = null;
 let timeOffFormDiv = null;
 let notifyFormDiv = null;
 let reviewDiv = null;
@@ -11,6 +11,36 @@ let contactButtons = null;
 // track the last user so we can reset when a new user logs in
 let lastUser = 0;
 
+function switchVisibleSections(sectionToShow) {
+
+  // hide all sections of this page
+  contactButtons.style.display = "none";
+  notifyHeader.style.display = "none";
+  reviewDiv.style.display = "none";
+  notifyFormDiv.style.display = "none";
+  timeOffFormDiv.style.display = "none";
+
+  // display specific section
+  switch (sectionToShow) {
+    case 'top':
+      contactButtons.style.display = "block";
+      notifyHeader.style.display = "block"
+      break;
+    case 'notify':
+      notifyFormDiv.style.display = "block";
+      break;
+    case 'timeoff':
+      timeOffFormDiv.style.display = "block";
+      break;
+    case 'review':
+      reviewDiv.style.display = "block";
+      break;
+    default:
+      console.log(`Error: switchVisibleSections, bad param: `, sectionToShow);
+  }
+
+}
+
 /* ==================================================
 *  onMenuNotify()
 *  Initial Menu selection handler, this is where it all begins
@@ -18,7 +48,6 @@ let lastUser = 0;
 * =================================================== */
 function onMenuNotify() {
   changeMenuAndContentArea("nav--notify", gelemContentNotify);
-
 
   // if a new user has logged in we want to reset what sections are visible
   // and any lingering content the last user may have typed into a message or
@@ -41,9 +70,8 @@ function notifyClick() {
   // console.log("notifyClick");
 
   // update what sections of page are visible
-  contactButtons.style.display = "none";
-  notifyFormDiv.style.display = "block";
-  notifyHeader.style.display = "none"
+  switchVisibleSections('notify');
+
   // set focus on the comment control
   document.forms.notifyForm.elements.notifyComment.focus();
 }
@@ -78,9 +106,7 @@ function reviewClick() {
   // console.log("reviewClick");
 
   // update what sections of page are visible
-  contactButtons.style.display = "none";
-  reviewDiv.style.display = "block";
-  notifyHeader.style.display = "none"
+  switchVisibleSections('review');
 
   /* ------------------
   *  getDateOnly()
@@ -177,9 +203,7 @@ function notifyPost() {
   }
 
   // update what sections of page are visible
-  notifyFormDiv.style.display = "none";
-  contactButtons.style.display = "";
-  notifyHeader.style.display = "none"
+  switchVisibleSections('top');
 
   return false; // prevent form from actually submitting
 }
@@ -194,18 +218,16 @@ function notifyCancel() {
   document.forms.notifyForm.elements.notifyComment.value = "";
 
   // update what sections of page are visible
-  notifyFormDiv.style.display = "none";
-  contactButtons.style.display = "";
+  switchVisibleSections('top');
 }
 
 /* ==================================================
 *  reviewDone()
-*  Clicked done on Review pagw
+*  Clicked done on Review page
 * =================================================== */
 function reviewDone() {
   // update what sections of page are visible
-  reviewDiv.style.display = "none";
-  contactButtons.style.display = "";
+  switchVisibleSections('top');
 }
 
 /* ==================================================
@@ -220,65 +242,9 @@ function timeOffCancel() {
   document.getElementById('time-off-text-area').value = "";
 
   // update what sections of page are visible
-  timeOffFormDiv.style.display = "none";
-  contactButtons.style.display = "";
+  switchVisibleSections('top');
 }
 
-
-/* ==================================================
-*  renderRecentRequests()
-*  Render the list of recent time-off requests on right side of screen
-* =================================================== */
-// function renderRecentRequests() {
-//
-//   /* ------------------
-//   *  getDateOnly()
-//   --------------------- */
-//   function getDateOnly(_dt) {
-//     const dt = new Date(_dt); // this allows the dt param to be Date or String
-//     if (isNaN(dt)) {
-//       return "?";
-//     }
-//     return `${dt.getMonth() + 1}/${dt.getDate()}/${dt.getFullYear()}`;
-//   }
-//
-//   axios.get(`notifications/user/${gactiveUserId}`)
-//     .then((res) => {
-//       console.log("***** renderRecentRequests: ", res);
-//       const elemList = document.getElementById('list-time-off');
-//       elemList.innerHTML = "loading...";
-//       let html = "";
-//       const aNotifications = res.data.notifications;
-//       if (!aNotifications) {
-//         html = "no notifications to display";
-//       } else {
-//         html = `
-//           <table class="table">
-//             <thead>
-//               <tr>
-//                 <th scope="col">Start</th>
-//                 <th scope="col">End</th>
-//                 <th scope="col">Message</th>
-//               </tr>
-//             </thead>`;
-//         for (const oNotification of aNotifications) {
-//           html += `
-//               <tr>
-//                 <td>` + getDateOnly(`${oNotification.start_date}`) + `</td>
-//                 <td>` + getDateOnly(`${oNotification.end_date}`) + `</td>
-//                 <td>` + `${oNotification.comment}`.slice(0, 10) + `...</td>
-//               </tr>`
-//           }
-//         html += `
-//             </table>`
-//       }
-//       // console.log("---- html: ", html);
-//       elemList.innerHTML = html;
-//     })
-//     .catch((error) => {
-//       handleError("renderRecentRequests", error);
-//     });
-// }
 
 /* ==================================================
 *  timeOffClick()
@@ -287,8 +253,8 @@ function timeOffCancel() {
 function timeOffClick() {
 
   // update what sections of page are visible
-  contactButtons.style.display = "none";
-  timeOffFormDiv.style.display = "inline";
+  switchVisibleSections('timeoff')
+
 
   // render the table to display recent time-off requests
   // renderRecentRequests();
@@ -336,6 +302,7 @@ function timeOffPost() {
   // update what sections of page are visible
   timeOffFormDiv.style.display = "none";
   contactButtons.style.display = "";
+  notifyHeader.style.display = ""
 
   return false; // prevent actual form submission
 }
@@ -345,6 +312,8 @@ function timeOffPost() {
 * =================================================== */
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM loaded for menu-notify.js");
+
+  notifyHeader = document.getElementById('notifyHeader')
 
   // div containing the two buttons that choose which form to display
   contactButtons = document.getElementById('contactButtons');
