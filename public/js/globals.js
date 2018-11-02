@@ -13,9 +13,6 @@ let gactiveUserId = null;
 let gactiveUserShiftId = null;
 let gtoday = null;
 
-// clock in/out screen has a timeout that kicks user back to login
-let gTimeoutId = null;
-
 // object used to cancel current AJAX data loads requests if another is made.
 // Ex: user clicks the menu multiple times while a page is loading data.
 let goCancelAjax = null;

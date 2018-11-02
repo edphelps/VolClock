@@ -1,22 +1,51 @@
+//html elements
+const roleParagraph = document.getElementById('roleParagraph')
+const dropDown = document.getElementById('dropdownRoles')
+const clockInDiv = document.getElementById('clockInDiv')
+const clockOutDiv = document.getElementById('clockOutDiv')
+const milesInput = document.getElementById('miles')
+const clockInSuccess = document.getElementById('clockInSuccess')
+const milesForm = document.getElementById('milesForm')
+const somethingElse = document.getElementById('somethingElse')
+const roleDropper = document.getElementById('roleDropper')
+const clockInPrompt = document.getElementById('clockInPrompt')
+const seperatorLine = document.getElementById('seperatorLine')
+const timeoutCountdown = document.getElementById('timeoutCountdown')
 
+
+// clock in/out screen has a timeout that kicks user back to login
+let timeoutId = null;
 // how many secnods before this page kicks back to login
 const TIMEOUT_SECONDS = 30;
+// countdown timer to display on page
+let timeoutCountdownCounter = 0;
+let timeoutCountdownId = null;
 
 // clear the timeout that sends user back to login page
 function clearClockinTimeout() {
-  console.log(`((( clearing timeout: ${gTimeoutId} )))`);
-  if (gTimeoutId)
-    clearTimeout(gTimeoutId);
-  gTimeoutId = null;
+  console.log(`((( clearing timeout: ${timeoutId} )))`);
+  if (timeoutId)
+    clearTimeout(timeoutId);
+  if (timeoutCountdownId)
+    clearTimeout(timeoutCountdownId);
+  timeoutId = null;
+  timeoutCountdownId = null;
+  timeoutCountdownCounter = TIMEOUT_SECONDS;
 }
 
 // restart the timeout that sends the yser back to the login page
 function resetClockinTimeout() {
   clearClockinTimeout();
-  console.log(`((( SETTING timeout: ${gTimeoutId} )))`);
-  gTimeoutId = setTimeout(() => {
+  console.log(`((( SETTING timeout: ${timeoutId} )))`);
+  timeoutId = setTimeout(() => {
     location.reload();
   }, TIMEOUT_SECONDS * 1000);
+  timeoutCountdownCounter = TIMEOUT_SECONDS;
+  timeoutCountdown.innerText = `logout in ${timeoutCountdownCounter--} seconds`;
+  timeoutCountdownId = setInterval(() => {
+    console.log("counting down.........");
+    timeoutCountdown.innerText = `logout in ${timeoutCountdownCounter--} seconds`;
+  }, 1000);
 }
 
 /* ==================================================
@@ -34,18 +63,6 @@ function onMenuClockIn() {
   resetClockinTimeout();
 }
 
-//html elements
-const roleParagraph = document.getElementById('roleParagraph')
-const dropDown = document.getElementById('dropdownRoles')
-const clockInDiv = document.getElementById('clockInDiv')
-const clockOutDiv = document.getElementById('clockOutDiv')
-const milesInput = document.getElementById('miles')
-const clockInSuccess = document.getElementById('clockInSuccess')
-const milesForm = document.getElementById('milesForm')
-const somethingElse = document.getElementById('somethingElse')
-const roleDropper = document.getElementById('roleDropper')
-const clockInPrompt = document.getElementById('clockInPrompt')
-const seperatorLine = document.getElementById('seperatorLine')
 
 //creates drop down list of all roles
 function dropdownRoles(){
