@@ -1,6 +1,4 @@
 
-// let notifyButton = null;
-// let timeOffButton = null;
 let notifyHeader = null;
 let timeOffFormDiv = null;
 let notifyFormDiv = null;
