@@ -99,6 +99,7 @@ router.get('/user/:user_id/current', (req, res, next) => {
           // not clocked in earlier in the today
           res.status(200).json({ current_shift: "null", previous_shift_today: false });
         });
+        // TODO: need a catch at this level
     })
     .catch((error) => {
       next(routeCatch(`--- GET route /user/${req.params.user_id}/current `, error));
