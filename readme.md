@@ -7,6 +7,11 @@ for each shift.  The application is designed to be as simple as possible to
 meet the needs of a community with a range of computer experience and comfort.
 
 ***
+# Video of the site in action
+
+[Click here -- no sound](https://www.youtube.com/watch?v=pJ_doAztF2s)
+
+***
 # Login Page
 
 Volunteers login with a four digit code, which may be the last four digits of
